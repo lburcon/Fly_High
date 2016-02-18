@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FlyHighConference</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="splash_screen_text">Witaj na konferencji!</string>
+    <string name="title_activity_conference_list">ConferenceListActivity</string>
+</resources>
