@@ -21,8 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".conferenceListActivity"
+            android:name=".ConferenceListActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

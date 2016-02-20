@@ -1,26 +1,19 @@
 package com.example.yggdralisk.flyhighconference;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.provider.ContactsContract;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,35 +21,66 @@ import okhttp3.Response;
 
 public class SplashScren extends Activity {
 
+    private final int SPLASH_DISPLAY_LENGTH = 10000;
+    private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/import";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_scren);
 
-        try {
-            getConferenceList();//Get conferences list for the next screen and block view on splash till then
-        } catch (IOException e) {}
+        new getDataTask().execute();
+    }
 
-        getRest();//Start downloading rest of the content
-
-        Intent in = new Intent(this,conferenceListActivity.class);
+    protected void startMain()
+    {
+        Intent in = new Intent(this,ConferenceListActivity.class);
         this.startActivity(in);
-
     }
 
-    private void getConferenceList() throws IOException {
-        String url = "http://flyhigh.pwr.edu.pl/api/presentations";
-        OkHttpClient client = new OkHttpClient();
+         private class getDataTask extends AsyncTask<Void,Void,Void> {
+             JSONObject js = new JSONObject();
 
+             @Override
+             protected void onPreExecute() {
 
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
+             }
 
-            Response response = client.newCall(request).execute();
-    }
+             @Override
+             protected Void doInBackground(Void... params) {
+                 OkHttpClient client = new OkHttpClient();
 
-    private void getRest() {
-        
-    }
+                 Request request = new Request.Builder()
+                         .url(DATA_HOST_URL)
+                         .build();
+                 try {
+                     Response res = client.newCall(request).execute();
+                     String str = res.body().string();
+                      js = new JSONObject(str);
+                 } catch (IOException e) {
+                     e.printStackTrace();                 } catch (JSONException e) {
+
+                     e.printStackTrace();
+                 }
+
+                 return null;
+             }
+
+             @Override
+             protected void onPostExecute(Void result) {
+
+                 try {
+                     JSONArray organisersArray = new JSONArray(js.get("organisers").toString());
+                     JSONArray partnersArray = new JSONArray(js.get("partners").toString());
+                     JSONArray placesArray = new JSONArray(js.get("places").toString());
+                     JSONArray presentationsArray = new JSONArray(js.get("presentations").toString());
+                     JSONArray speakersArray = new JSONArray(js.get("speakers").toString());
+                     JSONArray usersArray = new JSONArray(js.get("users").toString());
+
+                     startMain();
+                 }catch (JSONException e) {
+                     e.printStackTrace();
+                 }
+             }
+         }
 }

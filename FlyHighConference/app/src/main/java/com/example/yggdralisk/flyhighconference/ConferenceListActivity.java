@@ -3,7 +3,7 @@ package com.example.yggdralisk.flyhighconference;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class conferenceListActivity extends AppCompatActivity {
+public class ConferenceListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
