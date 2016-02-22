@@ -5,4 +5,12 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="splash_screen_text">Witaj na konferencji!</string>
     <string name="title_activity_conference_list">ConferenceListActivity</string>
+    <string name="shared_preferences_name">ConferenceActivityMain</string>
+    <string name="shared_preferences_organisers">orgaisersJson</string>
+    <string name="shared_preferences_partners">partnersJson</string>
+    <string name="shared_preferences_places">placesJson</string>
+    <string name="shared_preferences_presentations">presentationsJson</string>
+    <string name="shared_preferences_speakers">speakersJson</string>
+    <string name="shared_preferences_users">usersJson</string>
+
 </resources>
