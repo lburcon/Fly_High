@@ -12,6 +12,7 @@
     <string name="shared_preferences_presentations">presentationsJson</string>
     <string name="shared_preferences_speakers">speakersJson</string>
     <string name="shared_preferences_users">usersJson</string>
-    <string name="splash_internet_error">Brak połączenia z internetem/nBłąd serwera</string>
+    <string name="splash_internet_error">Błąd połączenia</string>
+    <string name="shared_preferences_likes">likesJson</string>
 
 </resources>
