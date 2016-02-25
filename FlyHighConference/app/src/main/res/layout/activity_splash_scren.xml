@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -14,16 +13,16 @@
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
         android:layout_gravity="center_horizontal"
-        android:indeterminateDrawable="@xml/progress_yellow"/>
+        android:indeterminate="true"
+        android:indeterminateDrawable="@xml/progress_yellow" />
 
     <TextView
+        android:id="@+id/splash_messege"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="@string/splash_screen_text"
         android:gravity="center"
+        android:text="@string/splash_screen_text"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:id="@+id/splash_messege"/>
+        android:textStyle="bold" />
 </LinearLayout>
