@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
             fragmentActivity.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container_main, fragmentActivity).commit();
+                    .replace(R.id.fragment_container_main, fragmentActivity)
+                    .commit();
         }
             }
         catch(IllegalStateException ex)
