@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
+
             ConferenceListFragment firstFragment = new ConferenceListFragment();
             firstFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()
@@ -24,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void toggleDrawer()
-    {
-        DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.activity_main_drawer);
+    public void toggleDrawer() {
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer);
         mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 }

@@ -80,18 +80,17 @@ public class SplashScren extends Activity {
                     connectionFailed = true;
                 }
 
-            } return null;
+            }
+            return null;
         }
 
 
         @Override
         protected void onPostExecute(Void result) {
-            if(connectionFailed)
-            {
-                    splashMessege.setText(R.string.splash_internet_error);
-                    splashMessege.invalidate();
-            }
-            else {
+            if (connectionFailed) {
+                splashMessege.setText(R.string.splash_internet_error);
+                splashMessege.invalidate();
+            } else {
                 SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences_name), Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString(getString(R.string.shared_preferences_organisers), organisersArray.toString());
                 sharedPreferences.edit().putString(getString(R.string.shared_preferences_partners), partnersArray.toString());
@@ -103,25 +102,25 @@ public class SplashScren extends Activity {
                 sharedPreferences.edit().apply();
                 startMain();
             }
-            }
         }
-
-        private String getData(String urlAppend) throws JSONException {
-            OkHttpClient client = new OkHttpClient();
-            String str = new String();
-            Request request = new Request.Builder()
-                    .url(DATA_HOST_URL + urlAppend)
-                    .build();
-            try {
-                Response res = client.newCall(request).execute();
-                str = res.body().string();
-                return str;
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new JSONException("Brak polączenia");
-            }
-        }
-
-
     }
+
+    private String getData(String urlAppend) throws JSONException {
+        OkHttpClient client = new OkHttpClient();
+        String str = new String();
+        Request request = new Request.Builder()
+                .url(DATA_HOST_URL + urlAppend)
+                .build();
+        try {
+            Response res = client.newCall(request).execute();
+            str = res.body().string();
+            return str;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new JSONException("Brak polączenia");
+        }
+    }
+
+
+}
 

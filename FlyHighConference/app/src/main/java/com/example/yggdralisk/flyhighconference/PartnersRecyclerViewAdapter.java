@@ -1,38 +1,36 @@
 package com.example.yggdralisk.flyhighconference;
 
-import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by yggdralisk on 20.02.16.
+ * Created by lukasz on 25.02.16.
  */
-public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<ConferenceRecyclerViewAdapter.ViewHolder> {
+public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRecyclerViewAdapter.ViewHolder> {
 
     JSONArray mDataset = new JSONArray();
 
-    public ConferenceRecyclerViewAdapter(JSONArray myDataset) {
+    public PartnersRecyclerViewAdapter(JSONArray myDataset) {
         mDataset = myDataset;
     }
 
     @Override
-    public ConferenceRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PartnersRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.conference_list_element, parent, false);
+                .inflate(R.layout.partners_list_element, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(ConferenceRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(PartnersRecyclerViewAdapter.ViewHolder holder, int position) {
         try {
             holder.setData(mDataset.getJSONObject(position));
         } catch (JSONException e) {
@@ -44,6 +42,8 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
     public int getItemCount() {
         return 0;
     }
+
+    //TODO: setting data
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View itemView) {

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/conference_back_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/arrow_back" />
+
+        <TextView
+            android:id="@+id/conference_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_back_button"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="10:00 - 11:00"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/conference_speaker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_time"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="Janusz Ratajczak"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/conference_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_speaker"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="Nudny wykład o Javie"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/conference_description"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/conference_name"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:scrollbars="vertical"
+            android:text="ASKDOI JASDOIJ ISJdoiasjdo jaisdj iojawdn uahd sandoi wdu ansjdn uygwq wbdhasbdyg wdoiajdoij aw8djASOIDAISJDOIJWOJDOIAJW ODKASPO KDPOWAI DNMASKOND OIANWDO AJUNDIWB ADiua bwdiu aiuwbdi abwifq;wiej eiguewg ywgeu wuerguwerg erw g."
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/conference_map"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_above="@+id/linearLayout2"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/conference_description"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@+id/conference_localization_info"
+            android:layout_toStartOf="@+id/conference_localization_info"
+            android:src="@drawable/fly_high_map2" />
+
+        <TextView
+            android:id="@+id/conference_localization_info"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_above="@+id/linearLayout2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_horizontal"
+            android:scrollbars="vertical"
+            android:text="ASKDOI JASDOIJ ISJdoiasjdo jaisdj iojawdn uahd sandoi wdu ansjdn uygwq wbdhasbdyg wdoiajdoij aw8dj."
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:background="@color/main_yellow"
+            android:orientation="horizontal" />
+
+        <!-- RatingBar visibility is set to gone, have to change it in case logged in-->
+
+        <RatingBar
+            android:id="@+id/conference_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="95dp"
+            android:numStars="6"
+            android:rating="1"
+            android:stepSize="1"
+            android:visibility="gone" />
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_vertical"
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="90dp"
+            android:background="@color/main_yellow"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="5dp"
+            android:layout_toLeftOf="@+id/linear_layout_vertical"
+            android:layout_toStartOf="@+id/linear_layout_vertical">
+
+            <!-- TextView visibility is set to visible, have to change it in case logged in-->
+
+            <TextView
+                android:id="@+id/conference_rating_bar_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Aby wystawić oraz zobaczyć ocenę musisz być zalogowany."
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/main_yellow" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/linearLayout3"
+            android:layout_alignEnd="@+id/conference_localization_info"
+            android:layout_alignRight="@+id/conference_localization_info"
+            android:layout_alignTop="@+id/linear_layout_vertical"
+            android:layout_toRightOf="@+id/linearLayout3"
+            android:src="@drawable/author_face" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
