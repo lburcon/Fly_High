@@ -13,9 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
-import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -96,16 +94,17 @@ public class SplashScren extends Activity {
                     splashMessege.invalidate();
             }
             else {
-                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences_name), Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_organisers), organisersArray.toString());
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_partners), partnersArray.toString());
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_places), placesArray.toString());
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_presentations), presentationsArray.toString());
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_speakers), speakersArray.toString());
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_users), usersArray.toString());
-                sharedPreferences.edit().putString(getString(R.string.shared_preferences_likes), likesArray.toString());
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(getString(R.string.shared_preferences_organisers), organisersArray.toString());
+                editor.putString(getString(R.string.shared_preferences_partners), partnersArray.toString());
+                editor.putString(getString(R.string.shared_preferences_places), placesArray.toString());
+                editor.putString(getString(R.string.shared_preferences_presentations), presentationsArray.toString());
+                editor.putString(getString(R.string.shared_preferences_speakers), speakersArray.toString());
+                editor.putString(getString(R.string.shared_preferences_users), usersArray.toString());
+                editor.putString(getString(R.string.shared_preferences_likes), likesArray.toString());
 
-                sharedPreferences.edit().apply();
+                editor.apply();
             }
             startMain();
             }

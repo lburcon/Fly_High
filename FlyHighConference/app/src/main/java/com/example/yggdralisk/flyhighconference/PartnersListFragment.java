@@ -55,7 +55,7 @@ public class PartnersListFragment extends Fragment {
 
     private JSONArray getSponsors() throws JSONException {
         return new JSONArray(getContext()
-                .getSharedPreferences(getString(R.string.shared_preferences_name), Context.MODE_PRIVATE)
+                .getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE)
                 .getString(getString(R.string.shared_preferences_partners), ""));
     }
 

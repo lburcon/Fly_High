@@ -7,7 +7,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".MainActivity"
-        android:background="@color/main_yellow">
+        android:background="@color/main_yellow"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="50dp"
@@ -18,7 +19,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="402dp"
             android:scrollbars="vertical"
             android:id="@+id/conference_recycler_view"/>
 </LinearLayout>

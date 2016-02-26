@@ -1,6 +1,7 @@
 package com.example.yggdralisk.flyhighconference;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,13 +32,13 @@ public class ConferenceListFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
         try {
-            mAdapter = new ConferenceRecyclerViewAdapter(getPresentations());
+            mAdapter = new ConferenceRecyclerViewAdapter(getPresentations(),getContext());
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
         drawerButton.setOnClickListener(new View.OnClickListener() {
@@ -51,9 +52,9 @@ public class ConferenceListFragment extends Fragment {
     }
 
     private JSONArray getPresentations() throws JSONException {
-        return new JSONArray(getContext()
-                .getSharedPreferences(getString(R.string.shared_preferences_name), Context.MODE_PRIVATE)
-                .getString(getString(R.string.shared_preferences_presentations), ""));
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_preferences),Context.MODE_PRIVATE);
+        String str = sharedPreferences.getString(getString(R.string.shared_preferences_presentations), "");
+        return new JSONArray(str);
     }
 
 }

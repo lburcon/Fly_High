@@ -19,6 +19,8 @@ public class DrawerItem {
                 fragment = new ConferenceListFragment();
                 break;
             case "Nawigacja":
+                fragment = new ConferenceFragment();
+                break;
             case "Pytania":
             case "Uczestnicy":
             case "Sponsorzy":
