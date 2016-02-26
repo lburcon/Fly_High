@@ -77,7 +77,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                 descr.setText("Błąd");
             }
             try {
-                Glide.with(mContext).load(jsonObject.getString("image")).into(image);
+                Glide.with(mContext).load(jsonObject.getString("image").replace("\\","")).into(image);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
