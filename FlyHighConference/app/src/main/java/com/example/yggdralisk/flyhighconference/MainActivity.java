@@ -39,62 +39,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toggleDrawer() {
-        DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.main_drawer);
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
+        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT))
             mDrawerLayout.closeDrawer(Gravity.LEFT);
         else
             mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
     public void setDrawer() {
-       navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
         TypedArray ids = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
-        for(int i = 0; i < ids.length(); i ++)
-        navMenuIcons.add(ids.getResourceId(i, -1));
+        for (int i = 0; i < ids.length(); i++)
+            navMenuIcons.add(ids.getResourceId(i, -1));
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
 
         ArrayList<DrawerItem> drawerElements = new ArrayList<>();
         int temp;
-        if(navMenuTitles.length>=navMenuIcons.size())
+        if (navMenuTitles.length >= navMenuIcons.size())
             temp = navMenuTitles.length;
         else
             temp = navMenuTitles.length;
-        for(int i = 0; i < temp; i++)
+        for (int i = 0; i < temp; i++)
             drawerElements.add(new DrawerItem(navMenuTitles[i], navMenuIcons.get(i)));
 
         // Set the adapter for the list view
-        mDrawerList.setAdapter(new DrawerAdapter(getApplicationContext(),R.layout.drawer_item, drawerElements));
+        mDrawerList.setAdapter(new DrawerAdapter(getApplicationContext(), R.layout.drawer_item, drawerElements));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
-    public void setFragment(Bundle savedInstanceState,Fragment fragmentActivity) {
-        try
-        {
-        if (findViewById(R.id.fragment_container_main) != null) {
-            if (savedInstanceState != null) {
-                return;
+    public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity) {
+        try {
+            if (findViewById(R.id.fragment_container_main) != null) {
+                if (savedInstanceState != null) {
+                    return;
+                }
+                fragmentActivity.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, fragmentActivity)
+                        .commit();
             }
-            fragmentActivity.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_main, fragmentActivity)
-                    .commit();
-        }
-            }
-        catch(IllegalStateException ex)
-        {
+        } catch (IllegalStateException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void setFragment(Bundle savedInstanceState,Fragment fragmentActivity,Bundle args) {
-        try
-        {
+    public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity, Bundle args) {
+        try {
             if (findViewById(R.id.fragment_container_main) != null) {
                 if (savedInstanceState != null) {
                     return;
@@ -106,9 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_main, fragmentActivity)
                         .commit();
             }
-        }
-        catch(IllegalStateException ex)
-        {
+        } catch (IllegalStateException ex) {
             ex.printStackTrace();
         }
     }
@@ -116,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             setFragment(null,((DrawerItem)mDrawerList.getItemAtPosition(position)).fragment);
+            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).fragment);
         }
     }
 }
