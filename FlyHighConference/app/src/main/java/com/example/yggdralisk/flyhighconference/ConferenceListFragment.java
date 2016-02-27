@@ -27,7 +27,7 @@ public class ConferenceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.conference_view, container, false);
+        View view = inflater.inflate(R.layout.conference_list_view, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.conference_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
