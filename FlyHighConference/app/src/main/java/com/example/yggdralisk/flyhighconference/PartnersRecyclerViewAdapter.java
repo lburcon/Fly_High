@@ -115,7 +115,7 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
             public void onClick(View v) {
                 if (id > 0) {
                     Bundle args = new Bundle();
-                    args.putInt("presentationId", id);
+                    args.putInt("partnerId", id);
                     mUpLayout.setFragment(null,new PartnerFragment(),args);
                 }
 

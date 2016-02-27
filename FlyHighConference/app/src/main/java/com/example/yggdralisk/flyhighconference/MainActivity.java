@@ -113,4 +113,6 @@ public class MainActivity extends AppCompatActivity {
             setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).fragment);
         }
     }
+
+
 }

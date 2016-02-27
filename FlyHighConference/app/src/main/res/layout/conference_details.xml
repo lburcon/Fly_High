@@ -59,7 +59,7 @@
             android:gravity="center_horizontal"
             android:maxLines="5"
             android:scrollbars="vertical"
-            android:text="ASKDOI JASDOIJ ISJdoiasjdo jaisdj iojawdn uahd sandoi wdu ansjdn uygwq wbdhasbdyg wdoiajdoij aw8djASOIDAISJDOIJWOJDOIAJW ODKASPO KDPOWAI DNMASKOND OIANWDO AJUNDIWB ADiua bwdiu aiuwbdi abwifq;wiej eiguewg ywgeu wuerguwerg erw g."
+            android:text="Opis"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
 
@@ -84,7 +84,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center_horizontal"
             android:scrollbars="vertical"
-            android:text="ASKDOI JASDOIJ ISJdoiasjdo jaisdj iojawdn uahd sandoi wdu ansjdn uygwq wbdhasbdyg wdoiajdoij aw8dj."
+            android:text="Dojazd"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
 
