@@ -11,10 +11,25 @@
 
         <Button
             android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:drawableLeft="@drawable/hamburger_icon"
+            android:drawablePadding="@dimen/activity_horizontal_margin"
             android:background="@color/main_yellow"
             android:id="@+id/conference_drawer_button"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Plan konferencji"
+        android:background="@color/background_main"
+        android:textColor="@color/text_white"
+        android:textSize="35dp"
+        android:gravity="center_horizontal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_yellow" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent" android:layout_width="match_parent"
-    android:background="@color/main_yellow">
-    <ImageView
-        android:id="@+id/conference_list_item_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:foregroundGravity="center_horizontal"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/fly_high_logotype"
-        android:layout_centerVertical="true"
-        android:background="@color/background_main"/>
+    android:background="@color/main_yellow"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_yellow" />
 
+    <TextView
+        android:id="@+id/conference_list_item_auth"
+        android:textSize="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/text_white"
+        android:gravity="left"
+        android:text="Auth"
+        android:background="@color/background_main" />
+
+    <TextView
+        android:id="@+id/conference_list_itemt_time"
+        android:textSize="12sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/text_white"
+        android:gravity="center_horizontal"
+        android:text="DataTime"
+        android:background="@color/background_main"/>
     <TextView
         android:id="@+id/conference_list_item_titlext"
         android:textSize="25sp"
@@ -22,11 +39,6 @@
         android:textColor="@color/text_white"
         android:gravity="center_horizontal"
         android:text="Title"
-        android:layout_alignTop="@+id/conference_list_item_image"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/conference_list_item_image"
-        android:layout_toEndOf="@+id/conference_list_item_image"
         android:background="@color/background_main"/>
 
     <TextView
@@ -38,11 +50,10 @@
         android:textColor="@color/text_white"
         android:gravity="left"
         android:text="Descr"
-        android:layout_alignBottom="@+id/conference_list_item_image"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/conference_list_item_image"
-        android:layout_toEndOf="@+id/conference_list_item_image"
-        android:layout_below="@+id/conference_list_item_titlext"
         android:background="@color/background_main"/>
-</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_yellow"
+        android:id="@+id/view" />
+</LinearLayout>

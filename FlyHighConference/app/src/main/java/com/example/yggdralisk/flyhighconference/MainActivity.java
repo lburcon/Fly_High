@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
+    //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
     public void setFragment(Bundle savedInstanceState,Fragment fragmentActivity) {
         try
         {
@@ -85,6 +86,27 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
             }
+        catch(IllegalStateException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    public void setFragment(Bundle savedInstanceState,Fragment fragmentActivity,Bundle args) {
+        try
+        {
+            if (findViewById(R.id.fragment_container_main) != null) {
+                if (savedInstanceState != null) {
+                    return;
+                }
+
+                fragmentActivity.setArguments(getIntent().getExtras());
+                fragmentActivity.setArguments(args);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_main, fragmentActivity)
+                        .commit();
+            }
+        }
         catch(IllegalStateException ex)
         {
             ex.printStackTrace();
