@@ -32,17 +32,17 @@ public class PartnersListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //TODO: setting data, hamburger icon
+        //TODO: hamburger icon
 
-      /*  try {
-            mAdapter = new ConferenceRecyclerViewAdapter(getPresentations());
+       try {
+            mAdapter = new PartnersRecyclerViewAdapter(getPartners());
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-        Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
+       /*  Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
         drawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class PartnersListFragment extends Fragment {
         return view;
     }
 
-    private JSONArray getSponsors() throws JSONException {
+    private JSONArray getPartners() throws JSONException {
         return new JSONArray(getContext()
                 .getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE)
                 .getString(getString(R.string.shared_preferences_partners), ""));
