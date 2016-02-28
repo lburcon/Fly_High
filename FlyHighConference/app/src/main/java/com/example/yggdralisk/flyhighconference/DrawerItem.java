@@ -27,6 +27,8 @@ public class DrawerItem {
                 fragment = new PartnersListFragment();
                 break;
             case "Zaloguj/Wyloguj":
+                fragment = new LoginFragment();
+                break;
             default:
                 fragment = new ConferenceListFragment();
         }
