@@ -112,8 +112,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         private String getPresentationAuth(JSONObject jsonObject) throws JSONException {
             if(id == -1)
                 try {
-                    id = jsonObject.getInt("id");
-                    nListner.setId(id);
+                   return DataGetter.getSpeakerById(id,mContext).getString("name");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

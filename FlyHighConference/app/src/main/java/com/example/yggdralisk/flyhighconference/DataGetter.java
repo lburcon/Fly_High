@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by yggdralisk on 29.02.16.
@@ -50,6 +51,14 @@ public class DataGetter {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_organisers), "");
         return new JSONArray(str);
+    }
+
+    public static JSONObject getSpeakerById(int speakerId,Context context) throws JSONException {
+        JSONArray speakers = getSpeakers(context);
+        int i = 0;
+        for(; i < speakers.length() && (speakers.getJSONObject(i).getInt("id") != speakerId); i++)
+        {}
+        return speakers.getJSONObject(i);
     }
 
 
