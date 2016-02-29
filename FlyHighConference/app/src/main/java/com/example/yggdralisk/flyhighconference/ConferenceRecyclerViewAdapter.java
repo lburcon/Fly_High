@@ -77,6 +77,12 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
         public void setData(JSONObject jsonObject) {
             try {
+                id = jsonObject.getInt("id");
+                nListner.setId(id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
                 title.setText(jsonObject.getString("title"));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -100,15 +106,18 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                 e.printStackTrace();
                 descr.setText("Błąd");
             }
-            try {
-                id = jsonObject.getInt("id");
-                nListner.setId(id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
         }
 
         private String getPresentationAuth(JSONObject jsonObject) throws JSONException {
+            if(id == -1)
+                try {
+                    id = jsonObject.getInt("id");
+                    nListner.setId(id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             return "";
         }
 
@@ -144,7 +153,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             public void onClick(View v) {
                 if (id > 0) {
                     Bundle args = new Bundle();
-                    args.putInt("presentationId", id);
+                    args.putInt("id", id);
                     mUpLayout.setFragment(null,new ConferenceFragment(),args);
                 }
 

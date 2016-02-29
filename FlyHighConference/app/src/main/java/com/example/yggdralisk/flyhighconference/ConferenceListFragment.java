@@ -1,7 +1,5 @@
 package com.example.yggdralisk.flyhighconference;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +32,7 @@ public class ConferenceListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         try {
-            mAdapter = new ConferenceRecyclerViewAdapter(getPresentations(),getContext());
+            mAdapter = new ConferenceRecyclerViewAdapter(DataGetter.getPresentations(getContext()),getContext());
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -49,12 +47,6 @@ public class ConferenceListFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private JSONArray getPresentations() throws JSONException {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_preferences),Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(getString(R.string.shared_preferences_presentations), "");
-        return new JSONArray(str);
     }
 
 }

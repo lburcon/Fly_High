@@ -39,7 +39,7 @@ public class ConferenceFragment extends Fragment {
         for (int i = 0 ; i < mDataset.length() ; i++) {
             try {
                 jsonConference = mDataset.getJSONObject(i);
-                if (Integer.parseInt(jsonConference.getString("id")) == getArguments().getInt("presentationId"))
+                if (Integer.parseInt(jsonConference.getString("id")) == getArguments().getInt("presentationId")) //NULL POINTER EXCEPTION
                 break;
             } catch (JSONException e) {
                 e.printStackTrace();
