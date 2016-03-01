@@ -19,7 +19,6 @@ import org.json.JSONException;
 public class SpeakersListFragment extends Fragment {
 
 
-
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -55,7 +54,8 @@ public class SpeakersListFragment extends Fragment {
 
         return view;
     }
-//todo
+
+    //todo
     private JSONArray getSpeakers() throws JSONException {
         return DataGetter.getSpeakers(getContext());
     }

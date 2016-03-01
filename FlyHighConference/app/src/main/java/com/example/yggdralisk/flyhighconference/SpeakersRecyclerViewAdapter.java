@@ -56,12 +56,12 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
         public TextView description;
         public ImageView image;
         public int id = -1;
-       // SpeakersRecyclerViewAdapter nListener = new SpeakersRecyclerViewAdapter();
+        SpeakerRecyclerListener nListener = new SpeakerRecyclerListener();
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-      //      itemView.setOnClickListener(nListener);
+                  itemView.setOnClickListener(nListener);
 
             name = (TextView) itemView.findViewById(R.id.speakers_name);
             description = (TextView) itemView.findViewById(R.id.speakers_description);
@@ -74,12 +74,14 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
                 name.setText(jsonObject.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
+                name.setText("Błąd");
             }
 
             try {
                 description.setText(jsonObject.getString("description"));
             } catch (JSONException e) {
                 e.printStackTrace();
+                description.setText("Błąd");
             }
 
             try {
@@ -91,9 +93,16 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
                 e.printStackTrace();
             }
 
+            try {
+                id = jsonObject.getInt("id");
+                nListener.setId(id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
-/*
+
         private class SpeakerRecyclerListener implements View.OnClickListener {
             int id = 0;
 
@@ -105,13 +114,13 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
             public void onClick(View v) {
                 if (id > 0) {
                     Bundle args = new Bundle();
-                    args.putInt("partnerId", id);
-                    mUpLayout.setFragment(null,new PartnerFragment(),args);
+                    args.putInt("speakerId", id);
+                    mUpLayout.setFragment(null, new SpeakerFragment(), args);
                 }
 
             }
         }
-*/
+
 
     }
 }

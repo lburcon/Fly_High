@@ -1,7 +1,5 @@
 package com.example.yggdralisk.flyhighconference;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,75 +16,68 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by lukasz on 27.02.16.
+ * Created by lukasz on 01.03.16.
  */
-public class PartnerFragment extends Fragment {
+public class SpeakerFragment extends Fragment {
 
     private JSONArray mDataset = new JSONArray();
-    private JSONObject partner = new JSONObject();
+    private JSONObject speaker = new JSONObject();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.partners_details, container, false);
+        View view = inflater.inflate(R.layout.speaker_details, container, false);
 
         try {
-            mDataset = getPartners();
+            mDataset = getSpeakers();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         for (int i = 0 ; i < mDataset.length() ; i++) {
             try {
-                partner = mDataset.getJSONObject(i);
-                if (Integer.parseInt(partner.getString("id")) == getArguments().getInt("partnerId"))
+                speaker = mDataset.getJSONObject(i);
+                if (Integer.parseInt(speaker.getString("id")) == getArguments().getInt("speakerId"))
                     break;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        TextView name = (TextView) view.findViewById(R.id.partners_details_name);
-        TextView title = (TextView) view.findViewById(R.id.partners_details_title); //TODO: add speaker
-        TextView description = (TextView) view.findViewById(R.id.partners_details_description);
-        ImageView image = (ImageView) view.findViewById(R.id.partners_details_image);
-
+        TextView name = (TextView) view.findViewById(R.id.speaker_name);
+        TextView description = (TextView) view.findViewById(R.id.speaker_description);
+        ImageView image = (ImageView) view.findViewById(R.id.speaker_image);
 
         try {
-            title.setText(partner.getString("type"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            title.setText("Błąd");
-        }
-
-        try {
-            name.setText(partner.getString("name"));
+            name.setText(speaker.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
             name.setText("Błąd");
         }
 
         try {
-            description.setText(partner.getString("url"));
+            description.setText(speaker.getString("description") +
+                                "\n Kraj pochodzenia: " + speaker.getString("country") +
+                                "\n URL: " + speaker.getString("url"));
         } catch (JSONException e) {
             e.printStackTrace();
-            description.setText("Błąd");
+        description.setText("Błąd");
         }
 
         try {
-            Glide.with(getContext())
-                    .load(partner.getString("logo"))
+            Glide.with(this)
+                    .load(speaker.getString("image"))
                     .placeholder(R.drawable.fly_high_logotype)
                     .into(image);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
         return view;
     }
 
-    private JSONArray getPartners() throws JSONException {
-        return DataGetter.getPartners(getContext());
+    private JSONArray getSpeakers() throws JSONException {
+        return DataGetter.getSpeakers(getContext());
     }
-
 }

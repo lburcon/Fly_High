@@ -30,6 +30,7 @@
             android:layout_toLeftOf="@id/partners_image"
             android:gravity="center"
             android:text="Przykladowa nazwa"
+            android:textColor="@color/text_white"
             android:textSize="20sp" />
 
         <TextView
@@ -43,6 +44,7 @@
             android:layout_toLeftOf="@id/partners_image"
             android:gravity="center"
             android:text="Tytuł"
+            android:textColor="@color/text_white"
             android:textSize="15sp" />
 
     </RelativeLayout>
