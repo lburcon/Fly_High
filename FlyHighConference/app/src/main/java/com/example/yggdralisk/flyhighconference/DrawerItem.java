@@ -21,6 +21,8 @@ public class DrawerItem {
             case "Nawigacja":
             case "Pytania":
             case "Uczestnicy":
+                fragment = new SpeakersListFragment();
+                break;
             case "Sponsorzy":
                 fragment = new PartnersListFragment();
                 break;

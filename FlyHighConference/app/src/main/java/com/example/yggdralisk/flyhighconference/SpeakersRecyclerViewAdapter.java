@@ -17,19 +17,19 @@ import org.json.JSONObject;
 /**
  * Created by lukasz on 25.02.16.
  */
-public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRecyclerViewAdapter.ViewHolder> {
+public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRecyclerViewAdapter.ViewHolder> {
 
     JSONArray mDataset = new JSONArray();
     public MainActivity mUpLayout;
 
-    public PartnersRecyclerViewAdapter(JSONArray myDataset) {
+    public SpeakersRecyclerViewAdapter(JSONArray myDataset) {
         mDataset = myDataset;
     }
 
     @Override
-    public PartnersRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SpeakersRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.partners_list_element, parent, false);
+                .inflate(R.layout.speakers_list_element, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
         mUpLayout = (MainActivity) parent.getContext();
@@ -37,7 +37,7 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
     }
 
     @Override
-    public void onBindViewHolder(PartnersRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SpeakersRecyclerViewAdapter.ViewHolder holder, int position) {
         try {
             holder.setData(mDataset.getJSONObject(position));
         } catch (JSONException e) {
@@ -53,19 +53,19 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name;
-        public TextView title;
+        public TextView description;
         public ImageView image;
         public int id = -1;
-        PartnerRecyclerListener nListener = new PartnerRecyclerListener();
+       // SpeakersRecyclerViewAdapter nListener = new SpeakersRecyclerViewAdapter();
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(nListener);
+      //      itemView.setOnClickListener(nListener);
 
-            name = (TextView) itemView.findViewById(R.id.partners_name);
-            title = (TextView) itemView.findViewById(R.id.partners_title);
-            image = (ImageView) itemView.findViewById(R.id.partners_image);
+            name = (TextView) itemView.findViewById(R.id.speakers_name);
+            description = (TextView) itemView.findViewById(R.id.speakers_description);
+            image = (ImageView) itemView.findViewById(R.id.speakers_image);
         }
 
         public void setData(JSONObject jsonObject) {
@@ -74,35 +74,27 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
                 name.setText(jsonObject.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                name.setText("Błąd");
             }
 
             try {
-                title.setText(jsonObject.getString("type"));
+                description.setText(jsonObject.getString("description"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                title.setText("Błąd");
             }
 
             try {
                 Glide.with(itemView.getContext())
-                        .load(jsonObject.getString("logo"))
+                        .load(jsonObject.getString("image"))
                         .placeholder(R.drawable.fly_high_logotype)
                         .into(image);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            try {
-                id = jsonObject.getInt("id");
-                nListener.setId(id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         }
 
-        private class PartnerRecyclerListener implements View.OnClickListener {
+/*
+        private class SpeakerRecyclerListener implements View.OnClickListener {
             int id = 0;
 
             public void setId(int nId) {
@@ -119,6 +111,7 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
 
             }
         }
+*/
 
     }
 }
