@@ -152,7 +152,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             public void onClick(View v) {
                 if (id > 0) {
                     Bundle args = new Bundle();
-                    args.putInt("id", id);
+                    args.putInt("conferenceId", id);
                     mUpLayout.setFragment(null,new ConferenceFragment(),args);
                 }
 

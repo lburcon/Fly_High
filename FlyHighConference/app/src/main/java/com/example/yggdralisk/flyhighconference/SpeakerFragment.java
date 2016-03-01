@@ -34,14 +34,10 @@ public class SpeakerFragment extends Fragment {
             e.printStackTrace();
         }
 
-        for (int i = 0 ; i < mDataset.length() ; i++) {
-            try {
-                speaker = mDataset.getJSONObject(i);
-                if (Integer.parseInt(speaker.getString("id")) == getArguments().getInt("speakerId"))
-                    break;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        try {
+            speaker = DataGetter.getSpeakerById(getArguments().getInt("speakerId"), getContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         TextView name = (TextView) view.findViewById(R.id.speaker_name);

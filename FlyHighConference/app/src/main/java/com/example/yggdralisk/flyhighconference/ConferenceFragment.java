@@ -14,15 +14,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by lukasz on 23.02.16.
  */
 public class ConferenceFragment extends Fragment {
 
     private JSONArray mDataset = new JSONArray();
-    private JSONArray mDatasetSpeakers = new JSONArray();
     private JSONObject jsonConference = new JSONObject();
     private JSONObject jsonSpeaker = new JSONObject();
+    private int[] speakerIds = null;
+
 
     @Nullable
     @Override
@@ -30,17 +33,16 @@ public class ConferenceFragment extends Fragment {
         View view = inflater.inflate(R.layout.conference_details, container, false);
 
         try {
-            mDataset = getPresentations();
-            mDatasetSpeakers = getSpeakers();
+            mDataset = DataGetter.getPresentations(getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        for (int i = 0 ; i < mDataset.length() ; i++) {
+        for (int i = 0; i < mDataset.length(); i++) {
             try {
                 jsonConference = mDataset.getJSONObject(i);
-                if (Integer.parseInt(jsonConference.getString("id")) == getArguments().getInt("presentationId")) //NULL POINTER EXCEPTION
-                break;
+                if (Integer.parseInt(jsonConference.getString("id")) == getArguments().getInt("conferenceId")) //NULL POINTER EXCEPTION
+                    break;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -80,18 +82,22 @@ public class ConferenceFragment extends Fragment {
             time.setText("Błąd");
         }
 
-        return view;
-    }
+        //setting speaker and checking their number in case of adding ','
 
-    private JSONArray getPresentations() throws JSONException {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(getString(R.string.shared_preferences_presentations), "");
-        return new JSONArray(str);
-    }
-    private JSONArray getSpeakers() throws JSONException {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(getString(R.string.shared_preferences_speakers), "");
-        return new JSONArray(str);
+        speakerIds = getSpeakerIds();
+        for (int i = 0; i < speakerIds.length; i++)
+            try {
+                jsonSpeaker = DataGetter.getSpeakerById(speakerIds[i], getContext());
+                if (speakerIds.length > 1 && i != speakerIds.length-1)
+                    speaker.setText(speaker.getText() + jsonSpeaker.getString("name") + ", ");
+                else
+                    speaker.setText(speaker.getText() + jsonSpeaker.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        return view;
     }
 
     private String getPresentationTime(JSONObject jsonObject) throws JSONException {
@@ -113,6 +119,21 @@ public class ConferenceFragment extends Fragment {
 
     private String getTime(String dtDate) {
         return dtDate.substring(dtDate.indexOf(' '), dtDate.lastIndexOf(":"));
+    }
+
+    private int[] getSpeakerIds() {
+        int[] speakerIds = null;
+        try {
+            String ids = jsonConference.getString("speakers");
+            String[] strArray = ids.split(",");
+            speakerIds = new int[strArray.length];
+            for (int i = 0; i < strArray.length; i++) {
+                speakerIds[i] = Integer.parseInt(strArray[i]);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return speakerIds;
     }
 
 }
