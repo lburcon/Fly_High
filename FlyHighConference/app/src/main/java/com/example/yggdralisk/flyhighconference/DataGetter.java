@@ -61,6 +61,40 @@ public class DataGetter {
         return speakers.getJSONObject(i);
     }
 
+    public static Boolean checkUserLogged(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(context.getString(R.string.shared_preferences_user_logged), false);
+    }
 
+    public static String getLoogedUserName(Context context) {
+        if(checkUserLogged(context))
+        {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            return sharedPreferences.getString(context.getString(R.string.shared_preferences_logged_user_name), "");
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    public static Boolean toggleUserLogged(Context context,String userName)//Returns true if method logged user in or false otherwise
+    {
+        if(userName == null || userName == "" || !checkUserLogged(context)) {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(context.getString(R.string.shared_preferences_user_logged), false);
+            editor.putString(context.getString(R.string.shared_preferences_logged_user_name), "");
+            return false;
+        }
+        else {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(context.getString(R.string.shared_preferences_user_logged), true);
+            editor.putString(context.getString(R.string.shared_preferences_logged_user_name), userName);
+            editor.apply();
+            return true;
+        }
+    }
 
 }

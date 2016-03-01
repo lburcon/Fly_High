@@ -15,5 +15,8 @@
     <string name="splash_internet_error">Błąd połączenia</string>
     <string name="shared_preferences_likes">likesJson</string>
     <string name="login_error_messege">Błąd logowania!</string>
+    <string name="shared_preferences_user_logged">userLogged</string>
+    <string name="shared_preferences_logged_user_name">loggedUserName</string>
+    <string name="left_drawer_logged_name">Zalogowano jako:</string>
 
 </resources>

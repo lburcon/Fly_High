@@ -28,6 +28,7 @@ public class LoginFragment extends Fragment {
     EditText emailText;
     EditText passwordText;
     Button loginButton;
+    MainActivity mainActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +38,7 @@ public class LoginFragment extends Fragment {
         emailText = (EditText) view.findViewById(R.id.login_layout_email);
         passwordText = (EditText) view.findViewById(R.id.login_layout_password);
         loginButton = (Button) view.findViewById(R.id.login_layout_button);
+        mainActivity = (MainActivity)getContext();
 
         loginButton.setOnClickListener(new loginListener());
 
@@ -57,23 +59,18 @@ public class LoginFragment extends Fragment {
             try {
                 Response res = client.newCall(request).execute();
                 if (res.body() != null && res.body().string() != "null") {
-                    SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("logged", true);
-                    editor.putString("userName", emailText.getText().toString());
-                    editor.apply();
+                    DataGetter.toggleUserLogged(v.getContext(),emailText.getText().toString());
+                    mainActivity.setLoggedNameDrawer(emailText.getText().toString().substring(0,emailText.getText().toString().indexOf('@')));
                 }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast t = new Toast(v.getContext());
                 t.setDuration(Toast.LENGTH_LONG);
                 t.setText(R.string.login_error_messege);
-                SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("logged", false);
-                editor.putString("userName", "");
-                editor.apply();
+                DataGetter.toggleUserLogged(v.getContext(), "");
+                mainActivity.setLoggedNameDrawer("");
             }
         }
     }

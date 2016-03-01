@@ -35,7 +35,14 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:background="@color/main_yellow"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:paddingBottom="50dp"/>
+        <TextView
+            android:id="@+id/left_drawer_logged_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            />
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

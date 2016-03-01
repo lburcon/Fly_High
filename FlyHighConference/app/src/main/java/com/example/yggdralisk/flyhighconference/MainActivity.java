@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,20 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private TextView loggedName;
 
-    // nav drawer title
-    private CharSequence mDrawerTitle;
-
-
-    // slide menu items
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loggedName = (TextView) findViewById(R.id.left_drawer_logged_name);
         setFragment(savedInstanceState, new ConferenceListFragment());
         setDrawer();
     }
@@ -134,6 +133,13 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (!setPreviousFragment())
             super.onBackPressed();
+    }
+
+    public void setLoggedNameDrawer(String name){
+        if(name != null) {
+            loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
+            loggedName.invalidate();
+        }
 
     }
 }
