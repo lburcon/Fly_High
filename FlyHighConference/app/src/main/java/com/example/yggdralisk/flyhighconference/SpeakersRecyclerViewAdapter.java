@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,8 +21,10 @@ import org.json.JSONObject;
  */
 public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRecyclerViewAdapter.ViewHolder> {
 
-    JSONArray mDataset = new JSONArray();
+    private JSONArray mDataset = new JSONArray();
     public MainActivity mUpLayout;
+    private final int TYPE_0 = 0;
+    private final int TYPE_1 = 1;
 
     public SpeakersRecyclerViewAdapter(JSONArray myDataset) {
         mDataset = myDataset;
@@ -28,8 +32,19 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
 
     @Override
     public SpeakersRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.speakers_list_element, parent, false);
+        View v = null;
+
+
+        switch (viewType) {
+            case TYPE_0:
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.speakers_list_element_opposite, parent, false);
+                break;
+            case TYPE_1:
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.speakers_list_element, parent, false);
+                break;
+        }
 
         ViewHolder vh = new ViewHolder(v);
         mUpLayout = (MainActivity) parent.getContext();
@@ -46,6 +61,17 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
     }
 
     @Override
+    public int getItemViewType(int position) {
+        int id = -1;
+        try {
+            id = Integer.parseInt(mDataset.getJSONObject(position).getString("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return id % 2;
+    }
+
+    @Override
     public int getItemCount() {
         return mDataset.length();
     }
@@ -55,13 +81,14 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
         public TextView name;
         public TextView description;
         public ImageView image;
+        public LinearLayout linear;
         public int id = -1;
         SpeakerRecyclerListener nListener = new SpeakerRecyclerListener();
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-                  itemView.setOnClickListener(nListener);
+            itemView.setOnClickListener(nListener);
 
             name = (TextView) itemView.findViewById(R.id.speakers_name);
             description = (TextView) itemView.findViewById(R.id.speakers_description);
@@ -101,26 +128,27 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
             }
 
         }
+    }
 
 
-        private class SpeakerRecyclerListener implements View.OnClickListener {
-            int id = 0;
+    private class SpeakerRecyclerListener implements View.OnClickListener {
+        int id = 0;
 
-            public void setId(int nId) {
-                id = nId;
-            }
-
-            @Override
-            public void onClick(View v) {
-                if (id > 0) {
-                    Bundle args = new Bundle();
-                    args.putInt("speakerId", id);
-                    mUpLayout.setFragment(null, new SpeakerFragment(), args);
-                }
-
-            }
+        public void setId(int nId) {
+            id = nId;
         }
 
+        @Override
+        public void onClick(View v) {
+            if (id > 0) {
+                Bundle args = new Bundle();
+                args.putInt("speakerId", id);
+                mUpLayout.setFragment(null, new SpeakerFragment(), args);
+            }
 
+        }
     }
+
+
 }
+

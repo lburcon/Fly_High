@@ -16,7 +16,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerInside"
             android:src="@drawable/fly_high_logotype" />
 
         <TextView

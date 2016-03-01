@@ -9,14 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/speakers_image"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/speakers_linear"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fly_high_logotype" />
+
         <LinearLayout
             android:id="@+id/speakers_linear"
             android:layout_width="230dp"
             android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:layout_marginTop="5dp"
             android:background="@color/main_yellow">
 
@@ -60,16 +71,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/speakers_image"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/speakers_linear"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fly_high_logotype" />
+
 
     </RelativeLayout>
 
