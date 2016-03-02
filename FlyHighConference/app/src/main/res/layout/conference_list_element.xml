@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent" android:layout_width="match_parent"
-    android:background="@color/main_yellow"
+    android:background="@color/background_main"
     android:orientation="vertical">
     <View
         android:layout_width="match_parent"
@@ -48,9 +48,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@color/text_white"
-        android:gravity="left"
+        android:gravity="center"
         android:text="Descr"
-        android:background="@color/background_main"/>
+        android:background="@color/background_main"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

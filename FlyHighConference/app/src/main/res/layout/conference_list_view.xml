@@ -2,28 +2,26 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:paddingTop="@dimen/activity_vertical_margin"
         tools:context=".MainActivity"
         android:background="@color/main_yellow"
         android:orientation="vertical">
 
-        <Button
+        <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:drawableLeft="@drawable/hamburger_icon"
-            android:drawablePadding="@dimen/activity_horizontal_margin"
+            android:src="@drawable/hamburger_icon"
             android:background="@color/main_yellow"
-            android:id="@+id/conference_drawer_button"/>
+            android:id="@+id/conference_drawer_button"
+            android:layout_marginBottom="15dp"
+            android:visibility="visible"/>
 
     <TextView
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Plan konferencji"
         android:background="@color/background_main"
         android:textColor="@color/text_white"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:gravity="center_horizontal"/>
     <View
         android:layout_width="match_parent"

@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
                 fragmentTransaction.addToBackStack(null);
+
                 fragmentTransaction.commit();
             }
         } catch (IllegalStateException ex) {

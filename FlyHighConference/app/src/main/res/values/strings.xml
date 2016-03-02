@@ -18,5 +18,6 @@
     <string name="shared_preferences_user_logged">userLogged</string>
     <string name="shared_preferences_logged_user_name">loggedUserName</string>
     <string name="left_drawer_logged_name">Zalogowano jako:</string>
+    <string name="shared_preferences_logged_user_id">loggedUserId</string>
 
 </resources>

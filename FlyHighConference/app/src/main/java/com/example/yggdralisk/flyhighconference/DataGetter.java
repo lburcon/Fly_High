@@ -66,7 +66,7 @@ public class DataGetter {
         return sharedPreferences.getBoolean(context.getString(R.string.shared_preferences_user_logged), false);
     }
 
-    public static String getLoogedUserName(Context context) {
+    public static String getLoggedUserName(Context context) {
         if(checkUserLogged(context))
         {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
@@ -78,13 +78,26 @@ public class DataGetter {
         }
     }
 
-    public static Boolean toggleUserLogged(Context context,String userName)//Returns true if method logged user in or false otherwise
+    public static int getLoggedUserId(Context context) {
+        if(checkUserLogged(context))
+        {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            return sharedPreferences.getInt(context.getString(R.string.shared_preferences_logged_user_id), -1);
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    public static Boolean toggleUserLogged(Context context,String userName, int userId)//Returns true if method logged user in or false otherwise
     {
-        if(userName == null || userName == "" || !checkUserLogged(context)) {
+        if(userName == null || userName == "" || checkUserLogged(context) || userId == -1 ) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(context.getString(R.string.shared_preferences_user_logged), false);
             editor.putString(context.getString(R.string.shared_preferences_logged_user_name), "");
+            editor.putInt(context.getString(R.string.shared_preferences_logged_user_id), -1);
             return false;
         }
         else {
@@ -92,6 +105,7 @@ public class DataGetter {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(context.getString(R.string.shared_preferences_user_logged), true);
             editor.putString(context.getString(R.string.shared_preferences_logged_user_name), userName);
+            editor.putInt(context.getString(R.string.shared_preferences_logged_user_id),userId);
             editor.apply();
             return true;
         }

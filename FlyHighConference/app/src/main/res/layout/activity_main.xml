@@ -21,28 +21,42 @@
         android:orientation="vertical"
         android:background="@color/main_yellow">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/background_black"/>
+
         <ImageView
             android:id="@+id/left_drawer_image"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="@drawable/fly_high_mountain"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/background_black"/>
+
         <ListView android:id="@+id/left_drawer_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
-            android:background="@color/main_yellow"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="50dp"/>
+            android:background="@color/main_yellow" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/background_black"
+            android:layout_marginBottom="50dp"/>
         <TextView
             android:id="@+id/left_drawer_logged_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
             />
+
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
