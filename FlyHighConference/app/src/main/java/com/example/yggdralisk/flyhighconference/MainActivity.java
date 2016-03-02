@@ -1,7 +1,11 @@
 package com.example.yggdralisk.flyhighconference;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.FragmentTransaction;
 import android.content.res.TypedArray;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -27,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
-
 
 
     @Override
@@ -57,20 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-
-        ArrayList<DrawerItem> drawerElements = new ArrayList<>();
-        int temp;
-        if (navMenuTitles.length >= navMenuIcons.size())
-            temp = navMenuTitles.length;
-        else
-            temp = navMenuTitles.length;
-        for (int i = 0; i < temp; i++)
-            drawerElements.add(new DrawerItem(navMenuTitles[i], navMenuIcons.get(i)));
-
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new DrawerAdapter(getApplicationContext(), R.layout.drawer_item, drawerElements));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        changeZalogujWylogujOnDrawer();
     }
 
     //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
@@ -113,6 +103,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).fragment);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    toggleDrawer();
+                }
+            }, 300);
+        }
+    }
+
     public boolean setPreviousFragment() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
@@ -122,25 +126,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).fragment);
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
+    @Override
+    public void onBackPressed() {
+        if (!setPreviousFragment()) {
+            this.finish();
+            System.exit(0);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!setPreviousFragment())
-            super.onBackPressed();
-    }
-
-    public void setLoggedNameDrawer(String name){
-        if(name != null) {
+    public void setLoggedNameOnDrawer(String name) {
+        if (name != null) {
+            if(name == "")
+                loggedName.setText("");
+            else
             loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
+
             loggedName.invalidate();
         }
 
+    }
+
+    public boolean changeZalogujWylogujOnDrawer() //Returns true if drawer has been changed to zaloguj
+    {
+        ArrayList<DrawerItem> drawerElements = new ArrayList<>();
+        int temp;
+        boolean ifChanged = false;
+
+        if (navMenuTitles.length >= navMenuIcons.size())
+            temp = navMenuTitles.length - 2;
+        else
+            temp = navMenuIcons.size() - 2;
+
+        for (int i = 0; i < temp; i++)
+            drawerElements.add(new DrawerItem(navMenuTitles[i], navMenuIcons.get(i)));
+
+        if (DataGetter.checkUserLogged(getApplicationContext())) {
+            drawerElements.add(new DrawerItem(navMenuTitles[temp +1 ], navMenuIcons.get(temp + 1)));
+            ifChanged = true;
+        }
+        else {
+            // temp+1 if so it gets "wyloguj" String and icon
+            drawerElements.add(new DrawerItem(navMenuTitles[temp], navMenuIcons.get(temp)));
+        }
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new DrawerAdapter(getApplicationContext(), R.layout.drawer_item, drawerElements));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        return ifChanged;
     }
 }

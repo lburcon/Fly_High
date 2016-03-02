@@ -71,13 +71,15 @@ public class LoginFragment extends Fragment {
             if (!DataGetter.checkUserLogged(mContext))
                 DataGetter.toggleUserLogged(mContext, emailText.getText().toString(), id);
             String userName = emailText.getText().toString().substring(0, emailText.getText().toString().indexOf('@'));
-            mainActivity.setLoggedNameDrawer(userName);
+            mainActivity.setLoggedNameOnDrawer(userName);
             displayToast("Zalogowano jako: " + userName);
+            mainActivity.changeZalogujWylogujOnDrawer();
             return true;
         } else {
             displayToast(getString(R.string.login_error_messege));
             DataGetter.toggleUserLogged(mContext, "", -1);
-            mainActivity.setLoggedNameDrawer("");
+            mainActivity.setLoggedNameOnDrawer("");
+            mainActivity.changeZalogujWylogujOnDrawer();
             return false;
         }
     }

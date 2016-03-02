@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/text_white">
+
     <ImageButton
-        android:id = "@+id/login_layout_back_button"
+        android:id = "@+id/login_out_layout_back_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="left"
@@ -12,30 +13,13 @@
         android:background="@color/text_white"
         android:layout_marginBottom="25dp"
         android:visibility="visible"
-       />
-
-    <EditText
-        android:id="@+id/login_layout_email"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:layout_gravity="center_horizontal"
-        android:hint="Email"/>
-
-    <EditText
-        android:id="@+id/login_layout_password"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:layout_gravity="center_horizontal"
-        android:hint="Hasło"/>
-
+        />
     <Button
-        android:id="@+id/login_layout_login_button"
+        android:id="@+id/login_out_layout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Zaloguj"
+        android:text="Wyloguj"
         android:layout_marginTop="50dp"/>
 
     <ImageView
@@ -43,4 +27,5 @@
         android:layout_height="350dp"
         android:src="@drawable/fly_high"
         android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

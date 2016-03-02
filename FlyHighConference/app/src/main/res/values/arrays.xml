@@ -7,7 +7,8 @@
         <item >Pytania</item>
         <item >Uczestnicy</item>
         <item >Sponsorzy</item>
-        <item >Zaloguj/Wyloguj</item>
+        <item >Zaloguj</item>
+        <item >Wyloguj</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -19,6 +20,7 @@
         <item>@drawable/ic_face_black_24dp</item>
         <item>@drawable/ic_polymer_black_24dp</item>
         <item>@drawable/ic_lock_black_24dp</item>
+        <item>@drawable/ic_lock_open_black_24dp</item>
     </string-array>
 
 

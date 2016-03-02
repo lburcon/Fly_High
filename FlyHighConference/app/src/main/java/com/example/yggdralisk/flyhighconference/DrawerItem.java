@@ -26,8 +26,11 @@ public class DrawerItem {
             case "Sponsorzy":
                 fragment = new PartnersListFragment();
                 break;
-            case "Zaloguj/Wyloguj":
+            case "Zaloguj":
                 fragment = new LoginFragment();
+                break;
+            case "Wyloguj":
+                fragment = new LoginOutFragment();
                 break;
             default:
                 fragment = new ConferenceListFragment();
