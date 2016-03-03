@@ -176,4 +176,10 @@ public class MainActivity extends AppCompatActivity {
 
         return ifChanged;
     }
+
+    public void buttonBackPressed(View v) {
+        MainActivity mainActivity = this;
+        mainActivity.setPreviousFragment();
+    }
+
 }

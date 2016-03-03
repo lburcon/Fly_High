@@ -20,7 +20,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/speaker_image"
+        android:id="@+id/question_image"
         android:layout_width="200dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/fly_high_logotype"
@@ -28,7 +28,7 @@
         android:layout_gravity="center"/>
 
     <TextView
-        android:id="@+id/speaker_name"
+        android:id="@+id/question_name"
         android:layout_marginTop="5dp"
         android:text="Imię i nazwisko"
         android:textSize="25sp"
@@ -56,18 +56,11 @@
             android:layout_marginBottom="4dp"
             android:layout_height="match_parent"
             android:background="@color/background_main">
-
-            <TextView
-                android:id="@+id/speaker_description"
-                android:textSize="15sp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Opis"
-                android:textColor="@color/text_white"
+            
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/question_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
         </LinearLayout>
@@ -79,7 +72,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/partners_details_socials"
+            android:id="@+id/question_details_socials"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -87,7 +80,7 @@
 
             <ImageView
                 android:layout_marginBottom="5dp"
-                android:id="@+id/partners_details_community_facebook"
+                android:id="@+id/question_details_community_facebook"
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"
@@ -95,7 +88,7 @@
 
             <ImageView
                 android:layout_marginBottom="5dp"
-                android:id="@+id/partners_details_community_twitter"
+                android:id="@+id/question_details_community_twitter"
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"
@@ -103,7 +96,7 @@
 
             <ImageView
                 android:layout_marginBottom="5dp"
-                android:id="@+id/partners_details_community_tumblr"
+                android:id="@+id/question_details_community_tumblr"
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"
@@ -111,7 +104,7 @@
 
             <ImageView
                 android:layout_marginBottom="5dp"
-                android:id="@+id/partners_details_community_pinterest"
+                android:id="@+id/question_details_community_pinterest"
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="2dp"
