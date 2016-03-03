@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_main"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="15dp"
+            android:text="nick"
+            android:id="@+id/question_to_speaker_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/text_white" />
+
+        <TextView
+            android:text="data posta"
+            android:textSize="15dp"
+            android:id="@+id/question_to_speaker_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/text_white" />
+
+        <TextView
+            android:text="text posta"
+            android:textSize="20dp"
+            android:id="@+id/question_to_speaker_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/question_to_speaker_nick"
+            android:textColor="@color/text_white" />
+
+    </RelativeLayout>
+
+</LinearLayout>

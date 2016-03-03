@@ -20,6 +20,8 @@ public class DrawerItem {
                 break;
             case "Nawigacja":
             case "Pytania":
+                fragment = new QuestionsListFragment();
+                break;
             case "Uczestnicy":
                 fragment = new SpeakersListFragment();
                 break;
