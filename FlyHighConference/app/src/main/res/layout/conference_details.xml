@@ -10,8 +10,9 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/conference_back_button"
+            android:id="@+id/back_button_image"
             android:layout_width="35dp"
+            android:onClick="buttonBackPressed"
             android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -21,7 +22,7 @@
             android:id="@+id/conference_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/conference_back_button"
+            android:layout_below="@id/back_button_image"
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal"
             android:text="10:00 - 11:00"

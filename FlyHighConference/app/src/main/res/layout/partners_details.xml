@@ -10,7 +10,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/conference_back_button"
+            android:id="@+id/back_button_image"
+            android:onClick="buttonBackPressed"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentStart="true"
