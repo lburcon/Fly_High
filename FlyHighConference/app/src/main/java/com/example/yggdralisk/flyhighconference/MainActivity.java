@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean setPreviousFragment() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
             return true;
         } else {

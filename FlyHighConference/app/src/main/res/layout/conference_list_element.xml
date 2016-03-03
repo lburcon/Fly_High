@@ -40,7 +40,6 @@
         android:gravity="center_horizontal"
         android:text="Title"
         android:background="@color/background_main"/>
-
     <TextView
         android:id="@+id/conference_list_item_descrxt"
         android:textSize="15sp"
