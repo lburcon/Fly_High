@@ -2,18 +2,36 @@ package com.example.yggdralisk.flyhighconference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.logging.Handler;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 /**
  * Created by yggdralisk on 29.02.16.
  */
 public class DataGetter {
+    private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
+
     public static JSONArray getPresentations(Context context) throws JSONException {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_presentations), "");
+        return new JSONArray(str);
+    }
+
+    public static JSONArray getQuestionsToPresentation(Context context, int presentationID) throws JSONException {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, "");
         return new JSONArray(str);
     }
 
@@ -111,6 +129,4 @@ public class DataGetter {
             return true;
         }
     }
-
-
 }
