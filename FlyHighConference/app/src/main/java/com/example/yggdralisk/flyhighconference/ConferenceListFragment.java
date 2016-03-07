@@ -42,7 +42,7 @@ public class ConferenceListFragment extends Fragment {
         JSONArray mDataSet = new JSONArray();
         try {
             mDataSet = DataGetter.getPresentations(getContext());
-            mAdapter = new ConferenceRecyclerViewAdapter(mDataSet,getContext());
+            mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -61,13 +61,11 @@ public class ConferenceListFragment extends Fragment {
         return view;
     }
 
-    protected void scrollToCurrentPresentation(int index)
-    {
+    protected void scrollToCurrentPresentation(int index) {
         mLayoutManager.scrollToPosition(index);
     }
 
-    private class TimeFinder extends AsyncTask<JSONArray,Void,Void>
-    {
+    private class TimeFinder extends AsyncTask<JSONArray, Void, Void> {
         int index;
 
         private int compareDates(String dt1, String dt2) throws ParseException {
@@ -80,19 +78,19 @@ public class ConferenceListFragment extends Fragment {
             return date1.compareTo(date2);
 
         }
+
         @Override
         protected Void doInBackground(JSONArray... params) {
             JSONArray mDataSet = params[0];
 
             String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             try {
-            for(int i = 0; i < mDataSet.length(); i++)
-            {
-                    if(compareDates(mDataSet.getJSONObject(i).getString("start"),currentDate) >= 0 && compareDates(mDataSet.getJSONObject(i).getString("end"),currentDate) <=0)
-                       index = i;
+                for (int i = 0; i < mDataSet.length(); i++) {
+                    if (compareDates(mDataSet.getJSONObject(i).getString("start"), currentDate) >= 0 && compareDates(mDataSet.getJSONObject(i).getString("end"), currentDate) <= 0)
+                        index = i;
 
-            }
-            } catch (JSONException|ParseException e) {
+                }
+            } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
 

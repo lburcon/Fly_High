@@ -23,24 +23,22 @@ import okhttp3.Response;
 
 //Class to make both get and post request to API server. On get, results are loaded into magazine (SharedPreferences/sql database)
 //One can retrieve them using according methods from DataGetter class
-public class DataPoster {
+//For now I have no idea how to make usefull callbacks from this class neither do I know if we do even need them TODO:ServerPoster callbacks
+public class ServerConnector {
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
 
     //------------------------------------------------------------------------DATA_POST_PART --------------------------------------------------------------------------------
-    public boolean postLikeToPresentation(int questionID, int userID, Context context) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
+    public void postLikeToPresentation(int questionID, int userID, Context context) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
     {
-        PostRunnable postRunnable = new PostRunnable("like","?question=" + questionID + "&user=" + userID,context);
+        PostRunnable postRunnable = new PostRunnable("like", "?question=" + questionID + "&user=" + userID, context);
         new Thread(postRunnable).start();
 
-        return postRunnable.succes;
     }
 
-    public boolean postQuestionToPresentation(int presentationID, int userID, String questionContent,Context context )//Questions_to_speaker - Post question for presentation
+    public void postQuestionToPresentation(int presentationID, int userID, String questionContent, Context context)//Questions_to_speaker - Post question for presentation
     {
-        PostRunnable postRunnable = new PostRunnable("like","?presentation=" + presentationID + "&user=" + userID +"&content=" + questionContent,context);
+        PostRunnable postRunnable = new PostRunnable("question", "?presentation=" + presentationID + "&user=" + userID + "&content=" + questionContent, context);
         new Thread(postRunnable).start();
-
-        return postRunnable.succes;
     }
 
     private class PostRunnable implements Runnable {
@@ -77,18 +75,17 @@ public class DataPoster {
 
         }
     }
+
     //------------------------------------------------------------------------DATA_GET_PART ------------------------------------------------------------------------
-    private boolean refreshLikes(Context context)
-    {
-        GetRunnable getRunnable = new GetRunnable(context,"likes","",context.getString(R.string.shared_preferences_likes));
+    public boolean refreshLikes(Context context) {
+        GetRunnable getRunnable = new GetRunnable(context, "likes", "", context.getString(R.string.shared_preferences_likes));
         new Thread(getRunnable).start();
 
         return getRunnable.succes;
     }
 
-    private boolean getQuestionsToPresentation(Context context,int presentationID)
-    {
-        GetRunnable getRunnable = new GetRunnable(context,"likes","?presentation=" + presentationID,context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID);
+    public boolean getQuestionsToPresentation(Context context, int presentationID) {
+        GetRunnable getRunnable = new GetRunnable(context, "likes", "?presentation=" + presentationID, context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID);
         new Thread(getRunnable).start();
 
         return getRunnable.succes;
@@ -101,7 +98,7 @@ public class DataPoster {
         public boolean succes = true;
         Context context;
 
-        public GetRunnable( Context _context,String _appendUrl, String _appendData,String _sharedPreferencesName) {
+        public GetRunnable(Context _context, String _appendUrl, String _appendData, String _sharedPreferencesName) {
             appendData = _appendData;
             appendUrl = _appendUrl;
             context = _context;
@@ -127,15 +124,13 @@ public class DataPoster {
                 editor.putString(sharedPreferencesName, jsonArray.toString());
 
                 editor.apply();
-            } catch (IOException|JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
                 succes = false;
             }
 
         }
     }
-
-
 }
 
 
