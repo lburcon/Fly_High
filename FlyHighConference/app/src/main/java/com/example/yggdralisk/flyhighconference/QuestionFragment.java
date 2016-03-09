@@ -21,6 +21,7 @@ import java.util.ArrayList;
  */
 public class QuestionFragment extends Fragment {
 
+    private JSONArray mQuestions = new JSONArray();
     private JSONObject speaker = new JSONObject();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -35,11 +36,13 @@ public class QuestionFragment extends Fragment {
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new QuestionAdapter(getPrelectionsId(speakerId), getContext());
+        getArrayOfIds(getPrelectionsId(speakerId));
+        mAdapter = new QuestionAdapter(mQuestions, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         try {
@@ -101,6 +104,23 @@ public class QuestionFragment extends Fragment {
             e.printStackTrace();
         }
         return speakerIds;
+    }
+
+    private void getArrayOfIds(ArrayList<Integer> prelectionIds) { //adds questions to mQuestion JSONArray list
+
+        ServerConnector serverConnector;
+
+        for (int i = 0; i < prelectionIds.size(); i++) {
+            serverConnector = new ServerConnector();
+            serverConnector.getQuestionsToPresentation(getContext(), prelectionIds.get(i));
+        }
+
+        try {
+            for (int i = 0; i < prelectionIds.size(); i++)
+                mQuestions.put(DataGetter.getQuestionsToPresentation(getContext(), prelectionIds.get(i)));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -23,12 +24,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     private Context mContext;
     private JSONArray mQuestions = new JSONArray();
-    private ArrayList<Integer> prelectionIds = new ArrayList<>();
     private MainActivity mUpLayout;
 
 
-    public QuestionAdapter(ArrayList<Integer> prelectionIds, Context context) {
-        this.prelectionIds = prelectionIds; //here are ids of prelections given by one speaker
+    public QuestionAdapter(JSONArray mQuestions, Context context) {
+        this.mQuestions = mQuestions;
         mContext = context;
     }
 
@@ -44,14 +44,19 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(QuestionAdapter.ViewHolder holder, int position) {
-        DataPoster dataPoster = new DataPoster();
-        dataPoster.get
+
+
+        try {
+            holder.setData(mQuestions.getJSONObject(position));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mQuestions.length();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,14 +70,40 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             super(itemView);
 
             nick = (TextView) itemView.findViewById(R.id.question_to_speaker_nick);
-            rating = (TextView) itemView.findViewById(R.id.question_to_speaker_rating;
+            rating = (TextView) itemView.findViewById(R.id.question_to_speaker_rating);
             prelectionTitle = (TextView) itemView.findViewById(R.id.question_to_speaker_prelection_title);
             question = (TextView) itemView.findViewById(R.id.question_to_speaker_question);
         }
 
         public void setData(JSONObject jsonObject) {
 
+            try {
+                nick.setText(jsonObject.getString("user"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                nick.setText("Błąd");
+            }
 
+            try {
+                rating.setText("Ocena: " + jsonObject.getString("rating"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                rating.setText("Błąd");
+            }
+
+            try {
+                prelectionTitle.setText(jsonObject.getString("user"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                prelectionTitle.setText("Błąd");
+            }
+
+            try {
+                question.setText(jsonObject.getString("content"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                question.setText("Błąd");
+            }
 
         }
 
