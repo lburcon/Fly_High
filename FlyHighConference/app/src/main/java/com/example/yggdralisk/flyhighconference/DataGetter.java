@@ -23,7 +23,7 @@ import okhttp3.Response;
 public class DataGetter {
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
 
-    public static JSONArray getQuestions(Context context) throws JSONException {
+    public static JSONArray getSpeakerHasPresentations(Context context) throws JSONException {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_speaker_has_presentations), "");
         return new JSONArray(str);

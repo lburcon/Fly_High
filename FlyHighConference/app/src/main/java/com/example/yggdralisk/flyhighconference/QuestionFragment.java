@@ -22,17 +22,17 @@ import java.util.ArrayList;
 public class QuestionFragment extends Fragment {
 
     private JSONArray mQuestions = new JSONArray();
-    private JSONObject speaker = new JSONObject();
+    private JSONObject presentation = new JSONObject();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private int speakerId;
+    private int presentationId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.question_details, container, false);
-        speakerId = getArguments().getInt("speakerId");
+        presentationId = getArguments().getInt("speakerId");
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
@@ -41,12 +41,13 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        getArrayOfIds(getPrelectionsId(speakerId));
+        //getArrayOfIds(getPrelectionsId(speakerId));
+
         mAdapter = new QuestionAdapter(mQuestions, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         try {
-            speaker = DataGetter.getSpeakerById(speakerId, getContext());
+            presentation = DataGetter.getPresentationById(presentationId, getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -54,7 +55,7 @@ public class QuestionFragment extends Fragment {
         CollapsingToolbarLayout toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.question_details_collapsing_toolbar);
 
         try {
-            toolbar.setTitle(speaker.getString("name"));
+            toolbar.setTitle(presentation.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
             toolbar.setTitle("Błąd");
@@ -68,7 +69,7 @@ public class QuestionFragment extends Fragment {
         return DataGetter.getSpeakers(getContext());
     }
 
-    private ArrayList<Integer> getPrelectionsId(int speakerId) {
+    /*private ArrayList<Integer> getPrelectionsId(int speakerId) {
         ArrayList<Integer> prelectionIds = new ArrayList<>();
         JSONArray presentations;
 
@@ -104,7 +105,7 @@ public class QuestionFragment extends Fragment {
             e.printStackTrace();
         }
         return speakerIds;
-    }
+    }*/
 
     private void getArrayOfIds(ArrayList<Integer> prelectionIds) { //adds questions to mQuestion JSONArray list
 
