@@ -46,7 +46,7 @@ public class QuestionFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         try {
-            speaker = DataGetter.getSpeakerById(speakerId, getContext());
+            speaker = DataGetter.getPresentationById(speakerId, getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class QuestionFragment extends Fragment {
         CollapsingToolbarLayout toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.question_details_collapsing_toolbar);
 
         try {
-            toolbar.setTitle(speaker.getString("name"));
+            toolbar.setTitle(speaker.getString("title"));
         } catch (JSONException e) {
             e.printStackTrace();
             toolbar.setTitle("Błąd");
@@ -68,13 +68,12 @@ public class QuestionFragment extends Fragment {
         return DataGetter.getSpeakers(getContext());
     }
 
-    private ArrayList<Integer> getPrelectionsId(int speakerId) {
+    private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
         ArrayList<Integer> prelectionIds = new ArrayList<>();
         JSONArray presentations;
 
         try {
             presentations = DataGetter.getPresentations(getContext());
-
 
             for (int i = 0; i < presentations.length(); i++) {
                 JSONObject presentation = presentations.getJSONObject(i);
@@ -91,7 +90,7 @@ public class QuestionFragment extends Fragment {
         return prelectionIds;
     }
 
-    private int[] getSpeakerIds(JSONObject presentation) {
+    private int[] getSpeakerIds(JSONObject presentation) { // returns ids of prelegents for one prelection
         int[] speakerIds = null;
         try {
             String ids = presentation.getString("speakers");

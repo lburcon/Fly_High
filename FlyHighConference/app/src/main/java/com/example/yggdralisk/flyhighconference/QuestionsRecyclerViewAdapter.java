@@ -20,12 +20,14 @@ import org.json.JSONObject;
  */
 public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<QuestionsRecyclerViewAdapter.ViewHolder> {
         private JSONArray mDataset = new JSONArray();
+        private JSONArray mPresentations = new JSONArray();
         public MainActivity mUpLayout;
         private final int TYPE_0 = 0;
         private final int TYPE_1 = 1;
 
-        public QuestionsRecyclerViewAdapter(JSONArray myDataset) {
+        public QuestionsRecyclerViewAdapter(JSONArray myDataset, JSONArray myDatasetPresentations) {
             mDataset = myDataset;
+            mPresentations = myDatasetPresentations;
         }
 
         @Override
@@ -52,7 +54,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         @Override
         public void onBindViewHolder(QuestionsRecyclerViewAdapter.ViewHolder holder, int position) {
             try {
-                holder.setData(mDataset.getJSONObject(position));
+                holder.setData(mPresentations.getJSONObject(position));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -96,7 +98,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
             public void setData(JSONObject jsonObject) {
 
                 try {
-                    name.setText(jsonObject.getString("name"));
+                    name.setText(jsonObject.getString("title"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     name.setText("Błąd");

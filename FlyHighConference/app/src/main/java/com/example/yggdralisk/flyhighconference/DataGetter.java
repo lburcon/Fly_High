@@ -79,6 +79,14 @@ public class DataGetter {
         return speakers.getJSONObject(i);
     }
 
+    public static JSONObject getPresentationById(int presentationId,Context context) throws JSONException {
+        JSONArray presentations = getPresentations(context);
+        int i = 0;
+        for(; i < presentations.length() && (presentations.getJSONObject(i).getInt("id") != presentationId); i++)
+        {}
+        return presentations.getJSONObject(i);
+    }
+
     public static Boolean checkUserLogged(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(context.getString(R.string.shared_preferences_user_logged), false);

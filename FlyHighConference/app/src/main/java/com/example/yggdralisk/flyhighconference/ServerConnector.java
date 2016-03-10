@@ -85,7 +85,7 @@ public class ServerConnector {
     }
 
     public boolean getQuestionsToPresentation(Context context, int presentationID) {
-        GetRunnable getRunnable = new GetRunnable(context, "likes", "?presentation=" + presentationID, context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID);
+        GetRunnable getRunnable = new GetRunnable(context, "questions", "?presentation=" + presentationID, context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID);
         new Thread(getRunnable).start();
 
         return getRunnable.succes;
