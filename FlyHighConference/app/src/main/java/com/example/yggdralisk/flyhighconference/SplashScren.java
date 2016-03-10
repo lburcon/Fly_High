@@ -22,7 +22,7 @@ public class SplashScren extends Activity {
 
     private final int SPLASH_DISPLAY_LENGTH = 10000;
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
-    private final String[] DATA_BASIC = {"organisers", "partners", "places", "presentations", "speakers", "users","likes"};
+    private final String[] DATA_BASIC = {"organisers", "partners", "places", "presentations", "speakers", "users","likes","speaker_has_presentation"};
     private TextView splashMessege;
 
     @Override
@@ -48,6 +48,7 @@ public class SplashScren extends Activity {
         JSONArray speakersArray = new JSONArray();
         JSONArray usersArray = new JSONArray();
         JSONArray likesArray = new JSONArray();
+        JSONArray speakerHasPresentation = new JSONArray();
 
         Boolean connectionFailed = false;
 
@@ -69,6 +70,7 @@ public class SplashScren extends Activity {
                 speakersArray = new JSONArray(js.get(DATA_BASIC[4]).toString());
                 usersArray = new JSONArray(js.get(DATA_BASIC[5]).toString());
                 likesArray = new JSONArray(js.get(DATA_BASIC[6]).toString());
+                speakerHasPresentation = new JSONArray(js.get(DATA_BASIC[7]).toString());
             } catch (JSONException e) {//TODO:Zapytać się Wojtka o catch in trycatch w androidzie
                 try {
                     organisersArray = new JSONArray(getData(DATA_BASIC[0]));
@@ -77,7 +79,9 @@ public class SplashScren extends Activity {
                     presentationsArray = new JSONArray(getData(DATA_BASIC[3]));
                     speakersArray = new JSONArray(getData(DATA_BASIC[4]));
                     usersArray = new JSONArray(getData(DATA_BASIC[5]));
-                    likesArray = new JSONArray(js.get(DATA_BASIC[6]).toString());
+                    likesArray = new JSONArray(getData(DATA_BASIC[6]));
+                    speakerHasPresentation = new JSONArray(getData(DATA_BASIC[7]));
+
                 } catch (JSONException e1) { //TODO:Dopracować co zrobić w razie braku połączenia
                     connectionFailed = true;
                 }
@@ -103,6 +107,7 @@ public class SplashScren extends Activity {
                 editor.putString(getString(R.string.shared_preferences_speakers), speakersArray.toString());
                 editor.putString(getString(R.string.shared_preferences_users), usersArray.toString());
                 editor.putString(getString(R.string.shared_preferences_likes), likesArray.toString());
+                editor.putString(getString(R.string.shared_preferences_speaker_has_presentations), speakerHasPresentation.toString());
 
                 editor.apply();
             }

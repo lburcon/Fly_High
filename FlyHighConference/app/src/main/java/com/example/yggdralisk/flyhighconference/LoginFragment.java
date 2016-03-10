@@ -3,6 +3,7 @@ package com.example.yggdralisk.flyhighconference;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -74,6 +75,16 @@ public class LoginFragment extends Fragment {
             mainActivity.setLoggedNameOnDrawer(userName);
             displayToast("Zalogowano jako: " + userName);
             mainActivity.changeZalogujWylogujOnDrawer();
+
+
+            Handler handler = new Handler();
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainActivity.setFragment(null, new LoginOutFragment());
+                }
+            }, 2000);
             return true;
         } else {
             displayToast(getString(R.string.login_error_messege));
@@ -83,6 +94,8 @@ public class LoginFragment extends Fragment {
             return false;
         }
     }
+
+
 
     private void displayToast(String text) {
         Toast t = Toast.makeText(getContext(), "  " + text + "  ", Toast.LENGTH_LONG); //new Toast(mainActivity.getApplicationContext());

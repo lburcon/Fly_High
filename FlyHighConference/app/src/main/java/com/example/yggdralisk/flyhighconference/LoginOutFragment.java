@@ -2,6 +2,7 @@ package com.example.yggdralisk.flyhighconference;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -46,6 +47,14 @@ public class LoginOutFragment extends Fragment{
                 if (DataGetter.checkUserLogged(mContext)) {
                     DataGetter.toggleUserLogged(getContext(), "", -1);
                     displayToast("Wylogowano");
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mainActivity.setFragment(null, new LoginFragment());
+                        }
+                    }, 2000);
                 }
                 mainActivity.setLoggedNameOnDrawer("");
                 mainActivity.changeZalogujWylogujOnDrawer();

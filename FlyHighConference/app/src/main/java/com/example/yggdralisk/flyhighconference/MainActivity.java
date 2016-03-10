@@ -94,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
-                fragmentTransaction.addToBackStack(null);
+
+                if (fragmentActivity.getClass() != LoginFragment.class && fragmentActivity.getClass() != LoginOutFragment.class)
+                    fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
             }
