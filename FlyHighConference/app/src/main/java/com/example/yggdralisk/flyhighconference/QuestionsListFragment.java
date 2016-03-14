@@ -35,7 +35,7 @@ public class QuestionsListFragment extends Fragment {
         //TODO: hamburger icon
 
         try {
-            mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers());
+            mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -53,9 +53,12 @@ public class QuestionsListFragment extends Fragment {
         return view;
     }
 
-    //todo
     private JSONArray getSpeakers() throws JSONException {
         return DataGetter.getSpeakers(getContext());
+    }
+
+    private JSONArray getPresentations() throws JSONException {
+        return DataGetter.getPresentations(getContext());
     }
 
 }

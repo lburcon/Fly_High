@@ -47,7 +47,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
 
         try {
-            holder.setData(mQuestions.getJSONObject(position));
+            holder.setData(mQuestions.getJSONArray(1).getJSONObject(position));
         } catch (JSONException e) {
             e.printStackTrace();
         }
