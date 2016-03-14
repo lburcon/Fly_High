@@ -15,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by lukasz on 03.03.16.
@@ -69,7 +71,7 @@ public class QuestionFragment extends Fragment {
     }
 
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
-        ArrayList<Integer> prelectionIds = new ArrayList<>();
+        Set<Integer> prelectionIds = new HashSet<>();
         JSONArray presentations;
 
         try {
@@ -80,14 +82,16 @@ public class QuestionFragment extends Fragment {
                 int[] speakersIds = getSpeakerIds(presentation);
 
                 for (int j = 0; j < speakersIds.length; j++)
-                    if (speakerId == speakersIds[i]) ;
-                prelectionIds.add(Integer.parseInt(presentation.getString("id")));
+                { if (speakerId == speakersIds[j])
+                prelectionIds.add(Integer.parseInt(presentation.getString("id")));}
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return prelectionIds;
+        ArrayList<Integer> listOfIds = new ArrayList<>();
+        listOfIds.addAll(prelectionIds);
+        return listOfIds;
     }
 
     private int[] getSpeakerIds(JSONObject presentation) { // returns ids of prelegents for one prelection
