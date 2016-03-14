@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,17 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
+import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by yggdralisk on 20.02.16.
@@ -113,7 +112,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         private String getPresentationAuth(JSONObject jsonObject) throws JSONException {
             if(id == -1)
                 try {
-                   return DataGetter.getSpeakerById(id,mContext).getString("name");
+                   return DataGetter.getSpeakerById(id, mContext).getString("name");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

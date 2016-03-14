@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
 import android.os.Handler;
@@ -12,6 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
+import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
+import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
+import com.example.yggdralisk.flyhighconference.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).fragment);
+            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).getFragment());
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

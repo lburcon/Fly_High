@@ -1,7 +1,5 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by lukasz on 23.02.16.

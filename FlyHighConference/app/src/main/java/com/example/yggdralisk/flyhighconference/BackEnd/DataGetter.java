@@ -1,8 +1,10 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

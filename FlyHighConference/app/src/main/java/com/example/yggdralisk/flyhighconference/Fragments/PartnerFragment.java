@@ -1,7 +1,5 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Fragments;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

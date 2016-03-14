@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Fragments;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

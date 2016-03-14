@@ -1,6 +1,5 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Fragments;
 
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,13 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.ConferenceRecyclerViewAdapter;
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

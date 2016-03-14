@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,14 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionsRecyclerViewAdapter;
+import com.example.yggdralisk.flyhighconference.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 /**
- * Created by lukasz on 01.03.16.
+ * Created by lukasz on 03.03.16.
  */
-public class SpeakersListFragment extends Fragment {
-
+public class QuestionsListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -26,9 +29,9 @@ public class SpeakersListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.speakers, container, false);
+        View view = inflater.inflate(R.layout.questions, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.speakers_recycler_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -36,7 +39,7 @@ public class SpeakersListFragment extends Fragment {
         //TODO: hamburger icon
 
         try {
-            mAdapter = new SpeakersRecyclerViewAdapter(getSpeakers());
+            mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -54,9 +57,13 @@ public class SpeakersListFragment extends Fragment {
         return view;
     }
 
-    //todo
     private JSONArray getSpeakers() throws JSONException {
         return DataGetter.getSpeakers(getContext());
     }
 
+    private JSONArray getPresentations() throws JSONException {
+        return DataGetter.getPresentations(getContext());
+    }
+
 }
+

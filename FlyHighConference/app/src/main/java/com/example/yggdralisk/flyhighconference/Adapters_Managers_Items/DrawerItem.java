@@ -1,6 +1,13 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 import android.support.v4.app.Fragment;
+
+import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.PartnersListFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.QuestionsListFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.SpeakersListFragment;
 
 /**
  * Created by yggdralisk on 25.02.16.
@@ -10,6 +17,10 @@ public class DrawerItem {
     String text;
     Fragment fragment;
 
+    public Fragment getFragment()
+    {
+        return fragment;
+    }
     public DrawerItem(String text,int iconId) {
         this.iconId = iconId;
         this.text = text;

@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
+import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

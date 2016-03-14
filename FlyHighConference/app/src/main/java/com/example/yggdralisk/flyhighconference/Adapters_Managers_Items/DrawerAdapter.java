@@ -1,17 +1,15 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.yggdralisk.flyhighconference.R;
+
 import java.util.List;
 
 /**

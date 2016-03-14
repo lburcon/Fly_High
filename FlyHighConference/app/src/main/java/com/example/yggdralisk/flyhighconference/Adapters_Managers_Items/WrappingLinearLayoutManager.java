@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference;
+package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
