@@ -92,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 fragmentActivity.setArguments(getIntent().getExtras());
                 fragmentActivity.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().setCustomAnimations(R.anim.slie_up_animation,R.anim.slide_down_animation);
+
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
                 if (fragmentActivity.getClass() != LoginFragment.class && fragmentActivity.getClass() != LoginOutFragment.class)
