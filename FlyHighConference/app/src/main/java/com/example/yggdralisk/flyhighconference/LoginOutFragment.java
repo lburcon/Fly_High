@@ -57,7 +57,7 @@ public class LoginOutFragment extends Fragment{
                     }, 2000);
                 }
                 mainActivity.setLoggedNameOnDrawer("");
-                mainActivity.changeZalogujWylogujOnDrawer();
+                mainActivity.changeLoginLogoutDrawer();
             }
         });
 

@@ -1,24 +1,17 @@
 package com.example.yggdralisk.flyhighconference;
 
-import android.app.Activity;
-import android.app.Application;
-import android.app.FragmentTransaction;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
         mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
-        changeZalogujWylogujOnDrawer();
+        changeLoginLogoutDrawer();
     }
 
     //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
@@ -73,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 fragmentActivity.setArguments(getIntent().getExtras());
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+               // fragmentTransaction.setCustomAnimations(R.anim.slie_up_animation,R.anim.slide_down_animation,R.anim.slie_up_animation,R.anim.slide_down_animation);
+
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
                 fragmentTransaction.addToBackStack(null);
+
                 fragmentTransaction.commit();
             }
         } catch (IllegalStateException ex) {
@@ -93,7 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 fragmentActivity.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().setCustomAnimations(R.anim.slie_up_animation,R.anim.slide_down_animation);
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().setCustomAnimations(R.anim.slie_up_animation, R.anim.slide_down_animation);
+
+
+               // fragmentTransaction.setCustomAnimations(R.anim.slie_up_animation,R.anim.slide_down_animation,R.anim.slie_up_animation,R.anim.slide_down_animation);
+
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean changeZalogujWylogujOnDrawer() //Returns true if drawer has been changed to zaloguj
+    public boolean changeLoginLogoutDrawer() //Returns true if drawer has been changed to zaloguj
     {
         ArrayList<DrawerItem> drawerElements = new ArrayList<>();
         int temp;

@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment {
             String userName = emailText.getText().toString().substring(0, emailText.getText().toString().indexOf('@'));
             mainActivity.setLoggedNameOnDrawer(userName);
             displayToast("Zalogowano jako: " + userName);
-            mainActivity.changeZalogujWylogujOnDrawer();
+            mainActivity.changeLoginLogoutDrawer();
 
 
             Handler handler = new Handler();
@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment {
             displayToast(getString(R.string.login_error_messege));
             DataGetter.toggleUserLogged(mContext, "", -1);
             mainActivity.setLoggedNameOnDrawer("");
-            mainActivity.changeZalogujWylogujOnDrawer();
+            mainActivity.changeLoginLogoutDrawer();
             return false;
         }
     }
