@@ -15,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by lukasz on 03.03.16.
@@ -47,7 +49,9 @@ public class QuestionFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         try {
+
             presentation = DataGetter.getPresentationById(presentationId, getContext());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,7 +59,9 @@ public class QuestionFragment extends Fragment {
         CollapsingToolbarLayout toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.question_details_collapsing_toolbar);
 
         try {
+
             toolbar.setTitle(presentation.getString("name"));
+
         } catch (JSONException e) {
             e.printStackTrace();
             toolbar.setTitle("Błąd");
@@ -69,30 +75,33 @@ public class QuestionFragment extends Fragment {
         return DataGetter.getSpeakers(getContext());
     }
 
-    /*private ArrayList<Integer> getPrelectionsId(int speakerId) {
-        ArrayList<Integer> prelectionIds = new ArrayList<>();
+
+    private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
+        Set<Integer> prelectionIds = new HashSet<>();
+
         JSONArray presentations;
 
         try {
             presentations = DataGetter.getPresentations(getContext());
-
 
             for (int i = 0; i < presentations.length(); i++) {
                 JSONObject presentation = presentations.getJSONObject(i);
                 int[] speakersIds = getSpeakerIds(presentation);
 
                 for (int j = 0; j < speakersIds.length; j++)
-                    if (speakerId == speakersIds[i]) ;
-                prelectionIds.add(Integer.parseInt(presentation.getString("id")));
+                { if (speakerId == speakersIds[j])
+                prelectionIds.add(Integer.parseInt(presentation.getString("id")));}
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return prelectionIds;
+        ArrayList<Integer> listOfIds = new ArrayList<>();
+        listOfIds.addAll(prelectionIds);
+        return listOfIds;
     }
 
-    private int[] getSpeakerIds(JSONObject presentation) {
+    private int[] getSpeakerIds(JSONObject presentation) { // returns ids of prelegents for one prelection
         int[] speakerIds = null;
         try {
             String ids = presentation.getString("speakers");
@@ -105,7 +114,7 @@ public class QuestionFragment extends Fragment {
             e.printStackTrace();
         }
         return speakerIds;
-    }*/
+    }
 
     private void getArrayOfIds(ArrayList<Integer> prelectionIds) { //adds questions to mQuestion JSONArray list
 
