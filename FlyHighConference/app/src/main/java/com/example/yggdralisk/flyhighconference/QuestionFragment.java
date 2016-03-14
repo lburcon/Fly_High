@@ -24,17 +24,17 @@ import java.util.Set;
 public class QuestionFragment extends Fragment {
 
     private JSONArray mQuestions = new JSONArray();
-    private JSONObject presentation = new JSONObject();
+    private JSONObject speaker = new JSONObject();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private int presentationId;
+    private int speakerId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.question_details, container, false);
-        presentationId = getArguments().getInt("speakerId");
+        speakerId = getArguments().getInt("speakerId");
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
@@ -43,15 +43,12 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //getArrayOfIds(getPrelectionsId(speakerId));
-
+        getArrayOfIds(getPrelectionsId(speakerId));
         mAdapter = new QuestionAdapter(mQuestions, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         try {
-
-            presentation = DataGetter.getPresentationById(presentationId, getContext());
-
+            speaker = DataGetter.getPresentationById(speakerId, getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -59,9 +56,7 @@ public class QuestionFragment extends Fragment {
         CollapsingToolbarLayout toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.question_details_collapsing_toolbar);
 
         try {
-
-            toolbar.setTitle(presentation.getString("name"));
-
+            toolbar.setTitle(speaker.getString("title"));
         } catch (JSONException e) {
             e.printStackTrace();
             toolbar.setTitle("Błąd");
@@ -75,10 +70,8 @@ public class QuestionFragment extends Fragment {
         return DataGetter.getSpeakers(getContext());
     }
 
-
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
         Set<Integer> prelectionIds = new HashSet<>();
-
         JSONArray presentations;
 
         try {
@@ -90,7 +83,7 @@ public class QuestionFragment extends Fragment {
 
                 for (int j = 0; j < speakersIds.length; j++)
                 { if (speakerId == speakersIds[j])
-                prelectionIds.add(Integer.parseInt(presentation.getString("id")));}
+                    prelectionIds.add(Integer.parseInt(presentation.getString("id")));}
             }
 
         } catch (JSONException e) {
