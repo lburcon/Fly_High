@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -35,10 +37,10 @@ import okhttp3.Response;
  */
 public class LoginFragment extends Fragment {
 
-    protected EditText emailText;
-    protected EditText passwordText;
-    protected Button loginButton;
-    protected ImageButton backButton;
+    @Bind(R.id.login_layout_email) EditText emailText;
+    @Bind(R.id.login_layout_password) EditText passwordText;
+    @Bind(R.id.login_layout_login_button) Button loginButton;
+    @Bind(R.id.login_layout_hamburger) ImageButton hamburgerButton;
     MainActivity mainActivity;
     Context mContext;
 
@@ -47,10 +49,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_layout, container, false);
 
-        emailText = (EditText) view.findViewById(R.id.login_layout_email);
-        passwordText = (EditText) view.findViewById(R.id.login_layout_password);
-        loginButton = (Button) view.findViewById(R.id.login_layout_login_button);
-        backButton = (ImageButton) view.findViewById(R.id.login_layout_back_button);
+        ButterKnife.bind(this,view);
         mainActivity = (MainActivity) getContext();
         mContext = container.getContext();
 
@@ -63,10 +62,10 @@ public class LoginFragment extends Fragment {
     private void setButtons() {
         loginButton.setOnClickListener(new loginListener());
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        hamburgerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.setPreviousFragment();
+                mainActivity.toggleDrawer();
             }
         });
     }

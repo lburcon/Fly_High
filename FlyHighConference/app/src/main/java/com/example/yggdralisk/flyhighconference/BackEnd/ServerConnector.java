@@ -2,22 +2,12 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-
 import com.example.yggdralisk.flyhighconference.R;
-
-import org.apache.http.client.protocol.ClientContextConfigurer;
+import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.logging.Handler;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * Created by yggdralisk on 03.03.16.

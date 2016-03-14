@@ -22,6 +22,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.Bind;
+
 /**
  * Created by yggdralisk on 20.02.16.
  */
@@ -36,8 +38,10 @@ public class ConferenceListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.conference_list_view, container, false);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.conference_recycler_view);
         mRecyclerView.setHasFixedSize(true);
+
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 

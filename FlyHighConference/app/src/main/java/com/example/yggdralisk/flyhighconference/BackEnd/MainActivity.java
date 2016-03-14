@@ -4,6 +4,7 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,16 +17,21 @@ import android.widget.TextView;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private TextView loggedName;
+    @Bind(R.id.main_drawer) DrawerLayout mDrawerLayout;
+    @Bind(R.id.left_drawer_list_view) ListView mDrawerList;
+    @Bind(R.id.left_drawer_logged_name) TextView loggedName;
 
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
@@ -35,17 +41,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loggedName = (TextView) findViewById(R.id.left_drawer_logged_name);
+        ButterKnife.bind(this);
+
         setFragment(savedInstanceState, new ConferenceListFragment());
         setDrawer();
     }
 
     public void toggleDrawer() {
-        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
-        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT))
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         else
-            mDrawerLayout.openDrawer(Gravity.LEFT);
+            mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
     public void setDrawer() {
@@ -55,10 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < ids.length(); i++)
             navMenuIcons.add(ids.getResourceId(i, -1));
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer_list_view);
         changeLoginLogoutDrawer();
+        ids.recycle();
     }
 
     //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
@@ -70,9 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 fragmentActivity.setArguments(getIntent().getExtras());
                 FragmentManager fragmentManager = getSupportFragmentManager();
+
+                boolean isLog = (fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginFragment
+                        || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
+
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
+
+                if(!isLog)
                 fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
@@ -91,10 +101,14 @@ public class MainActivity extends AppCompatActivity {
                 fragmentActivity.setArguments(getIntent().getExtras());
                 fragmentActivity.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
+                boolean isLog = (fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginFragment
+                        || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
-                fragmentTransaction.addToBackStack(null);
+
+                if(!isLog)
+                     fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
             }

@@ -18,13 +18,16 @@ import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by yggdralisk on 02.03.16.
  */
 public class LoginOutFragment extends Fragment{
 
-    Button logOutbutton;
-    ImageButton goBackButton;
+    @Bind(R.id.login_out_layout_button) Button logOutbutton;
+   @Bind(R.id.login_out_layout_hamburger) ImageButton hamburgerButton;
     Context mContext;
     MainActivity mainActivity;
 
@@ -33,8 +36,7 @@ public class LoginOutFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_out_layout,container,false);
 
-        logOutbutton = (Button) view.findViewById(R.id.login_out_layout_button);
-        goBackButton = (ImageButton) view.findViewById(R.id.login_out_layout_back_button);
+        ButterKnife.bind(this,view);
         mContext = container.getContext();
         mainActivity = (MainActivity) getContext();
 
@@ -65,10 +67,10 @@ public class LoginOutFragment extends Fragment{
             }
         });
 
-        goBackButton.setOnClickListener(new View.OnClickListener() {
+        hamburgerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.setPreviousFragment();
+                mainActivity.toggleDrawer();
             }
         });
     }

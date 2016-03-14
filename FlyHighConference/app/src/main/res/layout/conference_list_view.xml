@@ -9,10 +9,9 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/hamburger_icon"
+            android:src="@drawable/ic_hamburger"
             android:background="@color/main_yellow"
             android:id="@+id/conference_drawer_button"
-            android:layout_marginBottom="15dp"
             android:visibility="visible"/>
 
     <TextView

@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -24,14 +26,15 @@ public class SplashScren extends Activity {
 
     private final int SPLASH_DISPLAY_LENGTH = 10000;
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
-    private final String[] DATA_BASIC = {"organisers", "partners", "places", "presentations", "speakers", "users","likes","speaker_has_presentation"};
-    private TextView splashMessege;
+    private final String[] DATA_BASIC = {"organisers", "partners", "places", "presentations", "speakers", "users", "likes", "speaker_has_presentation"};
+    @Bind(R.id.splash_messege)
+    TextView splashMessege;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_scren);
-        splashMessege = (TextView) findViewById(R.id.splash_messege);
+        ButterKnife.bind(this);
         new getDataTask().execute();
     }
 
@@ -88,18 +91,17 @@ public class SplashScren extends Activity {
                     connectionFailed = true;
                 }
 
-            } return null;
+            }
+            return null;
         }
 
 
         @Override
         protected void onPostExecute(Void result) {
-            if(connectionFailed)
-            {
-                    splashMessege.setText(R.string.splash_internet_error);
-                    splashMessege.invalidate();
-            }
-            else {
+            if (connectionFailed) {
+                splashMessege.setText(R.string.splash_internet_error);
+                splashMessege.invalidate();
+            } else {
                 SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(getString(R.string.shared_preferences_organisers), organisersArray.toString());
@@ -114,25 +116,23 @@ public class SplashScren extends Activity {
                 editor.apply();
             }
             startMain();
-            }
         }
-
-        private String getData(String urlAppend) throws JSONException {
-            OkHttpClient client = new OkHttpClient();
-            String str = new String();
-            Request request = new Request.Builder()
-                    .url(DATA_HOST_URL + urlAppend)
-                    .build();
-            try {
-                Response res = client.newCall(request).execute();
-                str = res.body().string();
-                return str;
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new JSONException("Brak polączenia");
-            }
-        }
-
-
     }
+
+    private String getData(String urlAppend) throws JSONException {
+        OkHttpClient client = new OkHttpClient();
+        String str = new String();
+        Request request = new Request.Builder()
+                .url(DATA_HOST_URL + urlAppend)
+                .build();
+        try {
+            Response res = client.newCall(request).execute();
+            str = res.body().string();
+            return str;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new JSONException("Brak polączenia");
+        }
+    }
+}
 

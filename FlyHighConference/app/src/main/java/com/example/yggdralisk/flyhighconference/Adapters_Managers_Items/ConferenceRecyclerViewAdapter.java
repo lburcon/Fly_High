@@ -17,10 +17,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by yggdralisk on 20.02.16.
  */
-public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<ConferenceRecyclerViewAdapter.ViewHolder>  {
+public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<ConferenceRecyclerViewAdapter.ViewHolder> {
 
     JSONArray mConferences = new JSONArray();
     public Context mContext;
@@ -36,7 +39,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.conference_list_element, parent, false);
 
-       mUpLayout = (MainActivity) parent.getContext();
+        mUpLayout = (MainActivity) parent.getContext();
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -56,10 +59,14 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView descr;
-        public TextView auth;
-        public TextView time;
+        @Bind(R.id.conference_list_item_titlext)
+        TextView title;
+        @Bind(R.id.conference_list_item_descrxt)
+        TextView descr;
+        @Bind(R.id.conference_list_item_auth)
+        TextView auth;
+        @Bind(R.id.conference_list_itemt_time)
+        TextView time;
         public int id = -1;
         ConferenceRecyclerListner nListner = new ConferenceRecyclerListner();
 
@@ -69,10 +76,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
             itemView.setOnClickListener(nListner);
 
-            title = (TextView) itemView.findViewById(R.id.conference_list_item_titlext);
-            descr = (TextView) itemView.findViewById(R.id.conference_list_item_descrxt);
-            time = (TextView) itemView.findViewById(R.id.conference_list_itemt_time);
-            auth = (TextView) itemView.findViewById(R.id.conference_list_item_auth);
+            ButterKnife.bind(this, itemView);
         }
 
         public void setData(JSONObject jsonObject) {
@@ -106,13 +110,12 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                 e.printStackTrace();
                 descr.setText("Błąd");
             }
-
         }
 
         private String getPresentationAuth(JSONObject jsonObject) throws JSONException {
-            if(id == -1)
+            if (id == -1)
                 try {
-                   return DataGetter.getSpeakerById(id, mContext).getString("name");
+                    return DataGetter.getSpeakerById(id, mContext).getString("name");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -153,7 +156,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                 if (id > 0) {
                     Bundle args = new Bundle();
                     args.putInt("conferenceId", id);
-                    mUpLayout.setFragment(null,new ConferenceFragment(),args);
+                    mUpLayout.setFragment(null, new ConferenceFragment(), args);
                 }
 
             }

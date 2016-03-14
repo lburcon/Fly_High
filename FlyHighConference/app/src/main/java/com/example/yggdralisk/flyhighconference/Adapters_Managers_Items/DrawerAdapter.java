@@ -12,6 +12,9 @@ import com.example.yggdralisk.flyhighconference.R;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by yggdralisk on 25.02.16.
  */
@@ -41,8 +44,9 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
             rowView = inflater.inflate(textViewResourceId, parent, false);
         else
             rowView = inflater.inflate(R.layout.drawer_item, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.drawer_item_text);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.drawer_item_image);
+        TextView textView = ButterKnife.findById(rowView,R.id.drawer_item_text);
+        ImageView imageView = ButterKnife.findById(rowView,R.id.drawer_item_image);
+
         textView.setText(items.get(position).text);
         imageView.setImageResource(items.get(position).iconId);
 
