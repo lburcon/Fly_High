@@ -41,7 +41,7 @@ public class ConferenceFragment extends Fragment {
         for (int i = 0; i < mDataset.length(); i++) {
             try {
                 jsonConference = mDataset.getJSONObject(i);
-                if (Integer.parseInt(jsonConference.getString("id")) == getArguments().getInt("conferenceId")) //NULL POINTER EXCEPTION
+                if (Integer.parseInt(jsonConference.getString("id")) == getArguments().getInt("conferenceId")) //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
                     break;
             } catch (JSONException e) {
                 e.printStackTrace();
