@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnersListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionsListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakersListFragment;
@@ -30,6 +31,8 @@ public class DrawerItem {
                 fragment = new ConferenceListFragment();
                 break;
             case "Nawigacja":
+                fragment = new NavigationFragment();
+                break;
             case "Pytania":
                 fragment = new QuestionsListFragment();
                 break;

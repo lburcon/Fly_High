@@ -17,6 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by lukasz on 25.02.16.
  */
@@ -55,9 +58,13 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.partners_name)
         public TextView name;
+        @Bind(R.id.partners_title)
         public TextView title;
+        @Bind(R.id.partners_image)
         public ImageView image;
+
         public int id = -1;
         PartnerRecyclerListener nListener = new PartnerRecyclerListener();
 
@@ -66,9 +73,7 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
 
             itemView.setOnClickListener(nListener);
 
-            name = (TextView) itemView.findViewById(R.id.partners_name);
-            title = (TextView) itemView.findViewById(R.id.partners_title);
-            image = (ImageView) itemView.findViewById(R.id.partners_image);
+            ButterKnife.bind(this, itemView);
         }
 
         public void setData(JSONObject jsonObject) {

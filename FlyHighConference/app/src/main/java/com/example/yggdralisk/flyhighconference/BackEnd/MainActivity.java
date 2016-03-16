@@ -29,9 +29,12 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.main_drawer) DrawerLayout mDrawerLayout;
-    @Bind(R.id.left_drawer_list_view) ListView mDrawerList;
-    @Bind(R.id.left_drawer_logged_name) TextView loggedName;
+    @Bind(R.id.main_drawer)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.left_drawer_list_view)
+    ListView mDrawerList;
+    @Bind(R.id.left_drawer_logged_name)
+    TextView loggedName;
 
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
@@ -82,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
-                if(!isLog)
-                fragmentTransaction.addToBackStack(null);
+                if (!isLog)
+                    fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
             }
@@ -107,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
-                if(!isLog)
-                     fragmentTransaction.addToBackStack(null);
+                if (!isLog)
+                    fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
             }
@@ -150,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setLoggedNameOnDrawer(String name) {
         if (name != null) {
-            if(name == "")
+            if (name == "")
                 loggedName.setText("");
             else
-            loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
+                loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
 
             loggedName.invalidate();
         }
@@ -175,10 +178,9 @@ public class MainActivity extends AppCompatActivity {
             drawerElements.add(new DrawerItem(navMenuTitles[i], navMenuIcons.get(i)));
 
         if (DataGetter.checkUserLogged(getApplicationContext())) {
-            drawerElements.add(new DrawerItem(navMenuTitles[temp +1 ], navMenuIcons.get(temp + 1)));
+            drawerElements.add(new DrawerItem(navMenuTitles[temp + 1], navMenuIcons.get(temp + 1)));
             ifChanged = true;
-        }
-        else {
+        } else {
             // temp+1 if so it gets "wyloguj" String and icon
             drawerElements.add(new DrawerItem(navMenuTitles[temp], navMenuIcons.get(temp)));
         }
