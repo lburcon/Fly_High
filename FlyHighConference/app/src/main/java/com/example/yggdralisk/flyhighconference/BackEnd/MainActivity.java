@@ -1,14 +1,15 @@
+
+
 package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
+
                 if (!isLog)
                     fragmentTransaction.addToBackStack(null);
 
@@ -153,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setLoggedNameOnDrawer(String name) {
         if (name != null) {
-            if (name == "")
+            if(name.equals(""))
                 loggedName.setText("");
             else
                 loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
@@ -199,3 +201,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
