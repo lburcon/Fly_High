@@ -1,15 +1,14 @@
-
-
 package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -30,12 +29,9 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.main_drawer)
-    DrawerLayout mDrawerLayout;
-    @Bind(R.id.left_drawer_list_view)
-    ListView mDrawerList;
-    @Bind(R.id.left_drawer_logged_name)
-    TextView loggedName;
+    @Bind(R.id.main_drawer) DrawerLayout mDrawerLayout;
+    @Bind(R.id.left_drawer_list_view) ListView mDrawerList;
+    @Bind(R.id.left_drawer_logged_name) TextView loggedName;
 
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
@@ -86,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
-                if (!isLog)
-                    fragmentTransaction.addToBackStack(null);
+                if(!isLog)
+                fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
             }
@@ -111,9 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
-
-                if (!isLog)
-                    fragmentTransaction.addToBackStack(null);
+                if(!isLog)
+                     fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
             }
@@ -155,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setLoggedNameOnDrawer(String name) {
         if (name != null) {
-            if(name.equals(""))
+            if(name == "")
                 loggedName.setText("");
             else
-                loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
+            loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
 
             loggedName.invalidate();
         }
@@ -180,9 +175,10 @@ public class MainActivity extends AppCompatActivity {
             drawerElements.add(new DrawerItem(navMenuTitles[i], navMenuIcons.get(i)));
 
         if (DataGetter.checkUserLogged(getApplicationContext())) {
-            drawerElements.add(new DrawerItem(navMenuTitles[temp + 1], navMenuIcons.get(temp + 1)));
+            drawerElements.add(new DrawerItem(navMenuTitles[temp +1 ], navMenuIcons.get(temp + 1)));
             ifChanged = true;
-        } else {
+        }
+        else {
             // temp+1 if so it gets "wyloguj" String and icon
             drawerElements.add(new DrawerItem(navMenuTitles[temp], navMenuIcons.get(temp)));
         }
@@ -201,4 +197,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-

@@ -22,6 +22,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.Bind;
+
 /**
  * Created by yggdralisk on 20.02.16.
  */
@@ -58,7 +60,7 @@ public class ConferenceListFragment extends Fragment {
         drawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getContext()).toggleDrawer();
+                ((MainActivity) getActivity()).toggleDrawer();
             }
         });
 

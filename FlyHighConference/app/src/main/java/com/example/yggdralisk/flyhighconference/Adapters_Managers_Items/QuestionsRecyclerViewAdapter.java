@@ -18,9 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * Created by lukasz on 03.03.16.
  */
@@ -83,13 +80,11 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            @Bind(R.id.speakers_name)
-            public TextView name;
-            @Bind(R.id.speakers_description)
-            public TextView description;
-            @Bind(R.id.speakers_image)
-            public ImageView image;
 
+            public TextView name;
+            public TextView description;
+            public ImageView image;
+            public LinearLayout linear;
             public int id = -1;
             SpeakerRecyclerListener nListener = new SpeakerRecyclerListener();
 
@@ -98,7 +93,9 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
 
                 itemView.setOnClickListener(nListener);
 
-                ButterKnife.bind(this, itemView);
+                name = (TextView) itemView.findViewById(R.id.speakers_name);
+                description = (TextView) itemView.findViewById(R.id.speakers_description);
+                image = (ImageView) itemView.findViewById(R.id.speakers_image);
             }
 
             public void setData(JSONObject jsonObject) {
