@@ -10,9 +10,9 @@
 
         <ImageView
             android:id="@+id/back_button_image"
-            android:layout_width="35dp"
+            android:layout_width="40dp"
             android:onClick="buttonBackPressed"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_keyboard_backspace_black_24dp" />

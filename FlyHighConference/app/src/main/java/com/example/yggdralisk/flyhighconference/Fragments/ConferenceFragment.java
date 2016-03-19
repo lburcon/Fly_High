@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
@@ -14,6 +15,10 @@ import com.example.yggdralisk.flyhighconference.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by lukasz on 23.02.16.
@@ -24,7 +29,10 @@ public class ConferenceFragment extends Fragment {
     private JSONObject jsonConference = new JSONObject();
     private JSONObject jsonSpeaker = new JSONObject();
     private int[] speakerIds = null;
-
+    @Bind(R.id.conference_rating_bar)
+    RatingBar ratingBar;
+    @Bind(R.id.conference_rating_bar_text_view)
+    TextView warning;
 
     @Nullable
     @Override
@@ -47,11 +55,18 @@ public class ConferenceFragment extends Fragment {
             }
         }
 
-        TextView time = (TextView) view.findViewById(R.id.conference_time);
-        TextView speaker = (TextView) view.findViewById(R.id.conference_speaker); //TODO: add speaker
-        TextView name = (TextView) view.findViewById(R.id.conference_name);
-        TextView description = (TextView) view.findViewById(R.id.conference_description);
-        TextView localizationInfo = (TextView) view.findViewById(R.id.conference_localization_info);
+        ButterKnife.bind(this, view);
+
+        if (DataGetter.checkUserLogged(getContext())) {
+            warning.setVisibility(View.INVISIBLE);
+            ratingBar.setVisibility(View.VISIBLE);
+        }
+
+        TextView time = ButterKnife.findById(view, R.id.conference_time);
+        TextView speaker = ButterKnife.findById(view, R.id.conference_speaker);
+        TextView name = ButterKnife.findById(view, R.id.conference_name);
+        TextView description = ButterKnife.findById(view, R.id.conference_description);
+        TextView localizationInfo = ButterKnife.findById(view, R.id.conference_localization_info);
 
         try {
             name.setText(jsonConference.getString("title"));
@@ -97,6 +112,12 @@ public class ConferenceFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void setRatingBarVisibility() { //todo: check this
+
+
+
     }
 
     private String getPresentationTime(JSONObject jsonObject) throws JSONException {

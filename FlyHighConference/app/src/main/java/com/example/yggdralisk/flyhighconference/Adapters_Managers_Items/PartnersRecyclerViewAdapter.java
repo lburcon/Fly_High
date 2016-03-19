@@ -100,7 +100,6 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             try {
                 id = jsonObject.getInt("id");
                 nListener.setId(id);

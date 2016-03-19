@@ -86,7 +86,7 @@
         app:layout_anchor="@id/question_details_app_bar_layout"
         app:layout_anchorGravity="bottom|right|end" />
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -131,7 +131,7 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>
 
