@@ -23,7 +23,8 @@
         android:foregroundGravity="center_horizontal"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_hamburger"
-        android:layout_marginStart="2dp"/>
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"/>
 
    <TextView
        android:id="@+id/drawer_item_text"

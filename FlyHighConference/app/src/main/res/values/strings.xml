@@ -21,5 +21,6 @@
     <string name="shared_preferences_logged_user_id">loggedUserId</string>
     <string name="shared_preferences_presentation_questions_prefix">presentationQuestionsFor</string>
     <string name="shared_preferences_speaker_has_presentations">sharedPreferencesSpeakerHasPresentation</string>
+    <string name="splash_internet_succes">Witaj!</string>
 
 </resources>

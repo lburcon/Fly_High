@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
@@ -131,7 +132,12 @@ public class QuestionFragment extends Fragment {
 
         for (int i = 0; i < prelectionIds.size(); i++) {
             serverConnector = new ServerConnector();
-            serverConnector.getQuestionsToPresentation(getContext(), prelectionIds.get(i));
+            serverConnector.getQuestionsToPresentation(getContext(), prelectionIds.get(i), new ConnectorResultInterface() {
+                @Override
+                public void onDownloadFinished(boolean succeeded) {
+
+                }
+            });
         }
 
         try {

@@ -4,10 +4,6 @@
     android:layout_height="match_parent" android:layout_width="match_parent"
     android:background="@color/background_main"
     android:orientation="vertical">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/main_yellow" />
 
     <TextView
         android:id="@+id/conference_list_item_auth"
@@ -54,7 +50,7 @@
         android:layout_marginStart="5dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="@color/main_yellow"
         android:id="@+id/view" />
 </LinearLayout>
