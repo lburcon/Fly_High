@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
@@ -23,13 +25,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by lukasz on 03.03.16.
  */
 public class QuestionFragment extends Fragment {
 
     private JSONArray mQuestions = new JSONArray();
-    private JSONObject speaker = new JSONObject();
+    private JSONObject presentation = new JSONObject();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -53,26 +58,32 @@ public class QuestionFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         try {
-            speaker = DataGetter.getPresentationById(speakerId, getContext());
+            presentation = DataGetter.getPresentationById(speakerId, getContext());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        CollapsingToolbarLayout toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.question_details_collapsing_toolbar);
+        CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
+        ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
 
         try {
-            toolbar.setTitle(speaker.getString("title"));
+            toolbar.setTitle(presentation.getString("title"));
         } catch (JSONException e) {
             e.printStackTrace();
             toolbar.setTitle("Błąd");
         }
 
+        try {
+            Glide.with(getContext())
+                    .load(presentation.getString("image"))
+                    .placeholder(R.drawable.fly_high_logotype)
+                    .into(imageTop);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         return view;
-    }
-
-    private JSONArray getSpeakers() throws JSONException {
-        return DataGetter.getSpeakers(getContext());
     }
 
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker

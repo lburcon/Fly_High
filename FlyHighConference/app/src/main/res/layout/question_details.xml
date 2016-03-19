@@ -28,7 +28,6 @@
                 android:layout_height="200dp"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/fly_high"
                 app:layout_collapseMode="parallax" />
 
             <ImageView
@@ -79,8 +78,11 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add_white_24dp"
         app:layout_anchor="@id/question_details_app_bar_layout"
         app:layout_anchorGravity="bottom|right|end" />
 
@@ -100,7 +102,7 @@
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/fly_high_facebook" />
 
             <ImageView
@@ -108,7 +110,7 @@
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/fly_high_twitter" />
 
             <ImageView
@@ -116,7 +118,7 @@
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/fly_high_tumblr" />
 
             <ImageView
@@ -124,7 +126,7 @@
                 android:layout_width="75dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/fly_high_pinterest" />
 
         </LinearLayout>
