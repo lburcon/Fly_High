@@ -37,8 +37,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public QuestionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+        View v;
+
+        v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.question_to_speaker_element, parent, false);
+
 
         ViewHolder vh = new ViewHolder(v);
         mUpLayout = (MainActivity) parent.getContext();
@@ -47,7 +50,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(QuestionAdapter.ViewHolder holder, int position) {
-
 
         try {
             holder.setData(mQuestions.getJSONArray(1).getJSONObject(position));
@@ -68,8 +70,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         TextView nick;
         @Bind(R.id.question_to_speaker_rating)
         TextView rating;
-        @Bind(R.id.question_to_speaker_prelection_title)
-        TextView prelectionTitle;
         @Bind(R.id.question_to_speaker_question)
         TextView question;
 
@@ -81,32 +81,28 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
         public void setData(JSONObject jsonObject) {
 
-            try {
-                nick.setText(jsonObject.getString("user"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                nick.setText("Błąd");
-            }
+            if (jsonObject !=null) {
 
-            try {
-                rating.setText("Ocena: " + jsonObject.getString("rating"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                rating.setText("Błąd");
-            }
+                try {
+                    nick.setText(jsonObject.getString("user"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    nick.setText("Błąd");
+                }
 
-            try {
-                prelectionTitle.setText(jsonObject.getString("user"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                prelectionTitle.setText("Błąd");
-            }
+                try {
+                    rating.setText("Ocena: " + jsonObject.getString("rating"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    rating.setText("Błąd");
+                }
 
-            try {
-                question.setText(jsonObject.getString("content"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                question.setText("Błąd");
+                try {
+                    question.setText(jsonObject.getString("content"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    question.setText("Błąd");
+                }
             }
 
         }

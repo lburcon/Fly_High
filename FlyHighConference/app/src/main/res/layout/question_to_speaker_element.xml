@@ -11,7 +11,7 @@
 
         <TextView
             android:textSize="15dp"
-            android:text="nick"
+
             android:id="@+id/question_to_speaker_nick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textColor="@color/text_white" />
 
         <TextView
-            android:text="rating"
+
             android:textSize="15dp"
             android:id="@+id/question_to_speaker_rating"
             android:layout_width="wrap_content"
@@ -30,21 +30,12 @@
             android:textColor="@color/text_white" />
 
         <TextView
-            android:text="tytuł prelekcji"
-            android:textSize="20dp"
-            android:id="@+id/question_to_speaker_prelection_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/question_to_speaker_nick"
-            android:textColor="@color/text_white" />
-
-        <TextView
-            android:text="text posta"
+            android:text="Aktualnie nie ma żadnych pytań do tej prezentacji."
             android:textSize="20dp"
             android:id="@+id/question_to_speaker_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/question_to_speaker_prelection_title"
+            android:layout_below="@id/question_to_speaker_nick"
             android:textColor="@color/text_white" />
 
     </RelativeLayout>

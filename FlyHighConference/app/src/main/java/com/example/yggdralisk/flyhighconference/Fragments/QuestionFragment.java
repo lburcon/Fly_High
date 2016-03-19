@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +37,8 @@ import butterknife.ButterKnife;
  */
 public class QuestionFragment extends Fragment {
 
+    @Bind(R.id.question_details_toolbar)
+    Toolbar mToolbar;
     private JSONArray mQuestions = new JSONArray();
     private JSONObject presentation = new JSONObject();
     private RecyclerView mRecyclerView;
@@ -55,6 +61,7 @@ public class QuestionFragment extends Fragment {
 
         getArrayOfIds(getPrelectionsId(speakerId));
         mAdapter = new QuestionAdapter(mQuestions, getContext());
+
         mRecyclerView.setAdapter(mAdapter);
 
         try {
@@ -82,9 +89,17 @@ public class QuestionFragment extends Fragment {
             e.printStackTrace();
         }
 
-
         return view;
     }
+
+    private void setupToolbar() { //todo: strzałka wstecz
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        if (((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+
 
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
         Set<Integer> prelectionIds = new HashSet<>();
