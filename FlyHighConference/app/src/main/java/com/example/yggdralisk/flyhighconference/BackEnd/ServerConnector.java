@@ -176,6 +176,7 @@ public class ServerConnector {
     private void saveData(Object data) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
         Gson gson = new Gson();
         if (data instanceof Import) {
             editor.putString(context.getString(R.string.shared_preferences_organisers), gson.toJson(((Import) data).getOrganisers()));
@@ -190,10 +191,10 @@ public class ServerConnector {
             editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(data));
         } else if (data instanceof Question[]) {
             editor.putString(context.getString(R.string.shared_preferences_presentation_questions_prefix + presentationID), gson.toJson(data));
-        } else {
+         } else {
         }
-
         editor.apply();
+
     }
 }
 

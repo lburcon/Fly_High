@@ -124,10 +124,9 @@ public class QuestionFragment extends Fragment {
 
     private void getArrayOfIds(ArrayList<Integer> prelectionIds) { //adds questions to mQuestion JSONArray list
 
-        ServerConnector serverConnector;
+        ServerConnector serverConnector = new ServerConnector();
 
         for (int i = 0; i < prelectionIds.size(); i++) {
-            serverConnector = new ServerConnector();
             serverConnector.getQuestionsToPresentation(getContext(), prelectionIds.get(i), new ConnectorResultInterface() {
                 @Override
                 public void onDownloadFinished(boolean succeeded) {

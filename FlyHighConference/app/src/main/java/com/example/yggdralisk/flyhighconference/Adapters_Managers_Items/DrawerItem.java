@@ -27,7 +27,7 @@ public class DrawerItem {
         this.text = text;
 
         switch (text) {
-            case "Plan konderencji":
+            case "Plan konferencji":
                 fragment = new ConferenceListFragment();
                 break;
             case "Nawigacja":
