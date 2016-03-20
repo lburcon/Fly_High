@@ -8,22 +8,22 @@
 
 
     <!-- The main view  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_main_toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/main_yellow"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+    </android.support.v7.widget.Toolbar>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_main_toolbar"
-            android:minHeight="?attr/actionBarSize"
-            android:background="@color/main_yellow"
-            android:layout_width="match_parent"
-            android:layout_height="64dp">
-        </android.support.v7.widget.Toolbar>
-
-    </FrameLayout>
-
+        android:layout_height="match_parent" />
+    </LinearLayout>
     <!-- The navigation drawer -->
     <LinearLayout
         android:id="@+id/left_drawer"
