@@ -2,22 +2,20 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.SpeakerPresentationPair;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.User;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.logging.Handler;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * Created by yggdralisk on 29.02.16.
@@ -25,74 +23,75 @@ import okhttp3.Response;
 public class DataGetter {
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
 
-    public static JSONArray getSpeakerHasPresentations(Context context) throws JSONException {
+    public static SpeakerPresentationPair[] getSpeakerHasPresentations(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_speaker_has_presentations), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, SpeakerPresentationPair[].class);
     }
 
-    public static JSONArray getPresentations(Context context) throws JSONException {
+    public static Presentation[]  getPresentations(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_presentations), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Presentation[].class);
     }
 
-    public static JSONArray getQuestionsToPresentation(Context context, int presentationID) throws JSONException {
+    public static Question[] getQuestionsToPresentation(Context context, int presentationID) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Question[].class);
     }
 
-    public static JSONArray getSpeakers(Context context) throws JSONException {
+    public static Speaker[] getSpeakers(Context context)  {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_speakers), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Speaker[].class);
     }
 
-    public static JSONArray getPartners(Context context) throws JSONException {
+    public static Partner[] getPartners(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_partners), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Partner[].class);
     }
 
-    public static JSONArray getUsers(Context context) throws JSONException {
+    public static User[] getUsers(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_users), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, User[].class);
     }
 
-    public static JSONArray getPlaces(Context context) throws JSONException {
+    public static Place[] getPlaces(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_places), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Place[].class);
     }
 
-    public static JSONArray getLikes(Context context) throws JSONException {
+    public static Like[] getLikes(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_likes), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Like[].class);
     }
 
-    public static JSONArray getOrganisers(Context context) throws JSONException {
+    public static Organiser[] getOrganisers(Context context)  {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_organisers), "");
-        return new JSONArray(str);
+        return new Gson().fromJson(str, Organiser[].class);
     }
 
-    public static JSONObject getSpeakerById(int speakerId,Context context) throws JSONException {
-        JSONArray speakers = getSpeakers(context);
+    public static Speaker getSpeakerById(int speakerId,Context context) {
+        Speaker[] speakers = getSpeakers(context);
         int i = 0;
-        for(; i < speakers.length() && (speakers.getJSONObject(i).getInt("id") != speakerId); i++)
+        for(; i < speakers.length && (speakers[i].getId() != speakerId); i++)
         {}
-        return speakers.getJSONObject(i);
+        return speakers[i];
     }
 
-    public static JSONObject getPresentationById(int presentationId,Context context) throws JSONException {
-        JSONArray presentations = getPresentations(context);
+    public static Presentation getPresentationById(int presentationId,Context context) {
+
+        Presentation[] presentations = getPresentations(context);
         int i = 0;
-        for(; i < presentations.length() && (presentations.getJSONObject(i).getInt("id") != presentationId); i++)
+        for(; i < presentations.length && (presentations[i].getId() != presentationId); i++)
         {}
-        return presentations.getJSONObject(i);
+        return presentations[i];
     }
 
     public static Boolean checkUserLogged(Context context) {
