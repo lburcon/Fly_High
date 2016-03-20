@@ -2,18 +2,24 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -39,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.activity_main_toolbar)
     Toolbar mToolbar;
 
+
+
+    private ActionBarDrawerToggle mDrawerToggle;
+
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
 
@@ -52,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         setFragment(savedInstanceState, new ConferenceListFragment());
         setupToolbar();
         setDrawer();
+
+
+
     }
 
     public void toggleDrawer() {
@@ -206,8 +219,24 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_general, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.hamburger_drawer:
+                Toast.makeText(this,"DUPA", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
