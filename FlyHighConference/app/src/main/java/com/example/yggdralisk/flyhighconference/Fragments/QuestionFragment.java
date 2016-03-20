@@ -39,8 +39,7 @@ import butterknife.ButterKnife;
  */
 public class QuestionFragment extends Fragment {
 
-    @Bind(R.id.question_details_toolbar)
-    Toolbar mToolbar;
+
     private JSONArray mQuestions = new JSONArray();
     private Presentation presentation = new Presentation();
     private RecyclerView mRecyclerView;
@@ -84,12 +83,12 @@ public class QuestionFragment extends Fragment {
         return view;
     }
 
-    private void setupToolbar() { //todo: strzałka wstecz
+/*    private void setupToolbar() { //todo: strzałka wstecz
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
+    }*/
 
 
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker

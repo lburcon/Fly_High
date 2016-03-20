@@ -71,11 +71,9 @@ public class ConferenceFragment extends Fragment {
 
 
 
-<<<<<<< HEAD
+
         localizationInfo.setText(Integer.toString(conference.getPlace()));
-=======
-            localizationInfo.setText(Integer.toString(conference.getPlace()));
->>>>>>> ed8caffa585ce9fba0fc4bb1e6aee53c8f207c80
+
 
 
             time.setText(getPresentationTime(conference));

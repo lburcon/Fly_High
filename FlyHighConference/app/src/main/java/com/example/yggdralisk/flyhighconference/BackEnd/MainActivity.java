@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     ListView mDrawerList;
     @Bind(R.id.left_drawer_logged_name)
     TextView loggedName;
+    @Bind(R.id.activity_main_toolbar)
+    Toolbar mToolbar;
 
     private String[] navMenuTitles;
     private List<Integer> navMenuIcons = new ArrayList<>();
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setFragment(savedInstanceState, new ConferenceListFragment());
+        setupToolbar();
         setDrawer();
     }
 
@@ -196,6 +200,14 @@ public class MainActivity extends AppCompatActivity {
     public void buttonBackPressed(View v) {
         MainActivity mainActivity = this;
         mainActivity.setPreviousFragment();
+    }
+
+    private void setupToolbar() {
+
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 }
