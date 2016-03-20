@@ -7,10 +7,11 @@ public class Speaker {
     int id;
     String name;
     String country;
-    String url; //Homepage url
-    String image; //Url to image
-    int partner; //Patner's id
+    String description;
 
+    String url; //Homepage url
+
+    int partner; //Patner's id
     public int getId() {
         return id;
     }
@@ -29,6 +30,12 @@ public class Speaker {
 
     public String getImage() {
         return image;
+    }
+
+    String image; //Url to image
+
+    public String getDescription() {
+        return description;
     }
 
     public int getPartner() {

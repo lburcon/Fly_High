@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.R;
@@ -26,12 +27,12 @@ import butterknife.ButterKnife;
  */
 public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRecyclerViewAdapter.ViewHolder> {
 
-    private JSONArray mDataset = new JSONArray();
+    private Speaker[] mDataset;
     public MainActivity mUpLayout;
     private final int TYPE_0 = 0;
     private final int TYPE_1 = 1;
 
-    public SpeakersRecyclerViewAdapter(JSONArray myDataset) {
+    public SpeakersRecyclerViewAdapter(Speaker[] myDataset) {
         mDataset = myDataset;
     }
 
@@ -58,27 +59,23 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
 
     @Override
     public void onBindViewHolder(SpeakersRecyclerViewAdapter.ViewHolder holder, int position) {
-        try {
-            holder.setData(mDataset.getJSONObject(position));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+            holder.setData(mDataset[position]);
+
     }
 
     @Override
     public int getItemViewType(int position) {
         int id = -1;
-        try {
-            id = Integer.parseInt(mDataset.getJSONObject(position).getString("id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+            id =mDataset[position].getId();
+
         return id % 2;
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length();
+        return mDataset.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,37 +98,21 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(JSONObject jsonObject) {
+        public void setData(Speaker speakerObject) {
 
-            try {
-                name.setText(jsonObject.getString("name"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                name.setText("Błąd");
-            }
 
-            try {
-                description.setText(jsonObject.getString("description"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                description.setText("Błąd");
-            }
+                name.setText(speakerObject.getName());
 
-            try {
+                description.setText(speakerObject.getDescription());
+
                 Glide.with(itemView.getContext())
-                        .load(jsonObject.getString("image"))
+                        .load(speakerObject.getImage())
                         .placeholder(R.drawable.fly_high_logotype)
                         .into(image);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
-            try {
-                id = jsonObject.getInt("id");
+                id = speakerObject.getId();
                 nListener.setId(id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
 
         }
     }

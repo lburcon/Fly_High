@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
 import com.example.yggdralisk.flyhighconference.R;
@@ -41,7 +42,7 @@ public class QuestionFragment extends Fragment {
     @Bind(R.id.question_details_toolbar)
     Toolbar mToolbar;
     private JSONArray mQuestions = new JSONArray();
-    private JSONObject presentation = new JSONObject();
+    private Presentation presentation = new Presentation();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -65,80 +66,60 @@ public class QuestionFragment extends Fragment {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        try {
-            presentation = DataGetter.getPresentationById(speakerId, getContext());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        presentation = DataGetter.getPresentationById(speakerId, getContext());
+
 
         CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
         ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
 
-        try {
-            toolbar.setTitle(presentation.getString("title"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            toolbar.setTitle("Błąd");
-        }
 
-        try {
-            Glide.with(getContext())
-                    .load(presentation.getString("image"))
-                    .placeholder(R.drawable.fly_high_logotype)
-                    .into(imageTop);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        toolbar.setTitle(presentation.getTitle());
+
+        Glide.with(getContext())
+                .load(presentation.getImage())
+                .placeholder(R.drawable.fly_high_logotype)
+                .into(imageTop);
+
 
         return view;
     }
 
     private void setupToolbar() { //todo: strzałka wstecz
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
-        if (((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
 
-
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
         Set<Integer> prelectionIds = new HashSet<>();
-        JSONArray presentations;
+        Presentation[] presentations;
 
-        try {
-            presentations = DataGetter.getPresentations(getContext());
 
-            for (int i = 0; i < presentations.length(); i++) {
-                JSONObject presentation = presentations.getJSONObject(i);
-                int[] speakersIds = getSpeakerIds(presentation);
+        presentations = DataGetter.getPresentations(getContext());
 
-                for (int j = 0; j < speakersIds.length; j++)
-                { if (speakerId == speakersIds[j])
-                    prelectionIds.add(Integer.parseInt(presentation.getString("id")));}
+        for (int i = 0; i < presentations.length; i++) {
+            Presentation presentation = presentations[i];
+            int[] speakersIds = getSpeakerIds(presentation);
+
+            for (int j = 0; j < speakersIds.length; j++) {
+                if (speakerId == speakersIds[j])
+                    prelectionIds.add(presentation.getId());
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
+
         ArrayList<Integer> listOfIds = new ArrayList<>();
         listOfIds.addAll(prelectionIds);
         return listOfIds;
     }
 
-    private int[] getSpeakerIds(JSONObject presentation) { // returns ids of prelegents for one prelection
-        int[] speakerIds = null;
-        try {
-            String ids = presentation.getString("speakers");
-            String[] strArray = ids.split(",");
-            speakerIds = new int[strArray.length];
-            for (int i = 0; i < strArray.length; i++) {
-                speakerIds[i] = Integer.parseInt(strArray[i]);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return speakerIds;
+    private int[] getSpeakerIds(Presentation presentation) { // returns ids of prelegents for one prelection
+
+        int[] ids = presentation.getSpeakers();
+
+        return ids;
     }
 
     private void getArrayOfIds(ArrayList<Integer> prelectionIds) { //adds questions to mQuestion JSONArray list
@@ -155,12 +136,10 @@ public class QuestionFragment extends Fragment {
             });
         }
 
-        try {
-            for (int i = 0; i < prelectionIds.size(); i++)
-                mQuestions.put(DataGetter.getQuestionsToPresentation(getContext(), prelectionIds.get(i)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        for (int i = 0; i < prelectionIds.size(); i++)
+            mQuestions.put(DataGetter.getQuestionsToPresentation(getContext(), prelectionIds.get(i)));
+
     }
 
 }

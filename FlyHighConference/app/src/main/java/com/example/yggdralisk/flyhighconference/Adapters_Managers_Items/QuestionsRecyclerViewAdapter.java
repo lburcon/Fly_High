@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.R;
@@ -25,13 +27,13 @@ import butterknife.ButterKnife;
  * Created by lukasz on 03.03.16.
  */
 public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<QuestionsRecyclerViewAdapter.ViewHolder> {
-        private JSONArray mDataset = new JSONArray();
-        private JSONArray mPresentations = new JSONArray();
+        private Speaker[] mDataset;
+        private Presentation[] mPresentations;
         public MainActivity mUpLayout;
         private final int TYPE_0 = 0;
         private final int TYPE_1 = 1;
 
-        public QuestionsRecyclerViewAdapter(JSONArray myDataset, JSONArray myDatasetPresentations) {
+        public QuestionsRecyclerViewAdapter(Speaker[] myDataset, Presentation[] myDatasetPresentations) {
             mDataset = myDataset;
             mPresentations = myDatasetPresentations;
         }
@@ -59,27 +61,23 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
 
         @Override
         public void onBindViewHolder(QuestionsRecyclerViewAdapter.ViewHolder holder, int position) {
-            try {
-                holder.setData(mPresentations.getJSONObject(position));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+                holder.setData(mPresentations[position]);
+
         }
 
         @Override
         public int getItemViewType(int position) {
             int id = -1;
-            try {
-                id = Integer.parseInt(mDataset.getJSONObject(position).getString("id"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+                id = mDataset[position].getId();
+
             return id % 2;
         }
 
         @Override
         public int getItemCount() {
-            return mDataset.length();
+            return mDataset.length;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,37 +99,19 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
                 ButterKnife.bind(this, itemView);
             }
 
-            public void setData(JSONObject jsonObject) {
+            public void setData(Presentation presentationObject) {
 
-                try {
-                    name.setText(jsonObject.getString("title"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    name.setText("Błąd");
-                }
+                    name.setText(presentationObject.getTitle());
 
-                try {
-                    description.setText(jsonObject.getString("description"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    description.setText("Błąd");
-                }
+                    description.setText(presentationObject.getDescription());
 
-                try {
                     Glide.with(itemView.getContext())
-                            .load(jsonObject.getString("image"))
+                            .load(presentationObject.getImage())
                             .placeholder(R.drawable.fly_high_logotype)
                             .into(image);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                try {
-                    id = jsonObject.getInt("id");
+                    id = presentationObject.getId();
                     nListener.setId(id);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
             }
         }

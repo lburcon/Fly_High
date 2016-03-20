@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionsRecyclerViewAdapter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
@@ -38,12 +40,10 @@ public class QuestionsListFragment extends Fragment {
 
         //TODO: hamburger icon
 
-        try {
+
             mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
             mRecyclerView.setAdapter(mAdapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
 
        /*  Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
@@ -57,11 +57,11 @@ public class QuestionsListFragment extends Fragment {
         return view;
     }
 
-    private JSONArray getSpeakers() throws JSONException {
+    private Speaker[] getSpeakers(){
         return DataGetter.getSpeakers(getContext());
     }
 
-    private JSONArray getPresentations() throws JSONException {
+    private Presentation[] getPresentations(){
         return DataGetter.getPresentations(getContext());
     }
 

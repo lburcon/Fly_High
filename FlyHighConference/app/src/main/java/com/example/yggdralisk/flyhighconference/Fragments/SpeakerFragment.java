@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
@@ -23,59 +24,37 @@ import org.json.JSONObject;
 public class SpeakerFragment extends Fragment {
 
     private JSONArray mDataset = new JSONArray();
-    private JSONObject speaker = new JSONObject();
+    private Speaker speaker = new Speaker();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.speaker_details, container, false);
 
-        try {
-            mDataset = getSpeakers();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        try {
+
             speaker = DataGetter.getSpeakerById(getArguments().getInt("speakerId"), getContext());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
         TextView name = (TextView) view.findViewById(R.id.speaker_name);
         TextView description = (TextView) view.findViewById(R.id.speaker_description);
         ImageView image = (ImageView) view.findViewById(R.id.speaker_image);
 
-        try {
-            name.setText(speaker.getString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            name.setText("Błąd");
-        }
+            name.setText(speaker.getName());
 
-        try {
-            description.setText(speaker.getString("description") +
-                                "\n Kraj pochodzenia: " + speaker.getString("country") +
-                                "\n URL: " + speaker.getString("url"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        description.setText("Błąd");
-        }
 
-        try {
+
+            description.setText(speaker.getDescription() +//todo: add description
+                                "\n Kraj pochodzenia: " + speaker.getCountry() +
+                                "\n URL: " + speaker.getUrl());
+
+
             Glide.with(this)
-                    .load(speaker.getString("image"))
+                    .load(speaker.getImage())
                     .placeholder(R.drawable.fly_high_logotype)
                     .into(image);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
         return view;
-    }
-
-    private JSONArray getSpeakers() throws JSONException {
-        return DataGetter.getSpeakers(getContext());
     }
 }

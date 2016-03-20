@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
 import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
@@ -22,28 +23,23 @@ import org.json.JSONObject;
  */
 public class PartnerFragment extends Fragment {
 
-    private JSONArray mDataset = new JSONArray();
-    private JSONObject partner = new JSONObject();
+    private Partner[] mDataset;
+    private Partner partner = new Partner();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.partners_details, container, false);
 
-        try {
             mDataset = getPartners();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        for (int i = 0 ; i < mDataset.length() ; i++) {
-            try {
-                partner = mDataset.getJSONObject(i);
-                if (Integer.parseInt(partner.getString("id")) == getArguments().getInt("partnerId"))
+
+        for (int i = 0 ; i < mDataset.length ; i++) {
+
+                partner = mDataset[i];
+                if (partner.getId() == getArguments().getInt("partnerId"))
                     break;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
         }
 
         TextView name = (TextView) view.findViewById(R.id.partners_details_name);
@@ -52,40 +48,21 @@ public class PartnerFragment extends Fragment {
         ImageView image = (ImageView) view.findViewById(R.id.partners_details_image);
 
 
-        try {
-            title.setText(partner.getString("type"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            title.setText("Błąd");
-        }
+            title.setText(partner.getType());
 
-        try {
-            name.setText(partner.getString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            name.setText("Błąd");
-        }
+            name.setText(partner.getName());
 
-        try {
-            description.setText(partner.getString("url"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            description.setText("Błąd");
-        }
+            description.setText(partner.getUrl());
 
-        try {
             Glide.with(getContext())
-                    .load(partner.getString("logo"))
+                    .load(partner.getLogo())
                     .placeholder(R.drawable.fly_high_logotype)
                     .into(image);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         return view;
     }
 
-    private JSONArray getPartners() throws JSONException {
+    private Partner[] getPartners(){
         return DataGetter.getPartners(getContext());
     }
 

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
 import com.example.yggdralisk.flyhighconference.R;
@@ -25,10 +26,10 @@ import butterknife.ButterKnife;
  */
 public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRecyclerViewAdapter.ViewHolder> {
 
-    JSONArray mDataset = new JSONArray();
+    Partner[] mDataset;
     public MainActivity mUpLayout;
 
-    public PartnersRecyclerViewAdapter(JSONArray myDataset) {
+    public PartnersRecyclerViewAdapter(Partner[] myDataset) {
         mDataset = myDataset;
     }
 
@@ -44,16 +45,14 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
 
     @Override
     public void onBindViewHolder(PartnersRecyclerViewAdapter.ViewHolder holder, int position) {
-        try {
-            holder.setData(mDataset.getJSONObject(position));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        holder.setData(mDataset[position]);
+
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length();
+        return mDataset.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,36 +75,24 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(JSONObject jsonObject) {
+        public void setData(Partner partner) {
 
-            try {
-                name.setText(jsonObject.getString("name"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                name.setText("Błąd");
-            }
 
-            try {
-                title.setText(jsonObject.getString("type"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                title.setText("Błąd");
-            }
+            name.setText(partner.getName());
 
-            try {
-                Glide.with(itemView.getContext())
-                        .load(jsonObject.getString("logo"))
-                        .placeholder(R.drawable.fly_high_logotype)
-                        .into(image);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                id = jsonObject.getInt("id");
-                nListener.setId(id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+            title.setText(partner.getType());
+
+
+            Glide.with(itemView.getContext())
+                    .load(partner.getLogo())
+                    .placeholder(R.drawable.fly_high_logotype)
+                    .into(image);
+
+
+            id = partner.getId();
+            nListener.setId(id);
+
 
         }
 
@@ -121,7 +108,7 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
                 if (id > 0) {
                     Bundle args = new Bundle();
                     args.putInt("partnerId", id);
-                    mUpLayout.setFragment(null,new PartnerFragment(),args);
+                    mUpLayout.setFragment(null, new PartnerFragment(), args);
                 }
 
             }

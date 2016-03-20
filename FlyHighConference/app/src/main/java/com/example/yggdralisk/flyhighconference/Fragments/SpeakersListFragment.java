@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.SpeakersRecyclerViewAdapter;
 
@@ -39,12 +40,9 @@ public class SpeakersListFragment extends Fragment {
 
         //TODO: hamburger icon
 
-        try {
             mAdapter = new SpeakersRecyclerViewAdapter(getSpeakers());
             mRecyclerView.setAdapter(mAdapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
 
        /*  Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
@@ -59,7 +57,7 @@ public class SpeakersListFragment extends Fragment {
     }
 
     //todo
-    private JSONArray getSpeakers() throws JSONException {
+    private Speaker[] getSpeakers(){
         return DataGetter.getSpeakers(getContext());
     }
 
