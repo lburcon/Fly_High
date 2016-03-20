@@ -63,7 +63,6 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         public void onBindViewHolder(QuestionsRecyclerViewAdapter.ViewHolder holder, int position) {
 
                 holder.setData(mPresentations[position]);
-
         }
 
         @Override
