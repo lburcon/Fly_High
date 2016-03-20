@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.R;
@@ -25,11 +26,11 @@ import butterknife.ButterKnife;
  */
 public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<ConferenceRecyclerViewAdapter.ViewHolder> {
 
-    JSONArray mConferences = new JSONArray();
+    Presentation[] mConferences;
     public Context mContext;
     public MainActivity mUpLayout;
 
-    public ConferenceRecyclerViewAdapter(JSONArray myDataset, Context context) {
+    public ConferenceRecyclerViewAdapter(Presentation[] myDataset, Context context) {
         mConferences = myDataset;
         mContext = context;
     }
@@ -46,16 +47,12 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
     @Override
     public void onBindViewHolder(ConferenceRecyclerViewAdapter.ViewHolder holder, int position) {
-        try {
-            holder.setData(mConferences.getJSONObject(position));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            holder.setData(mConferences[position]);
     }
 
     @Override
     public int getItemCount() {
-        return mConferences.length();
+        return mConferences.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,53 +76,29 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(JSONObject jsonObject) {
-            try {
-                id = jsonObject.getInt("id");
+        public void setData(Presentation presentation) {
+                id = presentation.getId();
                 nListner.setId(id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                title.setText(jsonObject.getString("title"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                title.setText("Błąd");
-            }
-            try {
-                descr.setText(jsonObject.getString("description"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                descr.setText("Błąd");
-            }
-            try {
-                time.setText(getPresentationTime(jsonObject));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                descr.setText("Błąd");
-            }
-            try {
-                auth.setText(getPresentationAuth(jsonObject));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                descr.setText("Błąd");
-            }
+                title.setText(presentation.getTitle());
+
+                descr.setText(presentation.getDescription());
+
+                time.setText(getPresentationTime(presentation));
+
+                auth.setText(getPresentationAuth());
+
         }
 
-        private String getPresentationAuth(JSONObject jsonObject) throws JSONException {
+        private String getPresentationAuth(){
             if (id == -1)
-                try {
-                    return DataGetter.getSpeakerById(id, mContext).getString("name");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    return DataGetter.getSpeakerById(id, mContext).getName();
 
             return "";
         }
 
-        private String getPresentationTime(JSONObject jsonObject) throws JSONException {
-            String dtStart = jsonObject.getString("start");
-            String dtEnd = jsonObject.getString("end");
+        private String getPresentationTime(Presentation presentation) {
+            String dtStart = presentation.getStart();
+            String dtEnd = presentation.getEnd();
 
             String day = getDay(dtStart, dtEnd);
             String startTime = getTime(dtStart);

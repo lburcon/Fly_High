@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by lukasz on 16.03.16.
+ * Hijacked by yggdralisk on 18.03.16
  */
 
 public class NavigationFragment extends Fragment{

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telecom.Conference;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.ConferenceRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.BackEnd.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.R;
@@ -48,14 +50,10 @@ public class ConferenceListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        JSONArray mDataSet = new JSONArray();
-        try {
-            mDataSet = DataGetter.getPresentations(getContext());
+            Presentation[] mDataSet = DataGetter.getPresentations(getContext());
             mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
             mRecyclerView.setAdapter(mAdapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
         new TimeFinder().execute(mDataSet);
 
@@ -74,7 +72,7 @@ public class ConferenceListFragment extends Fragment {
         mLayoutManager.scrollToPosition(index);
     }
 
-    private class TimeFinder extends AsyncTask<JSONArray, Void, Void> {
+    private class TimeFinder extends AsyncTask<Presentation[], Void, Void> {
         int index;
 
         private int compareDates(String dt1, String dt2) throws ParseException {
@@ -89,17 +87,17 @@ public class ConferenceListFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(JSONArray... params) {
-            JSONArray mDataSet = params[0];
+        protected Void doInBackground(Presentation[]... params) {
+            Presentation[] mDataSet = params[0];
 
             String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             try {
-                for (int i = 0; i < mDataSet.length(); i++) {
-                    if (compareDates(mDataSet.getJSONObject(i).getString("start"), currentDate) >= 0 && compareDates(mDataSet.getJSONObject(i).getString("end"), currentDate) <= 0)
+                for (int i = 0; i < mDataSet.length; i++) {
+                    if (compareDates(mDataSet[i].getStart(), currentDate) >= 0 && compareDates(mDataSet[i].getEnd(), currentDate) <= 0)
                         index = i;
 
                 }
-            } catch (JSONException | ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
 
