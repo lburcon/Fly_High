@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
         setFragment(savedInstanceState, new ConferenceListFragment());
         setupToolbar();
         setDrawer();
-
-
-
     }
 
     public void toggleDrawer() {
@@ -87,29 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
     public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity) {
-        try {
-            if (findViewById(R.id.fragment_container_main) != null) {
-                if (savedInstanceState != null) {
-                    return;
-                }
-                fragmentActivity.setArguments(getIntent().getExtras());
-                FragmentManager fragmentManager = getSupportFragmentManager();
-
-                boolean isLog = (fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginFragment
-                        || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
-
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
-
-                if (!isLog)
-                    fragmentTransaction.addToBackStack(null);
-
-                fragmentTransaction.commit();
-            }
-        } catch (IllegalStateException ex) {
-            ex.printStackTrace();
-        }
+       setFragment(savedInstanceState, fragmentActivity, null);
     }
 
     public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity, Bundle args) {
@@ -119,12 +94,14 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 fragmentActivity.setArguments(getIntent().getExtras());
-                fragmentActivity.setArguments(args);
+                if (args != null) fragmentActivity.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 boolean isLog = (fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginFragment
                         || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+                //if(fragmentManager.findFragmentById(R.id.fragment_container_main) != null) fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.fragment_container_main));
+                // fragmentTransaction.add(R.id.fragment_container_main, fragmentActivity);
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
                 if (!isLog)

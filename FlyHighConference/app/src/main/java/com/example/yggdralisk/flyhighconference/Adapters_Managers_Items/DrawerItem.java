@@ -18,14 +18,7 @@ public class DrawerItem {
     String text;
     Fragment fragment;
 
-    public Fragment getFragment()
-    {
-        return fragment;
-    }
-    public DrawerItem(String text,int iconId) {
-        this.iconId = iconId;
-        this.text = text;
-
+    public Fragment getFragment() {
         switch (text) {
             case "Plan konferencji":
                 fragment = new ConferenceListFragment();
@@ -51,5 +44,12 @@ public class DrawerItem {
             default:
                 fragment = new ConferenceListFragment();
         }
+
+        return fragment;
+    }
+
+    public DrawerItem(String text, int iconId) {
+        this.iconId = iconId;
+        this.text = text;
     }
 }
