@@ -40,8 +40,6 @@ public class LoginFragment extends Fragment {
     @Bind(R.id.login_layout_email) EditText emailText;
     @Bind(R.id.login_layout_password) EditText passwordText;
     @Bind(R.id.login_layout_login_button) Button loginButton;
-    @Bind(R.id.login_layout_hamburger) ImageButton hamburgerButton;
-    MainActivity mainActivity;
     Context mContext;
 
     @Override
@@ -50,34 +48,20 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.login_layout, container, false);
 
         ButterKnife.bind(this,view);
-        mainActivity = (MainActivity) getContext();
         mContext = container.getContext();
-
-        setButtons();
-
 
         return view;
     }
 
-    private void setButtons() {
-        loginButton.setOnClickListener(new loginListener());
-
-        hamburgerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.toggleDrawer();
-            }
-        });
-    }
 
     private boolean logIn(int id) {
         if (id != -1) {
             if (!DataGetter.checkUserLogged(mContext))
                 DataGetter.toggleUserLogged(mContext, emailText.getText().toString(), id);
             String userName = emailText.getText().toString().substring(0, emailText.getText().toString().indexOf('@'));
-            mainActivity.setLoggedNameOnDrawer(userName);
+            ((MainActivity) getContext()).setLoggedNameOnDrawer(userName);
             displayToast("Zalogowano jako: " + userName);
-            mainActivity.changeLoginLogoutDrawer();
+            ((MainActivity) getContext()).changeLoginLogoutDrawer();
 
 
             Handler handler = new Handler();
@@ -85,15 +69,15 @@ public class LoginFragment extends Fragment {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mainActivity.setFragment(null, new LoginOutFragment());
+                    ((MainActivity) getContext()).setFragment(null, new LoginOutFragment());
                 }
             }, 2000);
             return true;
         } else {
             displayToast(getString(R.string.login_error_messege));
             DataGetter.toggleUserLogged(mContext, "", -1);
-            mainActivity.setLoggedNameOnDrawer("");
-            mainActivity.changeLoginLogoutDrawer();
+            ((MainActivity) getContext()).setLoggedNameOnDrawer("");
+            ((MainActivity) getContext()).changeLoginLogoutDrawer();
             return false;
         }
     }

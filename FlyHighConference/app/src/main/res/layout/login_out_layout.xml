@@ -4,16 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/text_white">
 
-    <ImageButton
-        android:id = "@+id/login_out_layout_hamburger"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="left"
-        android:src="@drawable/ic_hamburger"
-        android:background="@color/text_white"
-        android:layout_marginBottom="25dp"
-        android:visibility="visible"
-        />
     <Button
         android:id="@+id/login_out_layout_button"
         android:layout_width="wrap_content"

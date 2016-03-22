@@ -27,9 +27,7 @@ import butterknife.ButterKnife;
 public class LoginOutFragment extends Fragment{
 
     @Bind(R.id.login_out_layout_button) Button logOutbutton;
-   @Bind(R.id.login_out_layout_hamburger) ImageButton hamburgerButton;
     Context mContext;
-    MainActivity mainActivity;
 
     @Nullable
     @Override
@@ -38,7 +36,6 @@ public class LoginOutFragment extends Fragment{
 
         ButterKnife.bind(this,view);
         mContext = container.getContext();
-        mainActivity = (MainActivity) getContext();
 
         setButtons();
 
@@ -58,19 +55,12 @@ public class LoginOutFragment extends Fragment{
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mainActivity.setFragment(null, new LoginFragment());
+                            ((MainActivity) getContext()).setFragment(null, new LoginFragment());
                         }
                     }, 2000);
                 }
-                mainActivity.setLoggedNameOnDrawer("");
-                mainActivity.changeLoginLogoutDrawer();
-            }
-        });
-
-        hamburgerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.toggleDrawer();
+                ((MainActivity) getContext()).setLoggedNameOnDrawer("");
+                ((MainActivity) getContext()).changeLoginLogoutDrawer();
             }
         });
     }

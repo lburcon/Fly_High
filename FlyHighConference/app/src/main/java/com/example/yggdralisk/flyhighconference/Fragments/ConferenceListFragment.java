@@ -57,14 +57,6 @@ public class ConferenceListFragment extends Fragment {
 
         new TimeFinder().execute(mDataSet);
 
-        ImageButton drawerButton = (ImageButton) view.findViewById(R.id.conference_drawer_button);
-        drawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).toggleDrawer();
-            }
-        });
-
         return view;
     }
 
