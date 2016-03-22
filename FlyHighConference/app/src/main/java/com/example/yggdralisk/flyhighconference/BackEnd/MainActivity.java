@@ -57,9 +57,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
 
         setFragment(savedInstanceState, new ConferenceListFragment());
-        setupToolbar();
+        //setupToolbar();
+
         setDrawer();
     }
 
@@ -99,9 +102,11 @@ public class MainActivity extends AppCompatActivity {
                         || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+
                 //if(fragmentManager.findFragmentById(R.id.fragment_container_main) != null) fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.fragment_container_main));
                 // fragmentTransaction.add(R.id.fragment_container_main, fragmentActivity);
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
+                setupToolbar(fragmentActivity);
 
                 if (!isLog)
                     fragmentTransaction.addToBackStack(null);
@@ -128,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean setPreviousFragment() {
+        setupToolbar();
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
             return true;
@@ -193,12 +200,40 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupToolbar() {
 
-        setSupportActionBar(mToolbar);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+       // setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null)
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        //mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+    }
 
-       // if (getSupportActionBar() != null) {
-           // getSupportActionBar().setDisplayHomeAsUpEnabled(true); //USE THIS WHEN BACK BUTTON NEEDED
-        //}
+    private void setupToolbar(Fragment fragment) {
+        //setSupportActionBar(mToolbar);
+
+        Class fragmentClass = fragment.getClass();
+        String fragmentClassName = fragmentClass.getName();
+
+        if (getSupportActionBar() != null)
+        switch(fragmentClassName) {
+            case "com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment":
+            case "com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment":
+            case "com.example.yggdralisk.flyhighconference.Fragments.QuestionsListFragment":
+            case "com.example.yggdralisk.flyhighconference.Fragments.SpeakersListFragment":
+            case "com.example.yggdralisk.flyhighconference.Fragments.PartnersListFragment":
+            case "com.example.yggdralisk.flyhighconference.Fragments.LoginFragment":
+            case "com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment":
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//              mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                break;
+            default:
+                mDrawerToggle.setDrawerIndicatorEnabled(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        }
+
     }
 
     @Override

@@ -83,13 +83,6 @@ public class QuestionFragment extends Fragment {
         return view;
     }
 
-/*    private void setupToolbar() { //todo: strzałka wstecz
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }*/
-
 
     private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
         Set<Integer> prelectionIds = new HashSet<>();
