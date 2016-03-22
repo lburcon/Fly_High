@@ -11,14 +11,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_main_toolbar"
+        <?xml version="1.0" encoding="utf-8"?>
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:background="@color/main_yellow"
-            android:minHeight="?attr/actionBarSize">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/main_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:layout_scrollFlags="scroll|enterAlways|snap"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+
+            </android.support.design.widget.CoordinatorLayout>
+
+            <android.support.design.widget.NavigationView
+                android:id="@+id/navigation_view"
+                android:layout_width="@dimen/drawer_margin"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:menu="@menu/menu_general"/>
+
+        </android.support.v4.widget.DrawerLayout>
+
 
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/fragment_container_main"
