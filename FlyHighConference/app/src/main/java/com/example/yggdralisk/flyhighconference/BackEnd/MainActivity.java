@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         setSupportActionBar(mToolbar);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
 
@@ -134,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean setPreviousFragment() {
         setupToolbar();
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
             return true;
@@ -200,10 +200,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupToolbar() {
 
-       // setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
+        {getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);}
         //mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
@@ -224,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
             case "com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment":
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 //              mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-                mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
                 break;
             default:
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
