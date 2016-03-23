@@ -33,7 +33,7 @@ public class SplashScren extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_scren);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this);                                     //WTF THAT GIT
         //retrofitGet();
         ServerConnector serverConnector = new ServerConnector();
         serverConnector.refreshData(getApplicationContext(), new ConnectorResultInterface() {
