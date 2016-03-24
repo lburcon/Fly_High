@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
+import android.telecom.Conference;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,9 +24,13 @@ import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
+import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
 import java.util.ArrayList;
@@ -106,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
 
                 //if(fragmentManager.findFragmentById(R.id.fragment_container_main) != null) fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.fragment_container_main));
                 // fragmentTransaction.add(R.id.fragment_container_main, fragmentActivity);
-                fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
                 setupToolbar(fragmentActivity);
+                fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
+
 
                 if (!isLog)
                     fragmentTransaction.addToBackStack(null);
@@ -194,8 +200,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonBackPressed(View v) {
-        MainActivity mainActivity = this;
-        mainActivity.setPreviousFragment();
+       this.setPreviousFragment();
     }
 
     private void setupToolbar() {
@@ -209,12 +214,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupToolbar(Fragment fragment) {
         //setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            if (fragment instanceof ConferenceFragment || fragment instanceof PartnerFragment || fragment instanceof SpeakerFragment) {
+                mDrawerToggle.setDrawerIndicatorEnabled(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            } else {
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Class fragmentClass = fragment.getClass();
+            }
+        }
+
+        /*Class fragmentClass = fragment.getClass();
         String fragmentClassName = fragmentClass.getName();
 
         if (getSupportActionBar() != null)
-        switch(fragmentClassName) {
+        switch(fragment.getClass().toString()) {
             case "com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment":
             case "com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment":
             case "com.example.yggdralisk.flyhighconference.Fragments.QuestionsListFragment":
@@ -232,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        }
+        }*/
 
     }
 
