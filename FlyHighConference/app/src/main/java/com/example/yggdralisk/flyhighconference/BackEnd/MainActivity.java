@@ -2,7 +2,6 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -10,17 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
-import android.telecom.Conference;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -28,7 +21,6 @@ import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
-import com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.R;
@@ -66,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
 
-        setFragment(savedInstanceState, new ConferenceListFragment());
+        setFragment(savedInstanceState, new ConferenceListFragment(),null);
         //setupToolbar();
 
         setDrawer();
@@ -91,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
-    public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity) {
-       setFragment(savedInstanceState, fragmentActivity, null);
-    }
 
     public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity, Bundle args) {
         try {
@@ -106,11 +95,10 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 boolean isLog = (fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginFragment
                         || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
+
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-
-                //if(fragmentManager.findFragmentById(R.id.fragment_container_main) != null) fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.fragment_container_main));
-                // fragmentTransaction.add(R.id.fragment_container_main, fragmentActivity);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right,R.anim.slide_in_right,R.anim.slide_out_left);
                 setupToolbar(fragmentActivity);
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
@@ -129,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).getFragment());
+            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).getFragment(),null);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

@@ -23,25 +23,21 @@ import org.json.JSONException;
  */
 public class QuestionsListFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.questions, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //TODO: hamburger icon
 
 
-            mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
+        RecyclerView.Adapter mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
             mRecyclerView.setAdapter(mAdapter);
 
 
