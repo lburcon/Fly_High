@@ -53,8 +53,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     public void onBindViewHolder(QuestionAdapter.ViewHolder holder, int position) {
 
             holder.setData(mQuestions[position]);
-
-
     }
 
     @Override
@@ -79,14 +77,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
         public void setData(Question question) {
 
-            if (question !=null) {
+
                     nick.setText(String.valueOf(question.getUser()));
 
                     rating.setText("Ocena: " + question.getRating());
 
                     questionField.setText(question.getContent());
 
-            }
+
 
         }
 

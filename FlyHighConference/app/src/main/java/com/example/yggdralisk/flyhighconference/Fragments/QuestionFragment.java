@@ -61,10 +61,10 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        getArrayOfIds(speakerId);
+        getArrayOfIds(speakerId); // BUGGGGGGGGGG!!!!!!!111oneone WTF WHYYY
         mAdapter = new QuestionAdapter(questionArray, getContext());
 
-        mRecyclerView.setAdapter(mAdapter);
+       /* mRecyclerView.setAdapter(mAdapter);
 
         presentation = DataGetter.getPresentationById(speakerId, getContext());
 
@@ -78,7 +78,7 @@ public class QuestionFragment extends Fragment {
         Glide.with(getContext())
                 .load(presentation.getImage())
                 .placeholder(R.drawable.fly_high_logotype)
-                .into(imageTop);
+                .into(imageTop);*/
 
 
         return view;

@@ -55,7 +55,7 @@ public class LoginOutFragment extends Fragment{
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            ((MainActivity) getContext()).setFragment(null, new LoginFragment());
+                            ((MainActivity) getContext()).setFragment(null, new LoginFragment(),null);
                         }
                     }, 2000);
                 }

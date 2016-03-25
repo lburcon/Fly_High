@@ -50,9 +50,10 @@ public class LoginFragment extends Fragment {
         ButterKnife.bind(this,view);
         mContext = container.getContext();
 
+        loginButton.setOnClickListener(new loginListener());
+
         return view;
     }
-
 
     private boolean logIn(int id) {
         if (id != -1) {
@@ -69,7 +70,7 @@ public class LoginFragment extends Fragment {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ((MainActivity) getContext()).setFragment(null, new LoginOutFragment());
+                    ((MainActivity) getContext()).setFragment(null, new LoginOutFragment(),null);
                 }
             }, 2000);
             return true;
@@ -81,8 +82,6 @@ public class LoginFragment extends Fragment {
             return false;
         }
     }
-
-
 
     private void displayToast(String text) {
         Toast t = Toast.makeText(getContext(), "  " + text + "  ", Toast.LENGTH_LONG); //new Toast(mainActivity.getApplicationContext());

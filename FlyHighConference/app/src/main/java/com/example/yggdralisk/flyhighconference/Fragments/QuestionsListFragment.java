@@ -23,9 +23,8 @@ import org.json.JSONException;
  */
 public class QuestionsListFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    Speaker[] speakerArray;
+    Presentation[] presentationArray;
 
 
     @Nullable
@@ -33,12 +32,18 @@ public class QuestionsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.questions, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
+        speakerArray = getSpeakers();
+        if (presentationArray == null)
+        presentationArray = getPresentations();
+
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-            mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
+
+        RecyclerView.Adapter mAdapter = new QuestionsRecyclerViewAdapter(speakerArray, presentationArray);
+
             mRecyclerView.setAdapter(mAdapter);
 
         return view;
