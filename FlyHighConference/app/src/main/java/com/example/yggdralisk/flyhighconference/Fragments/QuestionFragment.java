@@ -72,25 +72,24 @@ public class QuestionFragment extends Fragment {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-            //todo: BUGGGGGGGGGG!!!!!!!111oneone WTF WHYYY
-
-
             mAdapter = new QuestionAdapter(questionArray, getContext());
 
             mRecyclerView.setAdapter(mAdapter);
 
             presentation = DataGetter.getPresentationById(speakerId, getContext());
 
-
             CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
-            ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
-            toolbar.setTitle(presentation.getTitle());
 
+
+            toolbar.setTitle(presentation.getTitle());
+        }
+
+        ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
             Glide.with(getContext())
                     .load(presentation.getImage())
                     .placeholder(R.drawable.fly_high_logotype)
                     .into(imageTop);
-        }
+
 
         return view;
     }
@@ -124,20 +123,17 @@ public class QuestionFragment extends Fragment {
         return ids;
     }*/
 
-    private void getArrayOfIds(int prelectionId) { //adds questions to mQuestion JSONArray list
+    private void getArrayOfIds(final int prelectionId) { //adds questions to mQuestion JSONArray list
 
         ServerConnector serverConnector = new ServerConnector();
 
         serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
             @Override
             public void onDownloadFinished(boolean succeeded) {
-
+                if(succeeded)
+                      questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
             }
         });
-
-
-        questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
-
     }
 
     @OnClick(R.id.question_fab)
@@ -145,19 +141,18 @@ public class QuestionFragment extends Fragment {
 
 
         if (DataGetter.checkUserLogged(getContext())) {
-        if (editText.getVisibility() == View.GONE) {
-            Toast.makeText(getContext(), "Możesz dodać pytanie.", Toast.LENGTH_SHORT).show();
-            editText.setVisibility(View.VISIBLE);
-            editText.setHint("Wpisz pytanie");
-        }
-        else {
-            ServerConnector serverConnector = new ServerConnector();
-            editText.setVisibility(View.GONE);
-            Toast.makeText(getContext(), "Pytanie zostało dodane.", Toast.LENGTH_SHORT).show();
-            serverConnector.postQuestionToPresentation(speakerId, DataGetter.getLoggedUserId(getContext()), editText.getText().toString(), getContext());
-            editText.getText().clear();
-        }}
-        else
+            if (editText.getVisibility() == View.GONE) {
+                Toast.makeText(getContext(), "Możesz dodać pytanie.", Toast.LENGTH_SHORT).show();
+                editText.setVisibility(View.VISIBLE);
+                editText.setHint("Wpisz pytanie");
+            } else {
+                ServerConnector serverConnector = new ServerConnector();
+                editText.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Pytanie zostało dodane.", Toast.LENGTH_SHORT).show();
+                serverConnector.postQuestionToPresentation(speakerId, DataGetter.getLoggedUserId(getContext()), editText.getText().toString(), getContext());
+                editText.getText().clear();
+            }
+        } else
             Toast.makeText(getContext(), "Musisz się zalogować.", Toast.LENGTH_SHORT).show();
     }
 }
