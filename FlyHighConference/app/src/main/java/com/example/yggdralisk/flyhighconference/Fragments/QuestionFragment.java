@@ -63,30 +63,7 @@ public class QuestionFragment extends Fragment {
         ButterKnife.bind(this, view);
 
 
-        getArrayOfIds(speakerId);
-        if (questionArray != null) {
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
-            mRecyclerView.setHasFixedSize(false);
-            mRecyclerView.setNestedScrollingEnabled(false);
-            mLayoutManager = new WrappingLinearLayoutManager(getContext());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-
-            mAdapter = new QuestionAdapter(questionArray, getContext());
-
-            mRecyclerView.setAdapter(mAdapter);
-
-            presentation = DataGetter.getPresentationById(speakerId, getContext());
-
-            CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
-            ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
-
-            toolbar.setTitle(presentation.getTitle());
-
-            Glide.with(getContext())
-                    .load(presentation.getImage())
-                    .placeholder(R.drawable.fly_high_logotype)
-                    .into(imageTop);
-        }
+        getArrayOfIds(speakerId,view);
 
         return view;
     }
@@ -120,17 +97,48 @@ public class QuestionFragment extends Fragment {
         return ids;
     }*/
 
-    private void getArrayOfIds(final int prelectionId) { //adds questions to mQuestion JSONArray list
+    private void getArrayOfIds(final int prelectionId, final View view) { //adds questions to mQuestion JSONArray list
 
         ServerConnector serverConnector = new ServerConnector();
 
         serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
             @Override
             public void onDownloadFinished(boolean succeeded) {
-                if(succeeded)
-                      questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
+                if(succeeded) {
+                    questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
+                    setRecycler(view);
+                }
             }
         });
+    }
+
+
+    private void setRecycler(View view)
+    {
+        if (questionArray != null) {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mLayoutManager = new WrappingLinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new QuestionAdapter(questionArray, getContext());
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        presentation = DataGetter.getPresentationById(speakerId, getContext());
+
+        CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
+        ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
+
+        toolbar.setTitle(presentation.getTitle());
+
+        Glide.with(getContext())
+                .load(presentation.getImage())
+                .placeholder(R.drawable.fly_high_logotype)
+                .into(imageTop);
+    }
+
     }
 
     @OnClick(R.id.question_fab)
