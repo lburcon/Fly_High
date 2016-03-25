@@ -45,7 +45,6 @@
                 android:src="@drawable/collapsing_toolbar_bottom_shadow" />
 
 
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -65,11 +64,37 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/question_details_recycler_view"
                 android:layout_width="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
+
+    <EditText
+        android:id="@+id/question_details_add_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="77dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_corner"
+        android:textColor="@color/text_white"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/question_fab"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:onClick="onFabClicked"
+        android:src="@drawable/ic_add_white_24dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>

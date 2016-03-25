@@ -3,6 +3,7 @@ package com.example.yggdralisk.flyhighconference.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -12,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.ConnectorResultInterface;
@@ -34,12 +37,15 @@ import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lukasz on 03.03.16.
  */
 public class QuestionFragment extends Fragment {
 
+    @Bind(R.id.question_details_add_question)
+    EditText editText;
 
     private Question[] questionArray;
     private Presentation presentation = new Presentation();
@@ -52,34 +58,41 @@ public class QuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.question_details, container, false);
-        speakerId= getArguments().getInt("speakerId");
+        speakerId = getArguments().getInt("speakerId");
+
+        ButterKnife.bind(this, view);
 
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mLayoutManager = new WrappingLinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        getArrayOfIds(speakerId); // BUGGGGGGGGGG!!!!!!!111oneone WTF WHYYY
-        mAdapter = new QuestionAdapter(questionArray, getContext());
-
-       /* mRecyclerView.setAdapter(mAdapter);
-
-        presentation = DataGetter.getPresentationById(speakerId, getContext());
+        getArrayOfIds(speakerId);
+        if (questionArray != null) {
+            mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
+            mRecyclerView.setHasFixedSize(false);
+            mRecyclerView.setNestedScrollingEnabled(false);
+            mLayoutManager = new WrappingLinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
-        ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
+            // BUGGGGGGGGGG!!!!!!!111oneone WTF WHYYY
 
 
-        toolbar.setTitle(presentation.getTitle());
+            mAdapter = new QuestionAdapter(questionArray, getContext());
 
-        Glide.with(getContext())
-                .load(presentation.getImage())
-                .placeholder(R.drawable.fly_high_logotype)
-                .into(imageTop);*/
+            mRecyclerView.setAdapter(mAdapter);
 
+            presentation = DataGetter.getPresentationById(speakerId, getContext());
+
+
+            CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
+            ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
+
+
+            toolbar.setTitle(presentation.getTitle());
+
+            Glide.with(getContext())
+                    .load(presentation.getImage())
+                    .placeholder(R.drawable.fly_high_logotype)
+                    .into(imageTop);
+        }
 
         return view;
     }
@@ -117,18 +130,36 @@ public class QuestionFragment extends Fragment {
 
         ServerConnector serverConnector = new ServerConnector();
 
+        serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
+            @Override
+            public void onDownloadFinished(boolean succeeded) {
 
-            serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
-                @Override
-                public void onDownloadFinished(boolean succeeded) {
-
-                }
-            });
-
+            }
+        });
 
 
-                questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
+        questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
 
     }
 
+    @OnClick(R.id.question_fab)
+    public void onFabClicked(View view) {
+
+
+        if (DataGetter.checkUserLogged(getContext())) {
+        if (editText.getVisibility() == View.GONE) {
+            Toast.makeText(getContext(), "Możesz dodać pytanie.", Toast.LENGTH_SHORT).show();
+            editText.setVisibility(View.VISIBLE);
+            editText.setHint("Wpisz pytanie");
+        }
+        else {
+            ServerConnector serverConnector = new ServerConnector();
+            editText.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "Pytanie zostało dodane.", Toast.LENGTH_SHORT).show();
+            serverConnector.postQuestionToPresentation(speakerId, DataGetter.getLoggedUserId(getContext()), editText.getText().toString(), getContext());
+            editText.getText().clear();
+        }}
+        else
+            Toast.makeText(getContext(), "Musisz się zalogować.", Toast.LENGTH_SHORT).show();
+    }
 }
