@@ -72,7 +72,7 @@ public class QuestionFragment extends Fragment {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-            // BUGGGGGGGGGG!!!!!!!111oneone WTF WHYYY
+            //todo: BUGGGGGGGGGG!!!!!!!111oneone WTF WHYYY
 
 
             mAdapter = new QuestionAdapter(questionArray, getContext());
@@ -84,8 +84,6 @@ public class QuestionFragment extends Fragment {
 
             CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
             ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
-
-
             toolbar.setTitle(presentation.getTitle());
 
             Glide.with(getContext())
