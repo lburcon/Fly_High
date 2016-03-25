@@ -76,16 +76,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         public void setData(Question question) {
-
-
                     nick.setText(String.valueOf(question.getUser()));
-
                     rating.setText("Ocena: " + question.getRating());
-
                     questionField.setText(question.getContent());
-
-
-
         }
 
     }

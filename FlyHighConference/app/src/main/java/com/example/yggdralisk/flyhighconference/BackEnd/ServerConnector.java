@@ -159,10 +159,14 @@ public class ServerConnector {
         call.enqueue(new Callback<Question[]>() {
             @Override
             public void onResponse(retrofit2.Call<Question[]> call, retrofit2.Response<Question[]> response) {
-                if (response.code() >= 200 && response.code() < 300)
+                if (response.code() >= 200 && response.code() < 300){
                     saveData(response.body());
                 if (callback != null)
                     callback.onDownloadFinished(true);
+                }
+
+                if (callback != null)
+                    callback.onDownloadFinished(false);
             }
 
             @Override
@@ -190,10 +194,12 @@ public class ServerConnector {
         } else if (data instanceof Like[]) {
             editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(data));
         } else if (data instanceof Question[]) {
-            editor.putString(context.getString(R.string.shared_preferences_presentation_questions_prefix + presentationID), gson.toJson(data));
+            editor.putString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, gson.toJson(data));
          } else {
         }
+
         editor.apply();
+
 
     }
 }
