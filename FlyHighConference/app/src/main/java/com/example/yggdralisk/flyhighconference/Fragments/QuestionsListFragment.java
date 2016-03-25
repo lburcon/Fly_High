@@ -38,21 +38,8 @@ public class QuestionsListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //TODO: hamburger icon
-
-
             mAdapter = new QuestionsRecyclerViewAdapter(getSpeakers(), getPresentations());
             mRecyclerView.setAdapter(mAdapter);
-
-
-
-       /*  Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
-        drawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).toggleDrawer();
-            }
-        });*/
 
         return view;
     }

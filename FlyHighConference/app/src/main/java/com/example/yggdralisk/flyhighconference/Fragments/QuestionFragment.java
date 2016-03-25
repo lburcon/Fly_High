@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
 import com.example.yggdralisk.flyhighconference.R;
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
 public class QuestionFragment extends Fragment {
 
 
-    private JSONArray mQuestions = new JSONArray();
+    private Question[] questionArray;
     private Presentation presentation = new Presentation();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -51,7 +52,7 @@ public class QuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.question_details, container, false);
-        speakerId = getArguments().getInt("speakerId");
+        speakerId= getArguments().getInt("speakerId");
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
@@ -60,8 +61,8 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        getArrayOfIds(getPrelectionsId(speakerId));
-        mAdapter = new QuestionAdapter(mQuestions, getContext());
+        getArrayOfIds(speakerId);
+        mAdapter = new QuestionAdapter(questionArray, getContext());
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -83,11 +84,9 @@ public class QuestionFragment extends Fragment {
         return view;
     }
 
-
-    private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
+   /* private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
         Set<Integer> prelectionIds = new HashSet<>();
         Presentation[] presentations;
-
 
         presentations = DataGetter.getPresentations(getContext());
 
@@ -112,24 +111,23 @@ public class QuestionFragment extends Fragment {
         int[] ids = presentation.getSpeakers();
 
         return ids;
-    }
+    }*/
 
-    private void getArrayOfIds(ArrayList<Integer> prelectionIds) { //adds questions to mQuestion JSONArray list
+    private void getArrayOfIds(int prelectionId) { //adds questions to mQuestion JSONArray list
 
         ServerConnector serverConnector = new ServerConnector();
 
-        for (int i = 0; i < prelectionIds.size(); i++) {
-            serverConnector.getQuestionsToPresentation(getContext(), prelectionIds.get(i), new ConnectorResultInterface() {
+
+            serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
                 @Override
                 public void onDownloadFinished(boolean succeeded) {
 
                 }
             });
-        }
 
 
-        for (int i = 0; i < prelectionIds.size(); i++)
-            mQuestions.put(DataGetter.getQuestionsToPresentation(getContext(), prelectionIds.get(i)));
+
+                questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
 
     }
 

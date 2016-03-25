@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
 
@@ -26,11 +27,11 @@ import butterknife.ButterKnife;
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
     private Context mContext;
-    private JSONArray mQuestions = new JSONArray();
+    private Question[] mQuestions;
     private MainActivity mUpLayout;
 
 
-    public QuestionAdapter(JSONArray mQuestions, Context context) {
+    public QuestionAdapter(Question[] mQuestions, Context context) {
         this.mQuestions = mQuestions;
         mContext = context;
     }
@@ -51,17 +52,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     @Override
     public void onBindViewHolder(QuestionAdapter.ViewHolder holder, int position) {
 
-        try {
-            holder.setData(mQuestions.getJSONArray(1).getJSONObject(position));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            holder.setData(mQuestions[position]);
+
 
     }
 
     @Override
     public int getItemCount() {
-        return mQuestions.length();
+        return mQuestions.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,7 +69,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         @Bind(R.id.question_to_speaker_rating)
         TextView rating;
         @Bind(R.id.question_to_speaker_question)
-        TextView question;
+        TextView questionField;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -79,30 +77,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(JSONObject jsonObject) {
+        public void setData(Question question) {
 
-            if (jsonObject !=null) {
+            if (question !=null) {
+                    nick.setText(String.valueOf(question.getUser()));
 
-                try {
-                    nick.setText(jsonObject.getString("user"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    nick.setText("Błąd");
-                }
+                    rating.setText("Ocena: " + question.getRating());
 
-                try {
-                    rating.setText("Ocena: " + jsonObject.getString("rating"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    rating.setText("Błąd");
-                }
+                    questionField.setText(question.getContent());
 
-                try {
-                    question.setText(jsonObject.getString("content"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    question.setText("Błąd");
-                }
             }
 
         }

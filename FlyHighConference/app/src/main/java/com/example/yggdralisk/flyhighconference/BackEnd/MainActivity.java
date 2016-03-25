@@ -30,6 +30,7 @@ import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
@@ -66,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
 
+        setDrawer();
         setFragment(savedInstanceState, new ConferenceListFragment());
         //setupToolbar();
 
-        setDrawer();
     }
 
     public void toggleDrawer() {
@@ -140,9 +141,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean setPreviousFragment() {
-        setupToolbar();
+
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
+            setupToolbar();
             return true;
         } else {
             return false;
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
        this.setPreviousFragment();
     }
 
-    private void setupToolbar() {
+    private void setupToolbar() { //only used when back arrow clicked
 
         if (getSupportActionBar() != null)
         {getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
@@ -215,7 +217,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupToolbar(Fragment fragment) {
         //setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
-            if (fragment instanceof ConferenceFragment || fragment instanceof PartnerFragment || fragment instanceof SpeakerFragment) {
+            if (fragment instanceof ConferenceFragment || fragment instanceof PartnerFragment ||
+                    fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment) {
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);

@@ -69,14 +69,14 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         public int getItemViewType(int position) {
             int id = -1;
 
-                id = mDataset[position].getId();
+                id = mPresentations[position].getId();
 
             return id % 2;
         }
 
         @Override
         public int getItemCount() {
-            return mDataset.length;
+            return mPresentations.length;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
