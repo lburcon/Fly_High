@@ -1,4 +1,4 @@
-package com.example.yggdralisk.flyhighconference.BackEnd;
+package com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces;
 
 /**
  * Created by yggdralisk on 19.03.16.

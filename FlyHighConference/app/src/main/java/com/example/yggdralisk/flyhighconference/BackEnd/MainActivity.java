@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 if (savedInstanceState != null) {
                     return;
                 }
+
                 fragmentActivity.setArguments(getIntent().getExtras());
                 if (args != null) fragmentActivity.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right,R.anim.slide_in_right,R.anim.slide_out_left);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_top,R.anim.slide_out_bottom,R.anim.slide_in_bottom,R.anim.slide_out_top);
                 setupToolbar(fragmentActivity);
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 

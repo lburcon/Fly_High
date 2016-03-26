@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Import;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ImportInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.LikeInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostLikeInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostQuestionToPresentationInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.QuestionToPresentationsInterface;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.gson.Gson;
@@ -19,12 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by yggdralisk on 03.03.16.
@@ -35,21 +33,67 @@ import java.util.List;
 public class ServerConnector {
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/";
     private Context context;
-    private ConnectorResultInterface callback;
     private int presentationID;
 
     //------------------------------------------------------------------------DATA_POST_PART --------------------------------------------------------------------------------
-    public void postLikeToPresentation(int questionID, int userID, Context context) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
+    public void postLikeToPresentation(Context context, int questionID, int userID, final ConnectorResultInterface callback) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
     {
-        PostRunnable postRunnable = new PostRunnable("like", "?question=" + questionID + "&user=" + userID, context);
-        new Thread(postRunnable).start();
+        this.context = context;
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DATA_HOST_URL)
+                .build();
+
+        PostLikeInterface importInterface = retrofit.create(PostLikeInterface.class);
+        Call<Boolean> call = importInterface.load(questionID, userID);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                if (response.code() >= 200 && response.code() < 300) {
+                    if (callback != null)
+                        callback.onDownloadFinished(true);
+                } else {
+                    if (callback != null)
+                        callback.onDownloadFinished(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                if (callback != null)
+                    callback.onDownloadFinished(false);
+            }
+        });
     }
 
-    public void postQuestionToPresentation(int presentationID, int userID, String questionContent, Context context)//Questions_to_speaker - Post question for presentation
+    public void postQuestionToPresentation(Context context, int presentationID, int userID, String questionContent,final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
     {
-        PostRunnable postRunnable = new PostRunnable("question", "?presentation=" + presentationID + "&user=" + userID + "&content=" + questionContent, context);
-        new Thread(postRunnable).start();
+        this.context = context;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DATA_HOST_URL)
+                .build();
+
+        PostQuestionToPresentationInterface importInterface = retrofit.create(PostQuestionToPresentationInterface.class);
+        Call<Boolean> call = importInterface.load(presentationID, userID,questionContent);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                if (response.code() >= 200 && response.code() < 300) {
+                    if (callback != null)
+                        callback.onDownloadFinished(true);
+                } else {
+                    if (callback != null)
+                        callback.onDownloadFinished(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                if (callback != null)
+                    callback.onDownloadFinished(false);
+            }
+        });
     }
 
     private class PostRunnable implements Runnable {
@@ -90,7 +134,6 @@ public class ServerConnector {
     //------------------------------------------------------------------------DATA_GET_PART ------------------------------------------------------------------------
     public void refreshLikes(Context context, final ConnectorResultInterface callback) {
         this.context = context;
-        this.callback = callback;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_HOST_URL)
@@ -102,10 +145,14 @@ public class ServerConnector {
         call.enqueue(new Callback<Like[]>() {
             @Override
             public void onResponse(retrofit2.Call<Like[]> call, retrofit2.Response<Like[]> response) {
-                if (response.code() >= 200 && response.code() < 300)
+                if (response.code() >= 200 && response.code() < 300) {
                     saveData(response.body());
-                if (callback != null)
-                    callback.onDownloadFinished(true);
+                    if (callback != null)
+                        callback.onDownloadFinished(true);
+                } else {
+                    if (callback != null)
+                        callback.onDownloadFinished(false);
+                }
             }
 
             @Override
@@ -118,7 +165,6 @@ public class ServerConnector {
 
     public void refreshData(Context context, final ConnectorResultInterface callback) {
         this.context = context;
-        this.callback = callback;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_HOST_URL)
@@ -130,10 +176,14 @@ public class ServerConnector {
         call.enqueue(new Callback<Import>() {
             @Override
             public void onResponse(retrofit2.Call<Import> call, retrofit2.Response<Import> response) {
-                if (response.code() >= 200 && response.code() < 300)
+                if (response.code() >= 200 && response.code() < 300) {
                     saveData(response.body());
-                if (callback != null)
-                    callback.onDownloadFinished(true);
+                    if (callback != null)
+                        callback.onDownloadFinished(true);
+                } else {
+                    if (callback != null)
+                        callback.onDownloadFinished(false);
+                }
             }
 
             @Override
@@ -146,7 +196,6 @@ public class ServerConnector {
 
     public void getQuestionsToPresentation(Context context, int presentationID, final ConnectorResultInterface callback) {
         this.context = context;
-        this.callback = callback;
         this.presentationID = presentationID;
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -159,12 +208,11 @@ public class ServerConnector {
         call.enqueue(new Callback<Question[]>() {
             @Override
             public void onResponse(retrofit2.Call<Question[]> call, retrofit2.Response<Question[]> response) {
-                if (response.code() >= 200 && response.code() < 300){
+                if (response.code() >= 200 && response.code() < 300) {
                     saveData(response.body());
-                if (callback != null)
-                    callback.onDownloadFinished(true);
-                }
-                else {
+                    if (callback != null)
+                        callback.onDownloadFinished(true);
+                } else {
                     if (callback != null)
                         callback.onDownloadFinished(false);
                 }
@@ -196,7 +244,7 @@ public class ServerConnector {
             editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(data));
         } else if (data instanceof Question[]) {
             editor.putString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, gson.toJson(data));
-         } else {
+        } else {
         }
 
         editor.apply();
