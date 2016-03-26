@@ -29,16 +29,8 @@
             android:layout_marginBottom="5dp"
             android:layout_marginRight="1dp"
             android:layout_marginTop="5dp"
-            android:background="@color/main_yellow">
+            android:background="@drawable/rounded_corner">
 
-            <LinearLayout
-                android:layout_width="226dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:background="@color/background_main">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,7 +60,6 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
         </LinearLayout>
 
 

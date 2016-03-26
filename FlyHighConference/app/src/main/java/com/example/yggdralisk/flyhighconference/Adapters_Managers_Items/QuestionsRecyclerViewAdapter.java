@@ -127,7 +127,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
             public void onClick(View v) {
                 if (id > 0) {
                     Bundle args = new Bundle();
-                    args.putInt("speakerId", id);
+                    args.putInt("conferenceId", id);
                     mUpLayout.setFragment(null, new QuestionFragment(), args);
                 }
 

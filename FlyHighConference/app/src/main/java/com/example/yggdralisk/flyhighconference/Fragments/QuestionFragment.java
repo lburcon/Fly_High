@@ -39,18 +39,18 @@ public class QuestionFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private int speakerId;
+    private int conferenceId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.question_details, container, false);
-        speakerId = getArguments().getInt("speakerId");
+        conferenceId = getArguments().getInt("conferenceId");
 
         ButterKnife.bind(this, view);
 
 
-        getArrayOfIds(speakerId,view);
+        getArrayOfIds(conferenceId,view);
 
 
         return view;
@@ -85,7 +85,7 @@ public class QuestionFragment extends Fragment {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        presentation = DataGetter.getPresentationById(getContext(), speakerId);
+        presentation = DataGetter.getPresentationById(getContext(), conferenceId);
 
         CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
         ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
@@ -112,8 +112,10 @@ public class QuestionFragment extends Fragment {
             } else {
                 ServerConnector serverConnector = new ServerConnector();
                 editText.setVisibility(View.GONE);
+                String question = editText.getText().toString();
 
-                serverConnector.postQuestionToPresentation(getContext(), speakerId, DataGetter.getLoggedUserId(getContext()), editText.getText().toString(), new ConnectorResultInterface() {
+                if (!question.equals("")){
+                serverConnector.postQuestionToPresentation(getContext(), conferenceId, DataGetter.getLoggedUserId(getContext()), question, new ConnectorResultInterface() {
                     @Override
                     public void onDownloadFinished(boolean succeeded) {
                         if (succeeded)
@@ -123,7 +125,9 @@ public class QuestionFragment extends Fragment {
 
                         editText.getText().clear();
                     }
-                });
+                });}
+                else Toast.makeText(getContext(), "Musisz najpierw zadać pytanie.", Toast.LENGTH_SHORT).show();
+
 
             }
         } else

@@ -63,21 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-
-
         setDrawer();
 
-        setFragment(savedInstanceState, new ConferenceListFragment(),null);
+        setFragment(savedInstanceState, new ConferenceListFragment(), null);
 
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        toolbarOnclick();
 
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                mDrawerToggle.setDrawerIndicatorEnabled(true);
-                setPreviousFragment();
-            }
-        });
+
 
     }
 
@@ -158,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
         if (!setPreviousFragment()) {
             this.finish();
             System.exit(0);
@@ -237,5 +231,16 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
-    
+
+    private void toolbarOnclick() {
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                setPreviousFragment();
+            }
+        });
+    }
 }
