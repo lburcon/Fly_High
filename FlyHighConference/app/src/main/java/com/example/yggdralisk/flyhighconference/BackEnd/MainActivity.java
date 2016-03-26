@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAd
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.InfoFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
@@ -213,7 +215,8 @@ public class MainActivity extends AppCompatActivity {
         //setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             if (fragment instanceof ConferenceFragment || fragment instanceof PartnerFragment ||
-                    fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment) {
+                    fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
+                    fragment instanceof InfoFragment) {
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -242,5 +245,21 @@ public class MainActivity extends AppCompatActivity {
                 setPreviousFragment();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_general, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.info:
+                setFragment(null, new InfoFragment(), null);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

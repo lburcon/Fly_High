@@ -5,8 +5,8 @@
     tools:context=".MainActivity">
 
     <group>
-    <item android:id="@+id/hamburger_drawer"
-        android:icon="@drawable/ic_hamburger"
+    <item android:id="@+id/info"
+        android:icon="@drawable/ic_info_outline_black_24dp"
         android:orderInCategory="200"
         app:showAsAction="ifRoom"
         android:title="hamburger" />
