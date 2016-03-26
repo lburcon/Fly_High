@@ -14,10 +14,6 @@ import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -91,7 +87,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
         private String getPresentationAuth(){
             if (id == -1)
-                    return DataGetter.getSpeakerById(id, mContext).getName();
+                    return DataGetter.getSpeakerById(mContext, id).getName();
 
             return "";
         }

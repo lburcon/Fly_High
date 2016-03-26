@@ -57,7 +57,7 @@ public class LoginOutFragment extends Fragment{
                         public void run() {
                             ((MainActivity) getContext()).setFragment(null, new LoginFragment(),null);
                         }
-                    }, 2000);
+                    }, 750);
                 }
                 ((MainActivity) getContext()).setLoggedNameOnDrawer("");
                 ((MainActivity) getContext()).changeLoginLogoutDrawer();

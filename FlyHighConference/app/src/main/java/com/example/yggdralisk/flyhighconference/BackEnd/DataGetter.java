@@ -77,23 +77,29 @@ public class DataGetter {
         return new Gson().fromJson(str, Organiser[].class);
     }
 
-    public static Speaker getSpeakerById(int speakerId,Context context) {
-        Speaker[] speakers = getSpeakers(context);
-        int i = 0;
-        for(; i < speakers.length && (speakers[i].getId() != speakerId); i++)
-        {}
-        return speakers[i];
+    public static Speaker getSpeakerById(Context context, int speakerId) {
+        for (Speaker s :
+                getSpeakers(context)) {
+            if (s.getId() == speakerId) return s;
+        }
+        return null;
     }
 
-    public static Presentation getPresentationById(int presentationId,Context context) {
-
-        Presentation[] presentations = getPresentations(context);
-        int i = 0;
-        for(; i < presentations.length && (presentations[i].getId() != presentationId); i++)
-        {}
-        return presentations[i];
+    public static Presentation getPresentationById(Context context, int presentationId) {
+        for (Presentation p :
+                getPresentations(context)) {
+            if (p.getId() == presentationId) return p;
+        }
+        return null;
     }
 
+    public static Place getPlaceById(Context context, int placeId)
+    {
+        for (Place p : getPlaces(context)) {
+            if (p.getId() == placeId) return p;
+        }
+        return null;
+    }
     public static Boolean checkUserLogged(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(context.getString(R.string.shared_preferences_user_logged), false);

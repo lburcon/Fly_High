@@ -53,21 +53,24 @@
             android:textColor="@color/text_white"
             android:textSize="20sp" />
 
-        <ImageView
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/conference_map"
-            android:layout_width="100dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.gms.maps.SupportMapFragment"
+
+            android:layout_marginLeft="15dp"
             android:layout_above="@+id/linearLayout2"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/conference_description"
-            android:layout_marginLeft="5dp"
-
+            android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/conference_localization_info"
-            android:src="@drawable/fly_high_map2" />
+            android:layout_toStartOf="@+id/conference_localization_info"
+            android:layout_below="@+id/conference_description" />
 
         <TextView
             android:id="@+id/conference_localization_info"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_above="@+id/linearLayout2"
 

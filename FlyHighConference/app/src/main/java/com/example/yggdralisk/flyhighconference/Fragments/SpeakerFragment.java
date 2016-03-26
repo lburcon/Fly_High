@@ -15,8 +15,6 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by lukasz on 01.03.16.
@@ -33,7 +31,7 @@ public class SpeakerFragment extends Fragment {
 
 
 
-            speaker = DataGetter.getSpeakerById(getArguments().getInt("speakerId"), getContext());
+            speaker = DataGetter.getSpeakerById(getContext(), getArguments().getInt("speakerId"));
 
 
         TextView name = (TextView) view.findViewById(R.id.speaker_name);

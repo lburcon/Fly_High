@@ -3,13 +3,8 @@ package com.example.yggdralisk.flyhighconference.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.yggdralisk.flyhighconference.BackEnd.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
@@ -26,14 +21,6 @@ import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
 import com.example.yggdralisk.flyhighconference.R;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.WrappingLinearLayoutManager;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -126,7 +113,7 @@ public class QuestionFragment extends Fragment {
 
         mRecyclerView.setAdapter(mAdapter);
 
-        presentation = DataGetter.getPresentationById(speakerId, getContext());
+        presentation = DataGetter.getPresentationById(getContext(), speakerId);
 
         CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
         ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
@@ -153,9 +140,19 @@ public class QuestionFragment extends Fragment {
             } else {
                 ServerConnector serverConnector = new ServerConnector();
                 editText.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Pytanie zostało dodane.", Toast.LENGTH_SHORT).show();
-                serverConnector.postQuestionToPresentation(speakerId, DataGetter.getLoggedUserId(getContext()), editText.getText().toString(), getContext());
-                editText.getText().clear();
+
+                serverConnector.postQuestionToPresentation(getContext(), speakerId, DataGetter.getLoggedUserId(getContext()), editText.getText().toString(), new ConnectorResultInterface() {
+                    @Override
+                    public void onDownloadFinished(boolean succeeded) {
+                        if (succeeded)
+                            Toast.makeText(getContext(), "Pytanie zostało dodane.", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getContext(), "Błąd dodawania pytania.", Toast.LENGTH_SHORT).show();
+
+                        editText.getText().clear();
+                    }
+                });
+
             }
         } else
             Toast.makeText(getContext(), "Musisz się zalogować.", Toast.LENGTH_SHORT).show();

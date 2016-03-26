@@ -1,6 +1,7 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -71,8 +73,13 @@ public class LoginFragment extends Fragment {
                 @Override
                 public void run() {
                     ((MainActivity) getContext()).setFragment(null, new LoginOutFragment(),null);
+                    try {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                    }catch (NullPointerException ex)
+                    {ex.printStackTrace();}
                 }
-            }, 2000);
+            }, 750);
             return true;
         } else {
             displayToast(getString(R.string.login_error_messege));

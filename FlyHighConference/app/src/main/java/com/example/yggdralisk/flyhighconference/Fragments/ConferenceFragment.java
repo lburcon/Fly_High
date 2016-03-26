@@ -10,14 +10,19 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
+import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,8 +32,8 @@ import butterknife.ButterKnife;
  */
 public class ConferenceFragment extends Fragment {
 
-    private Presentation[] mDataset ;
-    private Presentation conference = new Presentation();
+    private Presentation[] mDataset;
+    private Presentation presentation = new Presentation();
     private Speaker speakerObject = new Speaker();
     private int[] speakerIds = null;
     @Bind(R.id.conference_rating_bar)
@@ -41,14 +46,9 @@ public class ConferenceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.conference_details, container, false);
 
-            mDataset = DataGetter.getPresentations(getContext());
+        mDataset = DataGetter.getPresentations(getContext());
 
-
-        for (int i = 0; i < mDataset.length; i++) {
-                conference = mDataset[i];
-                if (conference.getId() == getArguments().getInt("conferenceId")) //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
-                    break;
-        }
+        presentation = DataGetter.getPresentationById(getContext(),getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
 
         ButterKnife.bind(this, view);
 
@@ -61,30 +61,18 @@ public class ConferenceFragment extends Fragment {
         TextView speaker = ButterKnife.findById(view, R.id.conference_speaker);
         TextView name = ButterKnife.findById(view, R.id.conference_name);
         TextView description = ButterKnife.findById(view, R.id.conference_description);
-        TextView localizationInfo = ButterKnife.findById(view, R.id.conference_localization_info);
 
+        name.setText(presentation.getTitle());
+        description.setText(presentation.getDescription());
 
-            name.setText(conference.getTitle());
-
- 
-            description.setText(conference.getDescription());
-
-
-
-
-        localizationInfo.setText(Integer.toString(conference.getPlace()));
-
-
-
-            time.setText(getPresentationTime(conference));
-
+        time.setText(getPresentationTime(presentation));
 
 
         //setting speaker and checking their number in case of adding ','
 
         speakerIds = getSpeakerIds();
         for (int i = 0; i < speakerIds.length; i++) {
-            speakerObject = DataGetter.getSpeakerById(speakerIds[i], getContext());
+            speakerObject = DataGetter.getSpeakerById(getContext(), speakerIds[i]);
             if (speakerIds.length > 1 && i != speakerIds.length - 1)
                 speaker.setText(speaker.getText() + speakerObject.getName() + ", ");
             else
@@ -92,10 +80,48 @@ public class ConferenceFragment extends Fragment {
 
         }
 
+        setMap(view);
         return view;
     }
 
-    private String getPresentationTime(Presentation pres){
+    private void setMap(View view) {
+        final Place myPlace = DataGetter.getPlaceById(getContext(), presentation.getPlace());
+
+        if (myPlace != null) {
+
+            TextView localizationInfo = ButterKnife.findById(view, R.id.conference_localization_info);
+            localizationInfo.setText(myPlace.getName());
+
+            final SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.conference_map);
+
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap googleMap) {
+                        LatLng loc = new LatLng(myPlace.getLat(), myPlace.getLon());
+                        googleMap.addMarker(new MarkerOptions().position(loc)
+                                .title(presentation.getTitle()));
+
+                        // Move the camera instantly to hamburg with a zoom of 50.
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+
+                        // Zoom in, animating the camera.
+                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
+                        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                            @Override
+                            public void onMapClick(LatLng latLng) {
+                                Bundle args = new Bundle();
+                                args.putInt("placeID",presentation.getPlace());
+                                ((MainActivity)getContext()).setFragment(null,new NavigationFragment(),args);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    private String getPresentationTime(Presentation pres) {
         String dtStart = pres.getStart();
         String dtEnd = pres.getEnd();
 
@@ -109,7 +135,6 @@ public class ConferenceFragment extends Fragment {
     private String getDay(String dtDate, String dtEnd)//TODO:Ogarnąć jakiś system sprawdzania
     {
         return dtDate.substring(0, dtDate.indexOf(' '));
-
     }
 
     private String getTime(String dtDate) {
@@ -119,9 +144,8 @@ public class ConferenceFragment extends Fragment {
     private int[] getSpeakerIds() {
         int[] speakerIds = null;
 
-           speakerIds = conference.getSpeakers();
+        speakerIds = presentation.getSpeakers();
 
         return speakerIds;
     }
-
 }

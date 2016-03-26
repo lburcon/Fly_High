@@ -19,7 +19,7 @@
     <string name="login_error_messege">Błąd logowania!</string>
     <string name="shared_preferences_user_logged">userLogged</string>
     <string name="shared_preferences_logged_user_name">loggedUserName</string>
-    <string name="left_drawer_logged_name">Zalogowano jako:</string>
+    <string name="left_drawer_logged_name">Zalogowano jako: </string>
     <string name="shared_preferences_logged_user_id">loggedUserId</string>
     <string name="shared_preferences_presentation_questions_prefix">presentationQuestionsFor</string>
     <string name="shared_preferences_speaker_has_presentations">sharedPreferencesSpeakerHasPresentation</string>
