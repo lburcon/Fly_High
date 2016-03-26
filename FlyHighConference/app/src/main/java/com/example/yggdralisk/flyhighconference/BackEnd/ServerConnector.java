@@ -164,9 +164,10 @@ public class ServerConnector {
                 if (callback != null)
                     callback.onDownloadFinished(true);
                 }
-
-                if (callback != null)
-                    callback.onDownloadFinished(false);
+                else {
+                    if (callback != null)
+                        callback.onDownloadFinished(false);
+                }
             }
 
             @Override

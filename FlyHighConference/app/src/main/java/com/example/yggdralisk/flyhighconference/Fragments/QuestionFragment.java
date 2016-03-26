@@ -63,77 +63,54 @@ public class QuestionFragment extends Fragment {
         ButterKnife.bind(this, view);
 
 
-        getArrayOfIds(speakerId);
-        if (questionArray != null) {
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
-            mRecyclerView.setHasFixedSize(false);
-            mRecyclerView.setNestedScrollingEnabled(false);
-            mLayoutManager = new WrappingLinearLayoutManager(getContext());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-
-
-            mAdapter = new QuestionAdapter(questionArray, getContext());
-
-            mRecyclerView.setAdapter(mAdapter);
-
-            presentation = DataGetter.getPresentationById(speakerId, getContext());
-
-            CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
-
-
-            toolbar.setTitle(presentation.getTitle());
-        }
-
-        ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
-            Glide.with(getContext())
-                    .load(presentation.getImage())
-                    .placeholder(R.drawable.fly_high_logotype)
-                    .into(imageTop);
+        getArrayOfIds(speakerId,view);
 
 
         return view;
     }
 
-   /* private ArrayList<Integer> getPrelectionsId(int speakerId) { //returns ids of prelections given by the speaker
-        Set<Integer> prelectionIds = new HashSet<>();
-        Presentation[] presentations;
-
-        presentations = DataGetter.getPresentations(getContext());
-
-        for (int i = 0; i < presentations.length; i++) {
-            Presentation presentation = presentations[i];
-            int[] speakersIds = getSpeakerIds(presentation);
-
-            for (int j = 0; j < speakersIds.length; j++) {
-                if (speakerId == speakersIds[j])
-                    prelectionIds.add(presentation.getId());
-            }
-        }
-
-
-        ArrayList<Integer> listOfIds = new ArrayList<>();
-        listOfIds.addAll(prelectionIds);
-        return listOfIds;
-    }
-
-    private int[] getSpeakerIds(Presentation presentation) { // returns ids of prelegents for one prelection
-
-        int[] ids = presentation.getSpeakers();
-
-        return ids;
-    }*/
-
-    private void getArrayOfIds(final int prelectionId) { //adds questions to mQuestion JSONArray list
+    private void getArrayOfIds(final int prelectionId, final View view) { //adds questions to mQuestion JSONArray list
 
         ServerConnector serverConnector = new ServerConnector();
 
         serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
             @Override
             public void onDownloadFinished(boolean succeeded) {
-                if(succeeded)
-                      questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
+                if(succeeded) {
+                    questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
+                    setRecycler(view);
+                }
             }
         });
+    }
+
+
+    private void setRecycler(View view)
+    {
+        if (questionArray != null) {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mLayoutManager = new WrappingLinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new QuestionAdapter(questionArray, getContext());
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        presentation = DataGetter.getPresentationById(speakerId, getContext());
+
+        CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
+        ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
+
+        toolbar.setTitle(presentation.getTitle());
+
+        Glide.with(getContext())
+                .load(presentation.getImage())
+                .placeholder(R.drawable.fly_high_logotype)
+                .into(imageTop);
+    }
+
     }
 
     @OnClick(R.id.question_fab)
