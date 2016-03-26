@@ -45,10 +45,10 @@ public class ServerConnector {
                 .build();
 
         PostLikeInterface importInterface = retrofit.create(PostLikeInterface.class);
-        Call<Boolean> call = importInterface.load(questionID, userID);
-        call.enqueue(new Callback<Boolean>() {
+        Call<ResponseBody> call = importInterface.load(questionID, userID);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.code() >= 200 && response.code() < 300) {
                     if (callback != null)
                         callback.onDownloadFinished(true);
@@ -59,14 +59,14 @@ public class ServerConnector {
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (callback != null)
                     callback.onDownloadFinished(false);
             }
         });
     }
 
-    public void postQuestionToPresentation(Context context, int presentationID, int userID, String questionContent,final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
+    public void postQuestionToPresentation(Context context, int presentationID, int userID, String questionContent, final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
     {
         this.context = context;
 
@@ -75,10 +75,10 @@ public class ServerConnector {
                 .build();
 
         PostQuestionToPresentationInterface importInterface = retrofit.create(PostQuestionToPresentationInterface.class);
-        Call<Boolean> call = importInterface.load(presentationID, userID,questionContent);
-        call.enqueue(new Callback<Boolean>() {
+        Call<ResponseBody> call = importInterface.load(presentationID, userID, questionContent);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.code() >= 200 && response.code() < 300) {
                     if (callback != null)
                         callback.onDownloadFinished(true);
@@ -89,46 +89,11 @@ public class ServerConnector {
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (callback != null)
                     callback.onDownloadFinished(false);
             }
         });
-    }
-
-    private class PostRunnable implements Runnable {
-        String appendUrl;
-        String appendData;
-        public boolean succes = true;
-        Context context;
-        public final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-
-        public PostRunnable(String _appendUrl, String _appendData, Context _context) {
-            appendData = _appendData;
-            appendUrl = _appendUrl;
-            context = _context;
-        }
-
-        @Override
-        public void run() {
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-                    .url(DATA_HOST_URL + appendUrl)
-                    .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, appendData))
-                    .build();
-
-            Response res = null;
-            try {
-                res = client.newCall(request).execute();
-
-                if (!res.isSuccessful()) succes = false;
-            } catch (IOException e) {
-                e.printStackTrace();
-                succes = false;
-            }
-
-        }
     }
 
     //------------------------------------------------------------------------DATA_GET_PART ------------------------------------------------------------------------

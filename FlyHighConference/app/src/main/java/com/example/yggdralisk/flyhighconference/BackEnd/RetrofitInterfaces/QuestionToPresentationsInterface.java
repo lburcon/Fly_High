@@ -10,6 +10,6 @@ import retrofit2.http.Query;
  * Created by yggdralisk on 19.03.16.
  */
 public interface QuestionToPresentationsInterface {
-    @GET("api/questions?")
+    @GET("api/questions")
     Call<Question[]> load(@Query("presentation") int id);
 }
