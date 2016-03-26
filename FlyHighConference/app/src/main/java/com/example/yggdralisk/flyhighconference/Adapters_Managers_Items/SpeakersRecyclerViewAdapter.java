@@ -1,6 +1,9 @@
 package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
@@ -105,11 +109,11 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
 
                 description.setText(speakerObject.getDescription());
 
-                Glide.with(itemView.getContext())
-                        .load(speakerObject.getImage())
-                        .placeholder(R.drawable.fly_high_logotype)
-                        .crossFade()
-                        .into(image);
+            Glide.with(itemView.getContext())
+                    .load(speakerObject.getImage())
+                    .placeholder(R.drawable.fly_high)
+                    .dontAnimate()
+                    .into(image);
 
                 id = speakerObject.getId();
                 nListener.setId(id);

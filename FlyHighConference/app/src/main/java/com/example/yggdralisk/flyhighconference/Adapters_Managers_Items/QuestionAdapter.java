@@ -52,12 +52,18 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     @Override
     public void onBindViewHolder(QuestionAdapter.ViewHolder holder, int position) {
 
+        if (mQuestions.length == 0)
+            holder.setData(null);
+        else
             holder.setData(mQuestions[position]);
     }
 
     @Override
     public int getItemCount() {
-        return mQuestions.length;
+        if (mQuestions.length == 0)
+            return 1;
+        else
+            return mQuestions.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,9 +82,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         public void setData(Question question) {
+
+            if (question != null) {
                     nick.setText(String.valueOf(question.getUser()));
                     rating.setText("Ocena: " + question.getRating());
-                    questionField.setText(question.getContent());
+                    questionField.setText(question.getContent()); }
+            else questionField.setText("Aktualnie nie ma żadnych pytań do tej prelekcji");
+
         }
 
     }

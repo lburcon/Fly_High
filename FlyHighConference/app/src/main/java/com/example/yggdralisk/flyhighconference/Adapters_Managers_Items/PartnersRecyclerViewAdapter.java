@@ -87,6 +87,8 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
             Glide.with(itemView.getContext())
                     .load(partner.getLogo())
                     .placeholder(R.drawable.fly_high_logotype)
+                    .fitCenter()
+                    .crossFade()
                     .into(image);
 
 

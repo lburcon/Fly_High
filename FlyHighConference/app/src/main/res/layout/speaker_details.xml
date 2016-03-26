@@ -14,33 +14,29 @@
 
     <TextView
         android:id="@+id/speaker_name"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Imię i nazwisko"
         android:textSize="25sp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/main_yellow"
+        android:background="@drawable/rounded_corner_yellow"
         android:textColor="@color/background_black"/>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/main_yellow"
         android:orientation="horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/main_yellow">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="4dp"
-            android:layout_height="match_parent"
-            android:background="@color/background_main">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rounded_corner_yellow">
 
             <TextView
                 android:id="@+id/speaker_description"
@@ -50,14 +46,19 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="5dp"
                 android:text="Opis"
-                android:textColor="@color/text_white"
+                android:textColor="@color/background_black"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-
-        </LinearLayout>
-
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/main_yellow"
+        android:orientation="horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"

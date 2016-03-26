@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,9 +34,11 @@ public class QuestionFragment extends Fragment {
 
     @Bind(R.id.question_details_add_question)
     EditText editText;
+    @Bind(R.id.question_details_name)
+    TextView conferenceName;
 
     private Question[] questionArray;
-    private Presentation presentation = new Presentation();
+    private Presentation presentation;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -50,7 +53,7 @@ public class QuestionFragment extends Fragment {
         ButterKnife.bind(this, view);
 
 
-        getArrayOfIds(conferenceId,view);
+        getArrayOfIds(conferenceId, view);
 
 
         return view;
@@ -86,6 +89,8 @@ public class QuestionFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         presentation = DataGetter.getPresentationById(getContext(), conferenceId);
+
+            conferenceName.setText(presentation.getTitle());
 
         CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
         ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);

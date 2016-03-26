@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="1dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/rounded_corner">
 
@@ -50,16 +50,18 @@
 
         </LinearLayout>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/speakers_image"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/speakers_linear"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginRight="20dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fly_high_logotype" />
+            app:civ_border_width="0dp"
+            app:civ_border_color="@color/main_yellow"/>
+
 
     </RelativeLayout>
 

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:text="Pytania do prelegentów"
+        android:text="Pytania do prelekcji"
         android:textColor="@color/text_white"
         android:textSize="25sp" />
 

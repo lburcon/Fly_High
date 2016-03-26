@@ -104,10 +104,11 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
 
                     description.setText(presentationObject.getDescription());
 
-                    Glide.with(itemView.getContext())
-                            .load(presentationObject.getImage())
-                            .placeholder(R.drawable.fly_high_logotype)
-                            .into(image);
+                Glide.with(itemView.getContext())
+                        .load(presentationObject.getImage())
+                        .placeholder(R.drawable.fly_high)
+                        .dontAnimate()
+                        .into(image);
 
                     id = presentationObject.getId();
                     nListener.setId(id);
