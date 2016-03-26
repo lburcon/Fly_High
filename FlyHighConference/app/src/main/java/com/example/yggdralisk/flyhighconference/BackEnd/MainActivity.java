@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -68,7 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
         setFragment(savedInstanceState, new ConferenceListFragment(),null);
 
-        //setupToolbar();
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                setPreviousFragment();
+            }
+        });
 
     }
 
@@ -197,10 +206,6 @@ public class MainActivity extends AppCompatActivity {
         return ifChanged;
     }
 
-    public void buttonBackPressed(View v) {
-       this.setPreviousFragment();
-    }
-
     private void setupToolbar() { //only used when back arrow clicked
 
         if (getSupportActionBar() != null)
@@ -225,31 +230,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-
-        /*Class fragmentClass = fragment.getClass();
-        String fragmentClassName = fragmentClass.getName();
-
-        if (getSupportActionBar() != null)
-        switch(fragment.getClass().toString()) {
-            case "com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment":
-            case "com.example.yggdralisk.flyhighconference.Fragments.NavigationFragment":
-            case "com.example.yggdralisk.flyhighconference.Fragments.QuestionsListFragment":
-            case "com.example.yggdralisk.flyhighconference.Fragments.SpeakersListFragment":
-            case "com.example.yggdralisk.flyhighconference.Fragments.PartnersListFragment":
-            case "com.example.yggdralisk.flyhighconference.Fragments.LoginFragment":
-            case "com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment":
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//              mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
-                mDrawerToggle.setDrawerIndicatorEnabled(true);
-                break;
-            default:
-                mDrawerToggle.setDrawerIndicatorEnabled(false);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        }*/
-
     }
 
     @Override
@@ -257,4 +237,5 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
+    
 }
