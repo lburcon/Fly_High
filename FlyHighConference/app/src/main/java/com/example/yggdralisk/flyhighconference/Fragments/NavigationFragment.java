@@ -39,7 +39,7 @@ public class NavigationFragment extends Fragment {
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
                     map = googleMap;
-                    succ(getArguments().getInt("placeID"));
+                    succ(0);
 
                 }
             });

@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 
 public class SplashScren extends Activity {
 
-    private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/";
     @Bind(R.id.splash_messege)
     TextView splashMessege;
 
@@ -22,8 +21,7 @@ public class SplashScren extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_scren);
-        ButterKnife.bind(this);                                     //WTF THAT GIT
-        //retrofitGet();
+        ButterKnife.bind(this);
         ServerConnector serverConnector = new ServerConnector();
         serverConnector.refreshData(getApplicationContext(), new ConnectorResultInterface() {
             @Override

@@ -1,5 +1,6 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.NavigateActivity;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -98,7 +100,7 @@ public class ConferenceFragment extends Fragment {
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
-                        LatLng loc = new LatLng(myPlace.getLat(), myPlace.getLon());
+                        final LatLng loc = new LatLng(myPlace.getLat(), myPlace.getLon());
                         googleMap.addMarker(new MarkerOptions().position(loc)
                                 .title(presentation.getTitle()));
 
@@ -110,9 +112,11 @@ public class ConferenceFragment extends Fragment {
                         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                             @Override
                             public void onMapClick(LatLng latLng) {
-                                Bundle args = new Bundle();
-                                args.putInt("placeID",presentation.getPlace());
-                                ((MainActivity)getContext()).setFragment(null,new NavigationFragment(),args);
+                                Intent in = new Intent(getContext(), NavigateActivity.class);
+                                in.putExtra("placeLAT",loc.latitude);
+                                in.putExtra("placeLNG",loc.longitude);
+                                in.putExtra("placeTitle",myPlace.getName());
+                                getActivity().startActivity(in);
                             }
                         });
                     }
