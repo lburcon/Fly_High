@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import butterknife.ButterKnife;
  */
 public class ConferenceFragment extends Fragment {
 
+    private static View view;
     private Presentation[] mDataset;
     private Presentation presentation = new Presentation();
     private Speaker speakerObject = new Speaker();
@@ -46,8 +49,25 @@ public class ConferenceFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.conference_details, container, false);
 
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+             view = inflater.inflate(R.layout.conference_details, container, false);
+            setData();
+            setMap(view);
+            }
+        catch (InflateException e) {
+        }
+
+        return view;
+    }
+
+    private void setData()
+    {
         mDataset = DataGetter.getPresentations(getContext());
 
         presentation = DataGetter.getPresentationById(getContext(),getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
@@ -81,9 +101,6 @@ public class ConferenceFragment extends Fragment {
                 speaker.setText(speaker.getText() + speakerObject.getName());
 
         }
-
-        setMap(view);
-        return view;
     }
 
     private void setMap(View view) {
