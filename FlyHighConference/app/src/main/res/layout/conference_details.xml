@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Aby wystawić oraz zobaczyć ocenę musisz być zalogowany."
+                android:text="@string/login_to_mark_pres"
                 android:textColor="@color/text_white"
                 android:textSize="15sp"
                 android:visibility="visible" />

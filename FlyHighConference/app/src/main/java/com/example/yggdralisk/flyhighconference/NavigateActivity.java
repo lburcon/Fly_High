@@ -31,7 +31,7 @@ public class NavigateActivity extends AppCompatActivity {
                     if (getIntent() != null)
                         succ(getIntent().getDoubleExtra("placeLAT", 51.108636), getIntent().getDoubleExtra("placeLNG", 17.060155), getIntent().getStringExtra("placeTitle"));
                     else
-                        succ(51.108636, 17.060155, "Politechnika Wrocławska");
+                        succ(51.108636, 17.060155, getString(R.string.pwr_map_title));
                 }
             });
         }
@@ -41,9 +41,9 @@ public class NavigateActivity extends AppCompatActivity {
     public void succ(double lat, double lng, String title) {
         LatLng loc = new LatLng(lat, lng);
         map.addMarker(new MarkerOptions().position(loc)
-                .title(title != null ? title : "Politechnika Wrocławska"));
+                .title(title != null ? title : getString(R.string.pwr_map_title)));
 
-        // Move the camera instantly to hamburg with a zoom of 50.
+        // Move the camera instantly to hamburg with a zoom
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
 
         // Zoom in, animating the camera.

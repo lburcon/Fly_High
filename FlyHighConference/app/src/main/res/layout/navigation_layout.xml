@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/navigation_map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment"/>
+        android:layout_height="250dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+    <TextView
+        android:id="@+id/navigation_descr"
+        android:text="OPIS DOJAZDU "
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/background_main"
+        android:textColor="@color/text_white"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"/>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/main_yellow"
+        >
+        <ImageButton
+            android:id="@+id/navigation_jakdojad_ic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/fly_high_jak_dojade"
+            android:scaleType="fitXY"
+            android:foregroundGravity="center"
+            android:background="@color/main_yellow"
+            android:layout_marginRight="10dp"/>
+        <ImageButton
+            android:id="@+id/navigation_mpk_ic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/fly_high_mpk"
+            android:scaleType="fitXY"
+            android:foregroundGravity="center"
+            android:background="@color/main_yellow"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>
