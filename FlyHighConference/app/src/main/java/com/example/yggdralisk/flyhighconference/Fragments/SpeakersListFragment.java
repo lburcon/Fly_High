@@ -17,6 +17,8 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.Speakers
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 /**
  * Created by lukasz on 01.03.16.
  */
@@ -40,8 +42,20 @@ public class SpeakersListFragment extends Fragment {
 
         //TODO: hamburger icon
 
+        if(getArguments() == null || getArguments().getIntArray("speakersIds") == null) {
             mAdapter = new SpeakersRecyclerViewAdapter(getSpeakers());
             mRecyclerView.setAdapter(mAdapter);
+        }
+        else
+        {
+            int[] tempSpeakersArr =  getArguments().getIntArray("speakersIds");
+            ArrayList<Speaker> temp = new ArrayList<>();
+            for(int i = 0; i < tempSpeakersArr.length; i++)
+               temp.add(DataGetter.getSpeakerById(getContext(),tempSpeakersArr[i]));
+
+            mAdapter = new SpeakersRecyclerViewAdapter(temp.toArray(new Speaker[1]));
+            mRecyclerView.setAdapter(mAdapter);
+        }
 
 
 

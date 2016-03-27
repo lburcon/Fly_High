@@ -9,6 +9,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -37,10 +38,11 @@ import butterknife.ButterKnife;
 public class ConferenceFragment extends Fragment {
 
     private static View view;
-    private Presentation[] mDataset;
     private Presentation presentation = new Presentation();
     private Speaker speakerObject = new Speaker();
     private int[] speakerIds = null;
+    @Bind(R.id.conference_speaker_button)
+    ImageButton speakerButton;
     @Bind(R.id.conference_rating_bar)
     RatingBar ratingBar;
     @Bind(R.id.conference_rating_bar_text_view)
@@ -68,7 +70,6 @@ public class ConferenceFragment extends Fragment {
 
     private void setData()
     {
-        mDataset = DataGetter.getPresentations(getContext());
 
         presentation = DataGetter.getPresentationById(getContext(),getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
 
@@ -89,7 +90,6 @@ public class ConferenceFragment extends Fragment {
 
         time.setText(getPresentationTime(presentation));
 
-
         //setting speaker and checking their number in case of adding ','
 
         speakerIds = getSpeakerIds();
@@ -99,8 +99,26 @@ public class ConferenceFragment extends Fragment {
                 speaker.setText(speaker.getText() + speakerObject.getName() + ", ");
             else
                 speaker.setText(speaker.getText() + speakerObject.getName());
-
         }
+
+        setOnClickListners();
+    }
+
+    private void setOnClickListners() {
+        speakerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                if(presentation.getSpeakers().length > 1) {
+                    args.putIntArray("speakersIds", presentation.getSpeakers());
+                    ((MainActivity) getContext()).setFragment(null, new SpeakersListFragment(), args);
+                }else
+                {
+                    args.putInt("speakerId", presentation.getSpeakers()[0]);
+                    ((MainActivity) getContext()).setFragment(null, new SpeakerFragment(), args);
+                }
+            }
+        });
     }
 
     private void setMap(View view) {

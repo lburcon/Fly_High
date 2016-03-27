@@ -150,14 +150,18 @@
             android:layout_alignParentBottom="true"
             android:background="@color/main_yellow" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <ImageButton
+            android:background="@color/background_main"
+            android:id="@+id/conference_speaker_button"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignBottom="@+id/linearLayout3"
             android:layout_alignRight="@+id/conference_localization_info"
             android:layout_alignTop="@+id/linear_layout_vertical"
-            android:layout_toRightOf="@+id/linearLayout3"
-            android:src="@drawable/ic_face_black_24dp" />
+            android:src="@drawable/ic_face_black_24dp"
+            android:layout_toEndOf="@+id/linearLayout3"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
 
     </RelativeLayout>
