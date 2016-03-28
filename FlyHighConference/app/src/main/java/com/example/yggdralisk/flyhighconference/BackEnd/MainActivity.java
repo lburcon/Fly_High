@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private String[] navMenuTitles;
+    boolean ifLast = false;
     private List<Integer> navMenuIcons = new ArrayList<>();
 
 
@@ -207,12 +208,23 @@ public class MainActivity extends AppCompatActivity {
             mDrawerToggle.setDrawerIndicatorEnabled(false);
             getSupportFragmentManager().popBackStack();
             setupToolbar(true);
+            ifLast = false;
             return true;
         } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mDrawerToggle.setDrawerIndicatorEnabled(true);
             getSupportFragmentManager().popBackStack();
             setupToolbar(false);
+            if (getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment)
+                ifLast = true;
+            else
+                ifLast = false;
+            return true;
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 1 && !ifLast) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            setFragment(null, new ConferenceListFragment(), null);
+            ifLast = true;
             return true;
         } else {
             return false;
@@ -244,10 +256,15 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             } else {
+                if (fragment instanceof ConferenceListFragment)
+                    ifLast = true;
+                else
+                    ifLast = false;
+
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+                clearBackStack();
             }
         }
     }
@@ -272,5 +289,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void clearBackStack() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
     }
 }
