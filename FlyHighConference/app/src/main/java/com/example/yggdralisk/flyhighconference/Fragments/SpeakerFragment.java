@@ -21,7 +21,6 @@ import org.json.JSONArray;
  */
 public class SpeakerFragment extends Fragment {
 
-    private JSONArray mDataset = new JSONArray();
     private Speaker speaker = new Speaker();
 
     @Nullable
