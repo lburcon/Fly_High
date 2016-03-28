@@ -48,9 +48,11 @@ public class PartnerFragment extends Fragment {
         ImageView image = (ImageView) view.findViewById(R.id.partners_details_image);
 
 
-            title.setText(partner.getType());
-
             name.setText(partner.getName());
+
+        if (partner.getType().equals("patronage"))
+            title.setText("patron");
+        else title.setText("sponsor");
 
             description.setText(partner.getUrl());
 

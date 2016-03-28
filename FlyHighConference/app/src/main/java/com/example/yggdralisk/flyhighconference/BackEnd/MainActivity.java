@@ -2,7 +2,7 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -37,7 +36,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     TextView loggedName;
     @Bind(R.id.activity_main_toolbar)
     Toolbar mToolbar;
+
 
 
     private ActionBarDrawerToggle mDrawerToggle;
