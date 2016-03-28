@@ -111,7 +111,7 @@ public class ConferenceFragment extends Fragment {
                 Bundle args = new Bundle();
                 if(presentation.getSpeakers().length > 1) {
                     args.putIntArray("speakersIds", presentation.getSpeakers());
-                    ((MainActivity) getContext()).setFragment(null, new SpeakersListFragment(), args);
+                    ((MainActivity) getContext()).setFragment(null, new SpeakersConferenceListFragment(), args);
                 }else
                 {
                     args.putInt("speakerId", presentation.getSpeakers()[0]);

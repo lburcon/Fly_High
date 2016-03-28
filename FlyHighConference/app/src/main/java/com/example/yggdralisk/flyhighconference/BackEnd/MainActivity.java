@@ -29,6 +29,7 @@ import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.SpeakersConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
 import java.util.ArrayList;
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
 
-
     private ActionBarDrawerToggle mDrawerToggle;
 
     private String[] navMenuTitles;
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         setFragment(savedInstanceState, new ConferenceListFragment(), null);
 
         toolbarOnclick();
-
 
 
     }
@@ -110,10 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_top,R.anim.slide_out_bottom,R.anim.slide_in_bottom,R.anim.slide_out_top);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom, R.anim.slide_in_bottom, R.anim.slide_out_top);
                 setupToolbar(fragmentActivity);
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
-
 
                 if (!isLog)
                     fragmentTransaction.addToBackStack(null);
@@ -129,34 +127,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).getFragment(),null);
+            setFragment(null, ((DrawerItem) mDrawerList.getItemAtPosition(position)).getFragment(), null);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     toggleDrawer();
                 }
             }, 300);
-        }
-    }
-
-    public boolean setPreviousFragment() {
-
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-            setupToolbar();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        if (!setPreviousFragment()) {
-            this.finish();
-            System.exit(0);
         }
     }
 
@@ -202,21 +179,67 @@ public class MainActivity extends AppCompatActivity {
         return ifChanged;
     }
 
-    private void setupToolbar() { //only used when back arrow clicked
+    private void toolbarOnclick() {
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+
+                setPreviousFragment();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (!setPreviousFragment()) {
+            this.finish();
+            System.exit(0);
+        }
+    }
+
+    public boolean setPreviousFragment() {
+
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            getSupportFragmentManager().popBackStack();
+            setupToolbar(true);
+            return true;
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            getSupportFragmentManager().popBackStack();
+            setupToolbar(false);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void setupToolbar(boolean count) { //only used when back arrow clicked
         if (getSupportActionBar() != null)
-        {getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);}
-        //mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+            if (count) {
+                mDrawerToggle.setDrawerIndicatorEnabled(false);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+            } else {
+                getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
     }
 
     private void setupToolbar(Fragment fragment) {
-        //setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+
         if (getSupportActionBar() != null) {
             if (fragment instanceof ConferenceFragment || fragment instanceof PartnerFragment ||
                     fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
-                    fragment instanceof InfoFragment) {
+                    fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment) {
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -233,18 +256,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
-    }
-
-    private void toolbarOnclick() {
-        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                mDrawerToggle.setDrawerIndicatorEnabled(true);
-                setPreviousFragment();
-            }
-        });
     }
 
     @Override
