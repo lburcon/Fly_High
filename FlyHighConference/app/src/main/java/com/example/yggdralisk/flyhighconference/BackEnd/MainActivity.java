@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setLoggedNameOnDrawer(String name) {
         if (name != null) {
-            if (name == "")
+            if (name.equals(""))
                 loggedName.setText("");
             else
                 loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
@@ -203,33 +203,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean setPreviousFragment() {
-
-
-        if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            getSupportFragmentManager().popBackStack();
-            setupToolbar(true);
-            ifLast = false;
-            return true;
-        } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            getSupportFragmentManager().popBackStack();
-            setupToolbar(false);
-            if (getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment)
-                ifLast = true;
-            else
+        if(getSupportActionBar() != null) {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                mDrawerToggle.setDrawerIndicatorEnabled(false);
+                getSupportFragmentManager().popBackStack();
+                setupToolbar(true);
                 ifLast = false;
+                return true;
+            } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                getSupportFragmentManager().popBackStack();
+                setupToolbar(false);
+                ifLast = getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment;
+                return true;
+            } else if (getSupportFragmentManager().getBackStackEntryCount() == 1 && !ifLast) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                setFragment(null, new ConferenceListFragment(), null);
+                ifLast = true;
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else
+        {
+            getSupportFragmentManager().popBackStack();
             return true;
-        } else if (getSupportFragmentManager().getBackStackEntryCount() == 1 && !ifLast) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            setFragment(null, new ConferenceListFragment(), null);
-            ifLast = true;
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -247,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupToolbar(Fragment fragment) {
+        if(getSupportActionBar() == null) return;
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
 
@@ -258,10 +261,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             } else {
-                if (fragment instanceof ConferenceListFragment)
-                    ifLast = true;
-                else
-                    ifLast = false;
+                ifLast = fragment instanceof ConferenceListFragment;
 
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
