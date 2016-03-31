@@ -9,6 +9,12 @@
         android:icon="@drawable/ic_info_outline_black_24dp"
         android:orderInCategory="200"
         app:showAsAction="ifRoom"
-        android:title="hamburger" />
+        android:title="info" />
+
+        <item android:id="@+id/organisers"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom"
+            android:title="organisers" />
     </group>
 </menu>

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -25,11 +26,13 @@ import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment
 import com.example.yggdralisk.flyhighconference.Fragments.InfoFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.OrganisersListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakersConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -276,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.menu_general, menu);
         return true;
     }
@@ -284,7 +288,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.info:
+                if (!(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getBackStackEntryCount() - 1) instanceof InfoFragment))
                 setFragment(null, new InfoFragment(), null);
+                return true;
+            case R.id.organisers:
+                if (!(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getBackStackEntryCount() - 1) instanceof OrganisersListFragment))
+                    setFragment(null, new OrganisersListFragment(), null);
                 return true;
         }
         return super.onOptionsItemSelected(item);

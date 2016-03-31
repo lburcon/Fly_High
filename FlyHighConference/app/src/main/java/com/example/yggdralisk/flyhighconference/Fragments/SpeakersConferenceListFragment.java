@@ -40,8 +40,6 @@ public class SpeakersConferenceListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //TODO: hamburger icon
-
         if(getArguments() == null || getArguments().getIntArray("speakersIds") == null) {
             mAdapter = new SpeakersRecyclerViewAdapter(getSpeakers());
             mRecyclerView.setAdapter(mAdapter);
@@ -57,20 +55,9 @@ public class SpeakersConferenceListFragment extends Fragment {
             mRecyclerView.setAdapter(mAdapter);
         }
 
-
-
-       /*  Button drawerButton = (Button) view.findViewById(R.id.conference_drawer_button);
-        drawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).toggleDrawer();
-            }
-        });*/
-
         return view;
     }
 
-    //todo
     private Speaker[] getSpeakers(){
         return DataGetter.getSpeakers(getContext());
     }
