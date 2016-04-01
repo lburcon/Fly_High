@@ -95,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
         ids.recycle();
     }
 
-    //Jeżeli nie wiesz co wysłać w jakos aveInstanceState, wyślij null
-
+    //Jeżeli nie wiesz co wysłać w jako savedInstanceState wyślij null
     public void setFragment(Bundle savedInstanceState, Fragment fragmentActivity, Bundle args) {
         try {
             if (findViewById(R.id.fragment_container_main) != null) {
@@ -153,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean changeLoginLogoutDrawer() //Returns true if drawer has been changed to zaloguj
-    {
+     {
         ArrayList<DrawerItem> drawerElements = new ArrayList<>();
         int temp;
         boolean ifChanged = false;
