@@ -2,6 +2,7 @@ package com.example.yggdralisk.flyhighconference.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -43,10 +44,6 @@ public class ConferenceFragment extends Fragment {
     private int[] speakerIds = null;
     @Bind(R.id.conference_speaker_button)
     ImageButton speakerButton;
-    @Bind(R.id.conference_rating_bar)
-    RatingBar ratingBar;
-    @Bind(R.id.conference_rating_bar_text_view)
-    TextView warning;
 
     @Nullable
     @Override
@@ -68,17 +65,11 @@ public class ConferenceFragment extends Fragment {
         return view;
     }
 
-    private void setData()
-    {
+    private void setData() {
 
         presentation = DataGetter.getPresentationById(getContext(),getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
 
         ButterKnife.bind(this, view);
-
-        if (DataGetter.checkUserLogged(getContext())) {
-            warning.setVisibility(View.INVISIBLE);
-            ratingBar.setVisibility(View.VISIBLE);
-        }
 
         TextView time = ButterKnife.findById(view, R.id.conference_time);
         TextView speaker = ButterKnife.findById(view, R.id.conference_speaker);
@@ -144,6 +135,7 @@ public class ConferenceFragment extends Fragment {
 
                         // Zoom in, animating the camera.
                         googleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
+
                         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                             @Override
                             public void onMapClick(LatLng latLng) {
@@ -151,6 +143,7 @@ public class ConferenceFragment extends Fragment {
                                 in.putExtra("placeLAT",loc.latitude);
                                 in.putExtra("placeLNG",loc.longitude);
                                 in.putExtra("placeTitle",myPlace.getName());
+
                                 getActivity().startActivity(in);
                             }
                         });

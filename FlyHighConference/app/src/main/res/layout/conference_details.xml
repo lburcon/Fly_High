@@ -60,110 +60,43 @@
             android:layout_height="match_parent"
             class="com.google.android.gms.maps.SupportMapFragment"
 
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_above="@+id/linearLayout2"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/conference_localization_info"
-            android:layout_toStartOf="@+id/conference_localization_info"
-            android:layout_below="@+id/conference_description" />
+            android:layout_below="@+id/conference_localization_info"
+            />
 
         <TextView
+            android:background="@color/main_yellow"
             android:id="@+id/conference_localization_info"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_above="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/conference_description"
+
             android:gravity="center_horizontal"
             android:scrollbars="vertical"
             android:text="Dojazd"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:background="@color/main_yellow"
-            android:orientation="horizontal" />
-
-        <!-- RatingBar visibility is set to gone, have to change it in case logged in-->
-
-        <RatingBar
-            android:id="@+id/conference_rating_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_alignParentBottom="true"
-
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="95dp"
-            android:numStars="6"
-            android:rating="1"
-            android:stepSize="1"
-            android:visibility="gone" />
-
-
-        <LinearLayout
-            android:id="@+id/linear_layout_vertical"
-            android:layout_width="2dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="90dp"
-            android:background="@color/main_yellow"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="5dp"
-
-            android:layout_toLeftOf="@+id/linear_layout_vertical"
-            android:orientation="horizontal">
-
-            <!-- TextView visibility is set to visible, have to change it in case logged in-->
-
-            <TextView
-                android:id="@+id/conference_rating_bar_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/login_to_mark_pres"
-                android:textColor="@color/text_white"
-                android:textSize="15sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
 
         <ImageButton
             android:background="@color/background_main"
+            android:id="@+id/conference_zoom_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            android:layout_alignRight="@+id/conference_map"
+            android:layout_alignParentBottom="true"/>
+
+        <ImageButton
+            android:background="@color/main_yellow"
             android:id="@+id/conference_speaker_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="30dp"
             android:src="@drawable/ic_face_black_24dp"
-            android:layout_alignBottom="@id/linearLayout3"
-            android:layout_alignParentRight="true"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/main_yellow" />
-
-
-
+            android:layout_alignRight="@+id/conference_localization_info"
+            android:layout_alignTop="@+id/conference_localization_info"
+            />
 
     </RelativeLayout>
 

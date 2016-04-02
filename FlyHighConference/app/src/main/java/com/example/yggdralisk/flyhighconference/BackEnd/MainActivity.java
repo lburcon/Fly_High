@@ -102,23 +102,30 @@ public class MainActivity extends AppCompatActivity {
                 if (savedInstanceState != null) {
                     return;
                 }
+                
+                if(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) != null)
+                    if((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main).getClass() == fragmentActivity.getClass()))
+                        return;
 
                 fragmentActivity.setArguments(getIntent().getExtras());
                 if (args != null) fragmentActivity.setArguments(args);
                 FragmentManager fragmentManager = getSupportFragmentManager();
+
                 boolean isLog = (fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginFragment
                         || fragmentManager.findFragmentById(R.id.fragment_container_main) instanceof LoginOutFragment);
 
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom, R.anim.slide_in_bottom, R.anim.slide_out_top);
-                setupToolbar(fragmentActivity);
+
                 fragmentTransaction.replace(R.id.fragment_container_main, fragmentActivity);
 
                 if (!isLog)
                     fragmentTransaction.addToBackStack(null);
 
                 fragmentTransaction.commit();
+
+                setupToolbar(fragmentActivity);
             }
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
@@ -135,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     toggleDrawer();
                 }
-            }, 300);
+            }, 350);
         }
     }
 
@@ -287,11 +294,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.info:
-                if (!(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getBackStackEntryCount() - 1) instanceof InfoFragment))
+                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main)  instanceof InfoFragment))
                 setFragment(null, new InfoFragment(), null);
                 return true;
             case R.id.organisers:
-                if (!(getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getBackStackEntryCount() - 1) instanceof OrganisersListFragment))
+                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
                     setFragment(null, new OrganisersListFragment(), null);
                 return true;
         }

@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/dotted_line"
+        android:layerType="software"
+        android:id="@+id/view" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -49,11 +54,11 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_gravity="bottom"
-        android:background="@color/main_yellow"
-        android:orientation="horizontal" />
+        android:layout_height="3dp"
+        android:background="@drawable/dotted_line"
+        android:layerType="software"
+        android:id="@+id/view" />
 
 </LinearLayout>

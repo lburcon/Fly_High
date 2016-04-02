@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".BackEnd.MainActivity"
-        android:background="@color/main_yellow"
+        android:background="@color/background_main"
         android:orientation="vertical">
 
 
@@ -15,15 +15,17 @@
         android:textColor="@color/text_white"
         android:textSize="35sp"
         android:gravity="center_horizontal"/>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/main_yellow" />
+        android:layout_height="3dp"
+        android:background="@drawable/dotted_line"
+        android:layerType="software" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:id="@+id/conference_recycler_view"
-            android:background="@color/background_main"/>
+            android:background="@color/background_main" />
 </LinearLayout>
