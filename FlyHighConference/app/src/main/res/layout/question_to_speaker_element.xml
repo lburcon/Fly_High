@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_main"
+    android:background="@color/backgroung_dark"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -30,7 +30,8 @@
             android:textColor="@color/text_white" />
 
         <TextView
-            android:text="Aktualnie nie ma żadnych pytań do tej prezentacji."
+            android:gravity="center"
+            android:text="@string/no_question_to_presentation"
             android:textSize="20dp"
             android:id="@+id/question_to_speaker_question"
             android:layout_width="wrap_content"
@@ -40,11 +41,11 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_marginBottom="5dp"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/main_yellow"
-        android:orientation="horizontal" />
+        android:layout_height="3dp"
+        android:background="@drawable/dotted_line"
+        android:layerType="software"
+        android:id="@+id/view" />
 
 </LinearLayout>

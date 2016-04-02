@@ -15,17 +15,18 @@
         android:text="OPIS DOJAZDU "
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:background="@color/background_main"
+        android:background="@color/backgroung_dark"
         android:textColor="@color/text_white"
         android:layout_marginBottom="10dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:scrollbars="vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@color/main_yellow"
+        android:background="@color/backgroung_dark"
         >
         <ImageButton
             android:id="@+id/navigation_jakdojad_ic"

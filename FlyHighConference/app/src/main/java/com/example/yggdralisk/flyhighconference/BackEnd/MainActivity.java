@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 if (savedInstanceState != null) {
                     return;
                 }
-                
+
                 if(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) != null)
                     if((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main).getClass() == fragmentActivity.getClass()))
                         return;

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
@@ -26,14 +27,12 @@ import butterknife.ButterKnife;
  */
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
-    private Context mContext;
     private Question[] mQuestions;
-    private MainActivity mUpLayout;
-
+    private Context context;
 
     public QuestionAdapter(Question[] mQuestions, Context context) {
         this.mQuestions = mQuestions;
-        mContext = context;
+        this.context = context;
     }
 
     @Override
@@ -45,7 +44,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
 
         ViewHolder vh = new ViewHolder(v);
-        mUpLayout = (MainActivity) parent.getContext();
         return vh;
     }
 
@@ -84,7 +82,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         public void setData(Question question) {
 
             if (question != null) {
-                    nick.setText(String.valueOf(question.getUser()));
+                try
+                {
+                    String mail = DataGetter.getUserById(context, question.getUser()).getMail();
+                    nick.setText(mail.substring(0, mail.indexOf('@')));
+                } catch (Exception ex)
+                {
+                    nick.setText("");
+                }
                     rating.setText("Ocena: " + question.getRating());
                     questionField.setText(question.getContent()); }
             else questionField.setText("Aktualnie nie ma żadnych pytań do tej prelekcji");

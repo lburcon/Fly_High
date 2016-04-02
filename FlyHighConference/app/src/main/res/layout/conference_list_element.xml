@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent" android:layout_width="match_parent"
-    android:background="@color/background_main"
+    android:background="@color/backgroung_dark"
     android:orientation="vertical">
 
     <View
@@ -14,25 +14,23 @@
 
     <TextView
         android:id="@+id/conference_list_item_auth"
-        android:textSize="10sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@color/text_white"
-        android:gravity="left"
-        android:text="Auth"
-        android:background="@color/background_main" />
-
-    <TextView
-        android:id="@+id/conference_list_itemt_time"
         android:textSize="12sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@color/text_white"
+        android:gravity="left"
+        android:text="Auth" />
+
+    <TextView
+        android:id="@+id/conference_list_itemt_time"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/text_white"
         android:gravity="center_horizontal"
-        android:text="DataTime"
-        android:background="@color/background_main"/>
+        android:text="DataTime" />
     <TextView
         android:id="@+id/conference_list_item_titlext"
         android:textSize="25sp"
@@ -41,8 +39,7 @@
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="@color/text_white"
         android:gravity="center_horizontal"
-        android:text="Title"
-        android:background="@color/background_main"/>
+        android:text="Title" />
     <TextView
         android:id="@+id/conference_list_item_descrxt"
         android:textSize="15sp"
@@ -52,7 +49,6 @@
         android:textColor="@color/text_white"
         android:gravity="center"
         android:text="Descr"
-        android:background="@color/background_main"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"/>
     <View

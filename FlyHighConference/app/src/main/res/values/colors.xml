@@ -3,6 +3,7 @@
     <color name="background_main">#3B3B3B</color>
     <color name="main_yellow">#FFCC00</color>
     <color name="background_black">#000000</color>
+    <color name="backgroung_dark">#2e2e2e</color>
     <color name="text_white">#FFFFFF</color>
     <color name="main_yellow_dark">#FFC000</color>
 </resources>

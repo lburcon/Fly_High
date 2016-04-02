@@ -8,19 +8,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="Pytania do prelekcji"
         android:textColor="@color/text_white"
-        android:textSize="25sp" />
+        android:textSize="35sp"
+        android:background="@color/backgroung_dark" />
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_gravity="bottom"
+        android:layout_height="3dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/main_yellow"
-        android:orientation="horizontal" />
+        android:background="@color/main_yellow" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/questions_recycler_view"

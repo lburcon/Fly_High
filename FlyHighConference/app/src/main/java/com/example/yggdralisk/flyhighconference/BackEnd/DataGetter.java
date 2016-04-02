@@ -100,6 +100,14 @@ public class DataGetter {
         }
         return null;
     }
+
+    public static User getUserById(Context context,int userID) {
+        for (User p : getUsers(context)) {
+            if (p.getId() == userID) return p;
+        }
+        return null;
+    }
+
     public static Boolean checkUserLogged(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(context.getString(R.string.shared_preferences_user_logged), false);

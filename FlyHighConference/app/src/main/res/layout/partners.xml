@@ -8,16 +8,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:textColor="@color/text_white"
         android:text="Sponsorzy"
-        android:textSize="35sp" />
+        android:textSize="35sp"
+        android:background="@color/backgroung_dark"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
+        android:background="@color/main_yellow"
         android:layerType="software" />
 
     <android.support.v7.widget.RecyclerView

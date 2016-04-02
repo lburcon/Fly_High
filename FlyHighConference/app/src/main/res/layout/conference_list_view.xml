@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Plan konferencji"
-        android:background="@color/background_main"
+        android:background="@color/backgroung_dark"
         android:textColor="@color/text_white"
         android:textSize="35sp"
         android:gravity="center_horizontal"/>
@@ -19,7 +19,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
+        android:background="@color/main_yellow"
         android:layerType="software" />
 
         <android.support.v7.widget.RecyclerView
