@@ -36,7 +36,7 @@ public class ServerConnector {
     private int presentationID;
 
     //------------------------------------------------------------------------DATA_POST_PART --------------------------------------------------------------------------------
-    public void postLikeToPresentation(Context context, int questionID, int userID, final ConnectorResultInterface callback) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
+    public void postLikeToQuestion(Context context, int questionID, int userID, final ConnectorResultInterface callback) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
     {
         this.context = context;
 

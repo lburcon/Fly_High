@@ -130,11 +130,9 @@ public class ConferenceFragment extends Fragment {
                         googleMap.addMarker(new MarkerOptions().position(loc)
                                 .title(presentation.getTitle()));
 
-                        // Move the camera instantly to hamburg with a zoom of 50.
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 12));
 
-                        // Zoom in, animating the camera.
-                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
+                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
                         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                             @Override

@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lukasz on 16.03.16.
@@ -36,8 +37,6 @@ import butterknife.ButterKnife;
 public class NavigationFragment extends Fragment {
     private static View view;
     private GoogleMap map;
-    @Bind(R.id.navigation_jakdojad_ic)ImageButton jakdojad;
-   @Bind(R.id.navigation_mpk_ic) ImageButton mpk;
     SupportMapFragment mapFragment;
 
     @Nullable
@@ -54,8 +53,6 @@ public class NavigationFragment extends Fragment {
             ButterKnife.bind(this,view);
 
             mapFragment = SupportMapFragment.newInstance();
-
-            setOnClickListners();
 
             FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.navigation_map, mapFragment);
@@ -75,23 +72,18 @@ public class NavigationFragment extends Fragment {
         return view;
     }
 
-    private void setOnClickListners() {
-        jakdojad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.http://wroclaw.jakdojade.pl/"));
-                startActivity(browserIntent);
-            }
-        });
+        @OnClick(R.id.navigation_jakdojad_ic)
+        public void setJakdojad() {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://wroclaw.jakdojade.pl"));
+            startActivity(browserIntent);
+        }
 
-        mpk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
-                startActivity(browserIntent);
-            }
-        });
+    @OnClick(R.id.navigation_mpk_ic)
+            public void setMpk() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
+        startActivity(browserIntent);
     }
+
 
     public void succ(int placeID) {
         Place place;
@@ -106,13 +98,11 @@ public class NavigationFragment extends Fragment {
             place.setName(getString(R.string.pwr_map_title));
         }
 
-        Marker locMark = map.addMarker(new MarkerOptions().position(loc)
+        map.addMarker(new MarkerOptions().position(loc)
                 .title(place.getName()));
 
-        // Move the camera instantly to hamburg with a zoom
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
 
-        // Zoom in, animating the camera.
         map.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
     }
 

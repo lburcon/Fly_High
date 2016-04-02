@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentTransaction.commit();
 
-                setupToolbar(fragmentActivity);
+
             }
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             if (name.equals(""))
                 loggedName.setText("");
             else
-                loggedName.setText(getString(R.string.left_drawer_logged_name) + name);
+                loggedName.setText(getString(R.string.left_drawer_logged_name) + " " +name);
 
             loggedName.invalidate();
         }
@@ -201,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            toggleDrawer();
 
         if (!setPreviousFragment()) {
             this.finish();

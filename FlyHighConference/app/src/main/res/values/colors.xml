@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_main">#3B3B3B</color>
-    <color name="main_yellow">#FFCC00</color>
+    <color name="background_main">#484848</color>
+    <color name="main_yellow">#ffe100</color>
     <color name="background_black">#000000</color>
-    <color name="backgroung_dark">#2e2e2e</color>
+    <color name="backgroung_dark">#3B3B3B</color>
     <color name="text_white">#FFFFFF</color>
-    <color name="main_yellow_dark">#FFC000</color>
+    <color name="main_yellow_dark">#FFCC00</color>
 </resources>

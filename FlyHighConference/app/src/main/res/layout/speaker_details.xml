@@ -40,7 +40,8 @@
         android:layout_height="300dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/rounded_corner_yellow">
+        android:background="@drawable/rounded_corner_yellow"
+        android:orientation="vertical">
 
             <TextView
                 android:id="@+id/speaker_description"
@@ -53,15 +54,17 @@
                 android:textColor="@color/background_black"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/dotted_line"
+            android:layerType="software"
+            android:id="@+id/view"/>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
-        android:layerType="software"
-        android:id="@+id/view"/>
+
 
 
 </LinearLayout>

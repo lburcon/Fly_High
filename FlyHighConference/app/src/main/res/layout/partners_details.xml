@@ -36,12 +36,14 @@
         android:textSize="30sp" />
 
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/main_yellow"
-        android:orientation="horizontal" />
+        android:layout_height="3dp"
+        android:background="@drawable/dotted_line"
+        android:layerType="software"
+        android:id="@+id/view"
+        android:layout_marginBottom="5dp" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +67,7 @@
         <TextView
             android:id="@+id/partners_details_description"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal"
             android:text="opis"
@@ -73,59 +75,6 @@
             android:textSize="15sp" />
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/main_yellow"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/partners_details_socials"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/partners_details_community_facebook"
-                android:layout_width="75dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/fly_high_facebook" />
-
-            <ImageView
-                android:id="@+id/partners_details_community_twitter"
-                android:layout_width="75dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/fly_high_twitter" />
-
-            <ImageView
-                android:id="@+id/partners_details_community_tumblr"
-                android:layout_width="75dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/fly_high_tumblr" />
-
-            <ImageView
-                android:id="@+id/partners_details_community_pinterest"
-                android:layout_width="75dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="2dp"
-                android:src="@drawable/fly_high_pinterest" />
-
-        </LinearLayout>
-    </RelativeLayout>
 
 
 </LinearLayout>
