@@ -32,7 +32,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:text="Partner"
-        android:textColor="@color/background_black"
+        android:textColor="@color/text_white"
         android:textSize="30sp" />
 
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="Nazwa sponsora"
-            android:textColor="@color/background_black"
+            android:textColor="@color/text_white"
             android:textSize="30sp" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal"
             android:text="opis"
-            android:textColor="@color/background_black"
+            android:textColor="@color/text_white"
             android:textSize="15sp" />
 
     </LinearLayout>

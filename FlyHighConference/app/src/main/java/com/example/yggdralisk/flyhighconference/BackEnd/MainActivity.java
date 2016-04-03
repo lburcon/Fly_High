@@ -2,7 +2,6 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -32,7 +30,6 @@ import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakersConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.R;
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setDrawer();
 
         setFragment(savedInstanceState, new ConferenceListFragment(), null);
+
 
         toolbarOnclick();
 
@@ -123,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!isLog)
                     fragmentTransaction.addToBackStack(null);
 
+                setupToolbar(fragmentActivity);
                 fragmentTransaction.commit();
 
 
@@ -265,7 +264,8 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             if (fragment instanceof ConferenceFragment || fragment instanceof PartnerFragment ||
                     fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
-                    fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment) {
+                    fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment ||
+                    fragment instanceof OrganisersListFragment) {
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);

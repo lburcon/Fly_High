@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_yellow"
-        android:textColor="@color/background_black"
+        android:textColor="@color/text_white"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         />
@@ -51,7 +51,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="5dp"
                 android:text="Opis"
-                android:textColor="@color/background_black"
+                android:textColor="@color/text_white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         <View
