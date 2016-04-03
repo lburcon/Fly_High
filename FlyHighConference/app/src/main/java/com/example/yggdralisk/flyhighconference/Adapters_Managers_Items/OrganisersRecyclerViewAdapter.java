@@ -116,6 +116,26 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
 
             email.setText(speakerObject.getEmail());
 
+        //A MOZE BY TAK UZYC SWITCHA?
+
+            if (speakerObject.getImage().equals("photo_john") || speakerObject.getImage().equals("photo_lukas"))
+            {
+                if (speakerObject.getImage().equals("photo_john"))
+                Glide.with(itemView.getContext())
+                        .load("")
+                        .placeholder(R.drawable.photo_john)
+                        .dontAnimate()
+                        .into(image);
+                else
+                Glide.with(itemView.getContext())
+                        .load("")
+                        .placeholder(R.drawable.photo_lukas)
+                        .dontAnimate()
+                        .into(image);
+
+
+            }
+            else
             Glide.with(itemView.getContext())
                     .load(speakerObject.getImage())
                     .placeholder(R.drawable.fly_high)

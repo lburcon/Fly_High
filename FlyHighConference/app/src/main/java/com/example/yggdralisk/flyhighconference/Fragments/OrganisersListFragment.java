@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.OrganisersRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.SpeakersRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
 import com.example.yggdralisk.flyhighconference.R;
 
 /**
@@ -22,6 +23,7 @@ public class OrganisersListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    Organiser[] organisers;
 
     @Nullable
     @Override
@@ -32,11 +34,53 @@ public class OrganisersListFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new OrganisersRecyclerViewAdapter(DataGetter.getOrganisers(getContext()));
+        organisers = new Organiser[DataGetter.getOrganisers(getContext()).length + 2];
+        addDevelopers();
+        mAdapter = new OrganisersRecyclerViewAdapter(organisers);
         mRecyclerView.setAdapter(mAdapter);
 
 
         return view;
+    }
+
+    private void addDevelopers() {
+        Organiser[] temp = DataGetter.getOrganisers(getContext());
+        int count = temp.length;
+
+        for (int i = 0 ; i < count ; i++){
+            organisers[i] = temp[i];
+        }
+
+        temp = makeDevelopers();
+
+        for (int i = count ; i < organisers.length  ; i++) {
+            organisers[i] = temp[organisers.length - i - 1];
+        }
+    }
+
+    private Organiser[] makeDevelopers() {
+        Organiser[] devArray = new Organiser[2];
+        int place = DataGetter.getOrganisers(getContext()).length;
+
+        Organiser Lukas = new Organiser();
+        Lukas.setId(place + 1);
+        Lukas.setName("Łukasz Burcon");
+        Lukas.setTitle("FlyHigh App Developer");
+        Lukas.setEmail("kaix96@gmail.com");
+        Lukas.setDescription("On jest całkiem wporzo");
+        Lukas.setImage("photo_lukas");
+
+        Organiser John = new Organiser();
+        John.setId(place + 2);
+        John.setName("Jan Stoltman");
+        John.setTitle("FlyHigh App Developer");
+        John.setEmail("stoltmanjan@gmail.com");
+        John.setDescription("App destroyer");
+        John.setImage("photo_john");
+
+        devArray[0] = John;
+        devArray[1] = Lukas;
+
+        return devArray;
     }
 }
