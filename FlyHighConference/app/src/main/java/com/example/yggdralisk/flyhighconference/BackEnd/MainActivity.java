@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     TextView loggedName;
     @Bind(R.id.activity_main_toolbar)
     Toolbar mToolbar;
-
 
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) != null)
-                    if((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main).getClass() == fragmentActivity.getClass()))
+                if (getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) != null)
+                    if ((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main).getClass() == fragmentActivity.getClass()))
                         return;
 
                 fragmentActivity.setArguments(getIntent().getExtras());
@@ -129,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
         }
+        invalidateOptionsMenu();
+
+
     }
 
     private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {
@@ -150,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             if (name.equals(""))
                 loggedName.setText("");
             else
-                loggedName.setText(getString(R.string.left_drawer_logged_name) + " " +name);
+                loggedName.setText(getString(R.string.left_drawer_logged_name) + " " + name);
 
             loggedName.invalidate();
         }
@@ -158,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean changeLoginLogoutDrawer() //Returns true if drawer has been changed to zaloguj
-     {
+    {
         ArrayList<DrawerItem> drawerElements = new ArrayList<>();
         int temp;
         boolean ifChanged = false;
@@ -211,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean setPreviousFragment() {
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
@@ -235,9 +238,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             getSupportFragmentManager().popBackStack();
             return true;
         }
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupToolbar(Fragment fragment) {
-        if(getSupportActionBar() == null) return;
+        if (getSupportActionBar() == null) return;
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
 
@@ -287,9 +288,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+
+        if ((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof ConferenceFragment)) {
+            menu.clear();
+            getMenuInflater().inflate(R.menu.menu_with_prelegents, menu);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_general, menu);
+
         return true;
     }
 
@@ -297,8 +311,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.info:
-                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main)  instanceof InfoFragment))
-                setFragment(null, new InfoFragment(), null);
+                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof InfoFragment))
+                    setFragment(null, new InfoFragment(), null);
                 return true;
             case R.id.organisers:
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))

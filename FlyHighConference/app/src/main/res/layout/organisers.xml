@@ -10,9 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:gravity="center"
+        android:background="@color/backgroung_dark"
         android:text="Organizatorzy"
         android:textColor="@color/text_white"
-        android:textSize="25sp" />
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
