@@ -42,8 +42,6 @@ public class ConferenceFragment extends Fragment {
     private Presentation presentation = new Presentation();
     private Speaker speakerObject = new Speaker();
     private int[] speakerIds = null;
-    @Bind(R.id.conference_speaker_button)
-    ImageButton speakerButton;
 
     @Nullable
     @Override
@@ -55,11 +53,10 @@ public class ConferenceFragment extends Fragment {
                 parent.removeView(view);
         }
         try {
-             view = inflater.inflate(R.layout.conference_details, container, false);
+            view = inflater.inflate(R.layout.conference_details, container, false);
             setData();
             setMap(view);
-            }
-        catch (InflateException e) {
+        } catch (InflateException e) {
         }
 
         return view;
@@ -67,7 +64,7 @@ public class ConferenceFragment extends Fragment {
 
     private void setData() {
 
-        presentation = DataGetter.getPresentationById(getContext(),getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
+        presentation = DataGetter.getPresentationById(getContext(), getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
 
         ButterKnife.bind(this, view);
 
@@ -92,25 +89,21 @@ public class ConferenceFragment extends Fragment {
                 speaker.setText(speaker.getText() + speakerObject.getName());
         }
 
-        setOnClickListners();
+        setToolbarData();
     }
 
-    private void setOnClickListners() {
-        speakerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle args = new Bundle();
-                if(presentation.getSpeakers().length > 1) {
-                    args.putIntArray("speakersIds", presentation.getSpeakers());
-                    ((MainActivity) getContext()).setFragment(null, new SpeakersConferenceListFragment(), args);
-                }else
-                {
-                    args.putInt("speakerId", presentation.getSpeakers()[0]);
-                    ((MainActivity) getContext()).setFragment(null, new SpeakerFragment(), args);
-                }
-            }
-        });
+    private void setToolbarData() {
+        OnDataPass activity = ((OnDataPass) getContext());
+        Bundle args = new Bundle();
+        if (presentation.getSpeakers().length > 1) {
+            args.putIntArray("speakersIds", presentation.getSpeakers());
+            activity.dataPass(args);
+        } else {
+            args.putInt("speakerId", presentation.getSpeakers()[0]);
+            activity.dataPass(args);
+        }
     }
+
 
     private void setMap(View view) {
         final Place myPlace = DataGetter.getPlaceById(getContext(), presentation.getPlace());
@@ -138,9 +131,9 @@ public class ConferenceFragment extends Fragment {
                             @Override
                             public void onMapClick(LatLng latLng) {
                                 Intent in = new Intent(getContext(), NavigateActivity.class);
-                                in.putExtra("placeLAT",loc.latitude);
-                                in.putExtra("placeLNG",loc.longitude);
-                                in.putExtra("placeTitle",myPlace.getName());
+                                in.putExtra("placeLAT", loc.latitude);
+                                in.putExtra("placeLNG", loc.longitude);
+                                in.putExtra("placeTitle", myPlace.getName());
 
                                 getActivity().startActivity(in);
                             }
@@ -177,5 +170,9 @@ public class ConferenceFragment extends Fragment {
         speakerIds = presentation.getSpeakers();
 
         return speakerIds;
+    }
+
+    public interface OnDataPass {
+        public void dataPass(Bundle data);
     }
 }

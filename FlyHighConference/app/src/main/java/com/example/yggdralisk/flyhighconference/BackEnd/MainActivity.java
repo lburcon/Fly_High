@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
@@ -38,7 +37,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConferenceFragment.OnDataPass{
 
     @Bind(R.id.main_drawer)
     DrawerLayout mDrawerLayout;
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private Bundle toolbarData;
     private String[] navMenuTitles;
     boolean ifLast = false;
     private List<Integer> navMenuIcons = new ArrayList<>();
@@ -123,15 +123,21 @@ public class MainActivity extends AppCompatActivity {
 
                 setupToolbar(fragmentActivity);
                 fragmentTransaction.commit();
-
+                fragmentManager.executePendingTransactions();
+                invalidateOptionsMenu();
 
             }
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
         }
-        invalidateOptionsMenu();
 
 
+
+    }
+
+    @Override
+    public void dataPass(Bundle data) {
+        toolbarData = data;
     }
 
     private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {
@@ -195,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 setPreviousFragment();
             }
         });
@@ -214,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean setPreviousFragment() {
+
+
         if (getSupportActionBar() != null) {
             if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -221,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().popBackStack();
                 setupToolbar(true);
                 ifLast = false;
+                getSupportFragmentManager().executePendingTransactions();
+                invalidateOptionsMenu();
                 return true;
             } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -228,12 +237,16 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().popBackStack();
                 setupToolbar(false);
                 ifLast = getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment;
+                getSupportFragmentManager().executePendingTransactions();
+                invalidateOptionsMenu();
                 return true;
             } else if (getSupportFragmentManager().getBackStackEntryCount() == 1 && !ifLast) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 setFragment(null, new ConferenceListFragment(), null);
                 ifLast = true;
+                getSupportFragmentManager().executePendingTransactions();
+                invalidateOptionsMenu();
                 return true;
             } else {
                 return false;
@@ -242,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
             return true;
         }
+
     }
 
     private void setupToolbar(boolean count) { //only used when back arrow clicked
@@ -318,6 +332,13 @@ public class MainActivity extends AppCompatActivity {
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
                     setFragment(null, new OrganisersListFragment(), null);
                 return true;
+            case R.id.prelegents:
+                if (toolbarData.getIntArray("speakersIds") != null)
+                    {setFragment(null, new SpeakersConferenceListFragment(), toolbarData);
+                    return true;}
+                else
+                    {setFragment(null, new SpeakerFragment(), toolbarData);
+                    return true;}
         }
         return super.onOptionsItemSelected(item);
     }
