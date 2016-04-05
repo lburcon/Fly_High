@@ -29,7 +29,7 @@
                     android:layout_marginBottom="5dp"
                     android:gravity="bottom|center"
                     android:textColor="@color/text_white"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/organisers_title"
@@ -47,7 +47,7 @@
                     android:layout_marginBottom="5dp"
                     android:gravity="center_horizontal"
                     android:textColor="@color/text_white"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
 
                 <TextView
@@ -57,7 +57,9 @@
                     android:layout_marginBottom="5dp"
                     android:gravity="center_horizontal"
                     android:textColor="@color/text_white"
-                    android:textSize="10sp" />
+                    android:textSize="12sp"
+                    android:ellipsize="end"
+                    android:maxLines="3"/>
 
 
             </LinearLayout>
