@@ -10,42 +10,53 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:textSize="15dp"
-
             android:id="@+id/question_to_speaker_nick"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:textColor="@color/text_white" />
+            android:textColor="@color/text_white"
+            android:textSize="15dp" />
 
         <TextView
-
-            android:textSize="15dp"
             android:id="@+id/question_to_speaker_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:textColor="@color/text_white" />
+            android:layout_marginRight="3dp"
+            android:textColor="@color/text_white"
+            android:textSize="15dp" />
+
 
         <TextView
-            android:gravity="center"
-            android:text="@string/no_question_to_presentation"
-            android:textSize="20dp"
             android:id="@+id/question_to_speaker_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/question_to_speaker_nick"
-            android:textColor="@color/text_white" />
+            android:gravity="center"
+            android:text="@string/no_question_to_presentation"
+            android:textColor="@color/text_white"
+            android:textSize="20dp" />
+
+        <ImageButton
+            android:id="@+id/question_plus_one"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/question_to_speaker_rating"
+            android:layout_marginRight="3dp"
+            android:background="@color/backgroung_dark"
+            android:src="@drawable/ic_plus_one_white_24dp" />
 
     </RelativeLayout>
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@drawable/dotted_line"
-        android:layerType="software"
-        android:id="@+id/view" />
+        android:layerType="software" />
 
 </LinearLayout>

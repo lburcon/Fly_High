@@ -11,13 +11,12 @@
         <ImageView
             android:id="@+id/partners_image"
             android:layout_width="120dp"
-            android:layout_height="110dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="60dp"
             android:scaleType="centerInside"
-            android:src="@drawable/fly_high_logotype" />
+            android:src="@drawable/fly_high_logotype"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:id="@+id/partners_name"
@@ -38,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/partners_name"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/partners_image"

@@ -40,4 +40,3 @@ public class SplashScren extends Activity {
         this.finish();
     }
 }
-
