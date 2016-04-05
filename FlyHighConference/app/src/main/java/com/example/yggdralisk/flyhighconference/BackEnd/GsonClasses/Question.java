@@ -5,7 +5,7 @@ package com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses;
  */
 public class Question {
     int id;
-    int presentation; //Presentation's id
+    int presentation; //ORMPresentation's id
     String content;
     int user; //Asking user's id
     int rating;

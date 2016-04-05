@@ -4,8 +4,8 @@ package com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses;
  * Created by yggdralisk on 19.03.16.
  */
 public class Like {
-    int question;//Question's id
-    int user;//User's id
+    int question;//ORMQuestion's id
+    int user;//ORMUser's id
 
     public int getQuestion() {
         return question;

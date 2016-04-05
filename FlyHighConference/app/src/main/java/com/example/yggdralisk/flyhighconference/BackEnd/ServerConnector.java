@@ -5,7 +5,14 @@ import android.content.SharedPreferences;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Import;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.DaoFactory;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.ORMLike;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.ORMOrganiser;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.ORMPresentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.ORMUser;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ImportInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.LikeInterface;
@@ -14,6 +21,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostQ
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.QuestionToPresentationsInterface;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.gson.Gson;
+import com.j256.ormlite.dao.Dao;
 
 import okhttp3.*;
 import okhttp3.Response;
@@ -23,6 +31,7 @@ import retrofit2.Callback;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by yggdralisk on 03.03.16.
@@ -192,29 +201,33 @@ public class ServerConnector {
     }
 
     private void saveData(Object data) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        DaoFactory dtoFactory = dtoFactory = (DaoFactory)context;
+
+        try {
+            Dao<ORMLike, Integer> ormLikes = dtoFactory.getOrmLikes();
+            Dao<ORMUser, Integer> ormUsers = dtoFactory.getOrmUsers();
+            Dao<ORMOrganiser, Integer> ormOrganisers = dtoFactory.getOrmOrganisers();
+            Dao<ORMPresentation, Integer> ormPresentations = dtoFactory.getOrmPresentations();
 
         Gson gson = new Gson();
         if (data instanceof Import) {
-            editor.putString(context.getString(R.string.shared_preferences_organisers), gson.toJson(((Import) data).getOrganisers()));
-            editor.putString(context.getString(R.string.shared_preferences_partners), gson.toJson(((Import) data).getPartners()));
-            editor.putString(context.getString(R.string.shared_preferences_places), gson.toJson(((Import) data).getPlaces()));
-            editor.putString(context.getString(R.string.shared_preferences_presentations), gson.toJson(((Import) data).getPresentations()));
-            editor.putString(context.getString(R.string.shared_preferences_speakers), gson.toJson(((Import) data).getSpeakers()));
-            editor.putString(context.getString(R.string.shared_preferences_users), gson.toJson(((Import) data).getUsers()));
-            editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(((Import) data).getLikes()));
-            editor.putString(context.getString(R.string.shared_preferences_speaker_has_presentations), gson.toJson(((Import) data).getSpeakerPresentationPairs()));
+            for (Organiser o:((Import) data).getOrganisers())
+                        ormOrganisers.create(new ORMOrganiser(o));
+
+            for (Presentation o:((Import) data).getPresentations())
+                ormPresentations.create(new ORMPresentation(o));
+
         } else if (data instanceof Like[]) {
-            editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(data));
+
         } else if (data instanceof Question[]) {
-            editor.putString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, gson.toJson(data));
+
         } else {
         }
 
-        editor.apply();
 
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 
