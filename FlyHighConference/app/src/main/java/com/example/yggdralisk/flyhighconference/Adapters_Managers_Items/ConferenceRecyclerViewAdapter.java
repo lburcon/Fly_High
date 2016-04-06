@@ -75,6 +75,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         public void setData(Presentation presentation) {
                 id = presentation.getId();
                 nListner.setId(id);
+
                 title.setText(presentation.getTitle());
 
                 descr.setText(presentation.getDescription());
@@ -86,8 +87,10 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         }
 
         private String getPresentationAuth(){
-            if (id == -1)
+            if (id != -1)
+                try {
                     return DataGetter.getSpeakerById(mContext, id).getName();
+                }catch (NullPointerException e) {e.printStackTrace();}
 
             return "";
         }
@@ -100,7 +103,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             String startTime = getTime(dtStart);
             String endTime = getTime(dtEnd);
 
-            return String.format("%s    %s - %s", day, startTime, endTime);
+            return String.format("%s  \n%s - %s", day, startTime, endTime);
         }
 
         private String getDay(String dtDate, String dtEnd)//TODO:Ogarnąć jakiś system sprawdzania

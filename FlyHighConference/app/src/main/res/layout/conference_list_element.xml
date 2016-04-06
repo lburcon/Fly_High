@@ -4,25 +4,34 @@
     android:layout_height="match_parent" android:layout_width="match_parent"
     android:background="@color/backgroung_dark"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/conference_list_item_auth"
-        android:textSize="12sp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@color/text_white"
-        android:gravity="left"
-        android:text="Auth" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/conference_list_item_auth"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/text_white"
+            android:gravity="left"
+            android:text="Auth"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/conference_list_itemt_time"
-        android:textSize="14sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@color/text_white"
-        android:gravity="center_horizontal"
-        android:text="DataTime" />
+        <TextView
+            android:id="@+id/conference_list_itemt_time"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/text_white"
+            android:gravity="right"
+            android:text="DataTime"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/conference_list_item_titlext"
         android:textSize="25sp"
@@ -41,6 +50,8 @@
         android:textColor="@color/text_white"
         android:gravity="center"
         android:text="Descr"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"/>

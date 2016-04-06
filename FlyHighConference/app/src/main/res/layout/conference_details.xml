@@ -13,12 +13,11 @@
             android:id="@+id/conference_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
+            android:gravity="right"
             android:text="10:00 - 11:00"
             android:textColor="@color/text_white"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/conference_speaker"
@@ -48,7 +47,6 @@
             android:layout_below="@id/conference_name"
             android:background="@color/backgroung_dark"
             android:gravity="center_horizontal"
-            android:maxLines="5"
             android:scrollbars="vertical"
             android:text="Opis"
             android:textColor="@color/text_white"
@@ -58,7 +56,7 @@
 
 
         <TextView
-            android:background="@color/main_yellow"
+            android:background="@color/backgroung_dark"
             android:id="@+id/conference_localization_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +65,9 @@
             android:scrollbars="vertical"
             android:text="Dojazd"
             android:textColor="@color/text_white"
-            android:textSize="20sp"
+            android:textSize="15sp"
+
+            android:layout_marginTop="125dp"
 
             android:layout_toRightOf="@+id/conference_map"
             android:layout_below="@+id/conference_description"/>

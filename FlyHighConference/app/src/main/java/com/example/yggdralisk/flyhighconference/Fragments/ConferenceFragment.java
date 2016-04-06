@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.ScrollingMovementMethod;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,24 +70,28 @@ public class ConferenceFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         TextView time = ButterKnife.findById(view, R.id.conference_time);
-        TextView speaker = ButterKnife.findById(view, R.id.conference_speaker);
+        TextView speakerName = ButterKnife.findById(view, R.id.conference_speaker);
         TextView name = ButterKnife.findById(view, R.id.conference_name);
         TextView description = ButterKnife.findById(view, R.id.conference_description);
 
         name.setText(presentation.getTitle());
+
         description.setText(presentation.getDescription());
+
+        description.setMovementMethod(new ScrollingMovementMethod());
 
         time.setText(getPresentationTime(presentation));
 
         //setting speaker and checking their number in case of adding ','
 
         speakerIds = getSpeakerIds();
+
         for (int i = 0; i < speakerIds.length; i++) {
             speakerObject = DataGetter.getSpeakerById(getContext(), speakerIds[i]);
             if (speakerIds.length > 1 && i != speakerIds.length - 1)
-                speaker.setText(speaker.getText() + speakerObject.getName() + ", ");
+                speakerName.setText(speakerName.getText() + speakerObject.getName() + ", ");
             else
-                speaker.setText(speaker.getText() + speakerObject.getName());
+                speakerName.setText(speakerName.getText() + speakerObject.getName());
         }
 
         setToolbarData();
@@ -152,7 +157,7 @@ public class ConferenceFragment extends Fragment {
         String startTime = getTime(dtStart);
         String endTime = getTime(dtEnd);
 
-        return String.format("%s    %s - %s", day, startTime, endTime);
+        return String.format("%s  \n%s - %s", day, startTime, endTime);
     }
 
     private String getDay(String dtDate, String dtEnd)//TODO:Ogarnąć jakiś system sprawdzania
