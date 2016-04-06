@@ -85,6 +85,24 @@ public class DataGetter {
         return null;
     }
 
+    public static String[] getPresentationSpeakersNames(Context context, int presentationId)
+    {
+        String [] names;
+        try {
+            int[] ids = getPresentationById(context, presentationId).getSpeakers();
+            names = new String[ids.length];
+            for (int i = 0; i < ids.length; i++)
+                names[i] = getSpeakerById(context,ids[i]).getName();
+
+            return names;
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
+        return new String[]{""};
+    }
+
     public static Presentation getPresentationById(Context context, int presentationId) {
         for (Presentation p :
                 getPresentations(context)) {

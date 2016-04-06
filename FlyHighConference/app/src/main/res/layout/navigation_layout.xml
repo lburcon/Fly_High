@@ -20,7 +20,7 @@
         android:id="@+id/navigation_descr"
         android:text="@string/navigation_decription_main"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="200dp"
         android:background="@color/backgroung_dark"
         android:textColor="@color/text_white"
         android:gravity="center"

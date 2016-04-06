@@ -1,5 +1,7 @@
 package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,12 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
-import com.example.yggdralisk.flyhighconference.Fragments.PartnerFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.net.URL;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -70,9 +69,8 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
         public ViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(nListener);
-
             ButterKnife.bind(this, itemView);
+            image.setOnClickListener(nListener);
         }
 
         public void setData(Partner partner) {
@@ -87,31 +85,37 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
 
             Glide.with(itemView.getContext())
                     .load(partner.getLogo())
-                    .placeholder(R.drawable.fly_high_logotype)
+                    .placeholder(R.drawable.fly_high_logotype2)
+                    .override(1400, 1400)
                     .fitCenter()
                     .crossFade()
                     .into(image);
 
 
-            id = partner.getId();
-            nListener.setId(id);
+            nListener.setId(partner.getId());
+            nListener.setURL(partner.getUrl());
 
 
         }
 
         private class PartnerRecyclerListener implements View.OnClickListener {
             int id = 0;
+            String URL = "";
 
             public void setId(int nId) {
                 id = nId;
             }
 
+            public void setURL(String URL) {
+                if (URL != null) this.URL = URL;
+            }
+
             @Override
             public void onClick(View v) {
-                if (id > 0) {
-                    Bundle args = new Bundle();
-                    args.putInt("partnerId", id);
-                    mUpLayout.setFragment(null, new PartnerFragment(), args);
+                if (URL != "") {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
+                    browserIntent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    v.getContext().startActivity(browserIntent);
                 }
 
             }

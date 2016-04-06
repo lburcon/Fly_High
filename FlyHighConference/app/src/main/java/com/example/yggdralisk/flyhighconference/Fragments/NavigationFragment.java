@@ -74,14 +74,20 @@ public class NavigationFragment extends Fragment {
 
         @OnClick(R.id.navigation_jakdojad_ic)
         public void setJakdojad() {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://wroclaw.jakdojade.pl"));
-            startActivity(browserIntent);
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setData(Uri.parse("http://wroclaw.jakdojade.pl"));
+            startActivity(intent);
         }
 
     @OnClick(R.id.navigation_mpk_ic)
             public void setMpk() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
-        startActivity(browserIntent);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
+        startActivity(intent);
     }
 
 
