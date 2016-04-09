@@ -32,7 +32,7 @@
         android:layout_height="3dp"
         android:background="@drawable/dotted_line"
         android:layerType="software"
-        android:id="@+id/view"
+        android:id="@+id/view1"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="3dp"/>
 
@@ -61,7 +61,7 @@
             android:layout_height="3dp"
             android:background="@drawable/dotted_line"
             android:layerType="software"
-            android:id="@+id/view"/>
+            android:id="@+id/view2"/>
 
     </LinearLayout>
 
