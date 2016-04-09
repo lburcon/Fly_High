@@ -212,7 +212,7 @@ public class ServerConnector {
     }
 
     private void saveData(final Object data) {
-        DaoFactory daoFactory = daoFactory = (DaoFactory) application;
+        DaoFactory daoFactory = (DaoFactory) application;
 
         try {
             final Dao<Like, Integer> ormLikes = daoFactory.getOrmLikes();

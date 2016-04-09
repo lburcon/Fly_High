@@ -34,7 +34,7 @@ public class OrganisersListFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        organisers = new Organiser[DataGetter.getOrganisers(getContext()).length + 2];
+        organisers = new Organiser[new DataGetter(getActivity().getApplication()).getOrganisers().length + 2];
         addDevelopers();
         mAdapter = new OrganisersRecyclerViewAdapter(organisers);
         mRecyclerView.setAdapter(mAdapter);
@@ -44,7 +44,7 @@ public class OrganisersListFragment extends Fragment {
     }
 
     private void addDevelopers() {
-        Organiser[] temp = DataGetter.getOrganisers(getContext());
+        Organiser[] temp = new DataGetter(getActivity().getApplication()).getOrganisers();
         int count = temp.length;
 
         for (int i = 0 ; i < count ; i++){
@@ -60,7 +60,7 @@ public class OrganisersListFragment extends Fragment {
 
     private Organiser[] makeDevelopers() {
         Organiser[] devArray = new Organiser[2];
-        int place = DataGetter.getOrganisers(getContext()).length;
+        int place = new DataGetter(getActivity().getApplication()).getOrganisers().length;
 
         Organiser Lukas = new Organiser();
         Lukas.setId(place + 1);

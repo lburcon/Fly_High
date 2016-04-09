@@ -96,7 +96,7 @@ public class NavigationFragment extends Fragment {
         LatLng loc = new LatLng(51.108636, 17.060155);
 
         if (placeID != 0) {
-            place = DataGetter.getPlaceById(getContext(), placeID);
+            place = new DataGetter(getActivity().getApplication()).getPlaceById(placeID);
             if (place != null)
                 loc = new LatLng(place.getLat(), place.getLon());
         } else {

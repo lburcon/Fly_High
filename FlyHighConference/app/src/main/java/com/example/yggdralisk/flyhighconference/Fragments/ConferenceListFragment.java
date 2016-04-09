@@ -39,7 +39,7 @@ public class ConferenceListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-            Presentation[] mDataSet = DataGetter.getPresentations(getContext());
+            Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
             mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
             mRecyclerView.setAdapter(mAdapter);
 

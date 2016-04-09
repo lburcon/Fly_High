@@ -28,28 +28,24 @@ public class SpeakerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.speaker_details, container, false);
 
-
-
-            speaker = DataGetter.getSpeakerById(getContext(), getArguments().getInt("speakerId"));
-
+        speaker = new DataGetter(getActivity().getApplication()).getSpeakerById(getArguments().getInt("speakerId"));
 
         TextView name = (TextView) view.findViewById(R.id.speaker_name);
         TextView description = (TextView) view.findViewById(R.id.speaker_description);
         ImageView image = (ImageView) view.findViewById(R.id.speaker_image);
 
-            name.setText(speaker.getName());
+        name.setText(speaker.getName());
 
 
+        description.setText(speaker.getDescription() +//todo: add description
+                "\n Kraj pochodzenia: " + speaker.getCountry() +
+                "\n URL: " + speaker.getUrl());
 
-            description.setText(speaker.getDescription() +//todo: add description
-                                "\n Kraj pochodzenia: " + speaker.getCountry() +
-                                "\n URL: " + speaker.getUrl());
 
-
-            Glide.with(this)
-                    .load(speaker.getImage())
-                    .placeholder(R.drawable.fly_high_logotype)
-                    .into(image);
+        Glide.with(this)
+                .load(speaker.getImage())
+                .placeholder(R.drawable.fly_high_logotype)
+                .into(image);
 
 
         return view;

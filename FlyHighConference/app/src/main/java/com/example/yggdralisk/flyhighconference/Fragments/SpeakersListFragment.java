@@ -46,10 +46,11 @@ public class SpeakersListFragment extends Fragment {
         }
         else
         {
+            DataGetter dataGetter = new DataGetter(getActivity().getApplication());
             int[] tempSpeakersArr =  getArguments().getIntArray("speakersIds");
             ArrayList<Speaker> temp = new ArrayList<>();
             for(int i = 0; i < tempSpeakersArr.length; i++)
-               temp.add(DataGetter.getSpeakerById(getContext(),tempSpeakersArr[i]));
+               temp.add(dataGetter.getSpeakerById(tempSpeakersArr[i]));
 
             mAdapter = new SpeakersRecyclerViewAdapter(temp.toArray(new Speaker[1]));
             mRecyclerView.setAdapter(mAdapter);
@@ -59,7 +60,7 @@ public class SpeakersListFragment extends Fragment {
     }
 
     private Speaker[] getSpeakers(){
-        return DataGetter.getSpeakers(getContext());
+        return new DataGetter(getActivity().getApplication()).getSpeakers();
     }
 
 }

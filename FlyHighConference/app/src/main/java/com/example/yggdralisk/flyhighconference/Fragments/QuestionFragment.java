@@ -63,11 +63,11 @@ public class QuestionFragment extends Fragment {
 
         ServerConnector serverConnector = new ServerConnector();
 
-        serverConnector.getQuestionsToPresentation(getContext(), prelectionId, new ConnectorResultInterface() {
+        serverConnector.getQuestionsToPresentation(getActivity().getApplication(),getContext(), prelectionId, new ConnectorResultInterface() {
             @Override
             public void onDownloadFinished(boolean succeeded) {
                 if(succeeded) {
-                    questionArray = DataGetter.getQuestionsToPresentation(getContext(), prelectionId);
+                    questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
                     setRecycler(view);
                 }
             }
@@ -84,11 +84,11 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new QuestionAdapter(questionArray, getContext());
+        mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication());
 
         mRecyclerView.setAdapter(mAdapter);
 
-        presentation = DataGetter.getPresentationById(getContext(), conferenceId);
+        presentation = new DataGetter(getActivity().getApplication()).getPresentationById(conferenceId);
 
             conferenceName.setText(presentation.getTitle());
 
@@ -120,7 +120,7 @@ public class QuestionFragment extends Fragment {
                 String question = editText.getText().toString();
 
                 if (!question.equals("")){
-                serverConnector.postQuestionToPresentation(getContext(), conferenceId, DataGetter.getLoggedUserId(getContext()), question, new ConnectorResultInterface() {
+                serverConnector.postQuestionToPresentation(getActivity().getApplication(),getContext(), conferenceId, DataGetter.getLoggedUserId(getContext()), question, new ConnectorResultInterface() {
                     @Override
                     public void onDownloadFinished(boolean succeeded) {
                         if (succeeded)
