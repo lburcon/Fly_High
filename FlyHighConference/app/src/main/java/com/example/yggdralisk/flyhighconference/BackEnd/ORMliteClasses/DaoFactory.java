@@ -4,6 +4,15 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.SpeakerPresentationPair;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.User;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -18,15 +27,15 @@ public class DaoFactory extends Application {
     private SharedPreferences preferences;
     private DatabaseHelper databaseHelper = null;
 
-    private Dao<ORMLike, Integer> ormLikes = null;
-    private Dao<ORMOrganiser, Integer> ormOrganisers = null;
-    private Dao<ORMPartner, Integer> ormPartners = null;
-    private Dao<ORMPlace, Integer> ormPlaces = null;
-    private Dao<ORMPresentation, Integer> ormPresentations = null;
-    private Dao<ORMQuestion, Integer> ormQuestions = null;
-    private Dao<ORMSpeaker, Integer> ormSpeakers = null;
-    private Dao<ORMSpeakerPresentationPair, Integer> ormSpeakerPresentationPairs = null;
-    private Dao<ORMUser, Integer> ormUsers = null;
+    private Dao<Like, Integer> ormLikes = null;
+    private Dao<Organiser, Integer> ormOrganisers = null;
+    private Dao<Partner, Integer> ormPartners = null;
+    private Dao<Place, Integer> ormPlaces = null;
+    private Dao<Presentation, Integer> ormPresentations = null;
+    private Dao<Question, Integer> ormQuestions = null;
+    private Dao<Speaker, Integer> ormSpeakers = null;
+    private Dao<SpeakerPresentationPair, Integer> ormSpeakerPresentationPairs = null;
+    private Dao<User, Integer> ormUsers = null;
 
     @Override
     public void onCreate() {
@@ -41,65 +50,65 @@ public class DaoFactory extends Application {
         return databaseHelper;
     }
 
-    public Dao<ORMLike, Integer> getOrmLikes() throws SQLException {
+    public Dao<Like, Integer> getOrmLikes() throws SQLException {
         if (ormLikes == null) {
-            ormLikes = databaseHelper.getDao(ORMLike.class);
+            ormLikes = databaseHelper.getDao(Like.class);
         }
         return ormLikes;
     }
 
-    public Dao<ORMOrganiser, Integer> getOrmOrganisers() throws SQLException {
+    public Dao<Organiser, Integer> getOrmOrganisers() throws SQLException {
         if (ormOrganisers == null) {
-            ormOrganisers = databaseHelper.getDao(ORMOrganiser.class);
+            ormOrganisers = databaseHelper.getDao(Organiser.class);
         }
         return ormOrganisers;
     }
 
-    public Dao<ORMPartner, Integer> getOrmPartners() throws SQLException {
+    public Dao<Partner, Integer> getOrmPartners() throws SQLException {
         if (ormPartners == null) {
-            ormPartners = databaseHelper.getDao(ORMPartner.class);
+            ormPartners = databaseHelper.getDao(Partner.class);
         }
         return ormPartners;
     }
 
-    public Dao<ORMPlace, Integer> getOrmPlaces() throws SQLException {
+    public Dao<Place, Integer> getOrmPlaces() throws SQLException {
         if (ormPlaces == null) {
-            ormPlaces = databaseHelper.getDao(ORMPlace.class);
+            ormPlaces = databaseHelper.getDao(Place.class);
         }
         return ormPlaces;
     }
 
-    public Dao<ORMPresentation, Integer> getOrmPresentations() throws SQLException {
+    public Dao<Presentation, Integer> getOrmPresentations() throws SQLException {
         if (ormPresentations == null) {
-            ormPresentations = databaseHelper.getDao(ORMPresentation.class);
+            ormPresentations = databaseHelper.getDao(Presentation.class);
         }
         return ormPresentations;
     }
 
-    public Dao<ORMQuestion, Integer> getOrmQuestions() throws SQLException {
+    public Dao<Question, Integer> getOrmQuestions() throws SQLException {
         if (ormQuestions == null) {
-            ormQuestions = databaseHelper.getDao(ORMQuestion.class);
+            ormQuestions = databaseHelper.getDao(Question.class);
         }
         return ormQuestions;
     }
 
-    public Dao<ORMSpeaker, Integer> getOrmSpeakers() throws SQLException {
+    public Dao<Speaker, Integer> getOrmSpeakers() throws SQLException {
         if (ormSpeakers == null) {
-            ormSpeakers = databaseHelper.getDao(ORMSpeaker.class);
+            ormSpeakers = databaseHelper.getDao(Speaker.class);
         }
         return ormSpeakers;
     }
 
-    public Dao<ORMSpeakerPresentationPair, Integer> getOrmSpeakerPresentationPairs() throws SQLException {
+    public Dao<SpeakerPresentationPair, Integer> getOrmSpeakerPresentationPairs() throws SQLException {
         if (ormSpeakerPresentationPairs == null) {
-            ormSpeakerPresentationPairs = databaseHelper.getDao(ORMSpeakerPresentationPair.class);
+            ormSpeakerPresentationPairs = databaseHelper.getDao(SpeakerPresentationPair.class);
         }
         return ormSpeakerPresentationPairs;
     }
 
-    public Dao<ORMUser, Integer> getOrmUsers() throws SQLException {
+    public Dao<User, Integer> getOrmUsers() throws SQLException {
         if (ormUsers == null) {
-            ormUsers = databaseHelper.getDao(ORMUser.class);
+            ormUsers = databaseHelper.getDao(User.class);
         }
         return ormUsers;
     }

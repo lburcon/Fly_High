@@ -1,18 +1,23 @@
 package com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * Created by yggdralisk on 19.03.16.
  */
+@DatabaseTable(tableName = "presentatnions")
 public class Presentation {
+    @DatabaseField(id = true)
     int id;
-    String title;
-    String description;
-    String start;
-    String end;
-    String image; //Url to image
-    String type;
-    int place; //ORMPlace id
-    String speakers; //Array of speaker's ids
+    @DatabaseField String title;
+    @DatabaseField  String description;
+    @DatabaseField(columnName = "start")  String start;
+    @DatabaseField String end;
+    @DatabaseField String image; //Url to image
+    @DatabaseField String type;
+    @DatabaseField int place; //place id
+    @DatabaseField String speakers; //Array of speaker's ids
 
     public int getId() {
         return id;
@@ -44,5 +49,8 @@ public class Presentation {
         for(int i = 0;i < numberStrs.length;i++)
             speakersIds[i] = Integer.parseInt(numberStrs[i]);
         return speakersIds;
+    }
+
+    public Presentation() {
     }
 }
