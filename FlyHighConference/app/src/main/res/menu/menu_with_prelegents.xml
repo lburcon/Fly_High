@@ -5,11 +5,12 @@
     tools:context=".MainActivity">
 
     <group>
+
         <item
-            android:id="@+id/prelegents"
-            android:icon="@drawable/ic_face_black_24dp"
-            android:orderInCategory="300"
-            android:title="prelegents"
+            android:id="@+id/favourites"
+            android:icon="@drawable/ic_favorite_border_black_24dp"
+            android:orderInCategory="100"
+            android:title="organisers"
             app:showAsAction="ifRoom" />
         <item
             android:id="@+id/info"
@@ -17,12 +18,11 @@
             android:orderInCategory="200"
             android:title="info"
             app:showAsAction="ifRoom" />
-
         <item
-            android:id="@+id/organisers"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:orderInCategory="200"
-            android:title="organisers"
+            android:id="@+id/prelegents"
+            android:icon="@drawable/ic_face_black_24dp"
+            android:orderInCategory="300"
+            android:title="prelegents"
             app:showAsAction="ifRoom" />
 
     </group>

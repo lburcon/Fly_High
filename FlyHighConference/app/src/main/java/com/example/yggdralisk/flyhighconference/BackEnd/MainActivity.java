@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
+import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFavouriteList;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.InfoFragment;
@@ -280,13 +281,12 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
             if (fragment instanceof ConferenceFragment ||
                     fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
                     fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment ||
-                    fragment instanceof OrganisersListFragment) {
+                    fragment instanceof OrganisersListFragment || fragment instanceof ConferenceFavouriteList) {
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             } else {
                 ifLast = fragment instanceof ConferenceListFragment;
-
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -331,6 +331,10 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
             case R.id.organisers:
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
                     setFragment(null, new OrganisersListFragment(), null);
+                return true;
+            case R.id.favourites:
+                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
+                    setFragment(null, new ConferenceFavouriteList(), null);
                 return true;
             case R.id.prelegents:
                 if (toolbarData.getIntArray("speakersIds") != null)

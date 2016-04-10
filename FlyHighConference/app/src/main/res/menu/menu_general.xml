@@ -5,6 +5,12 @@
     tools:context=".MainActivity">
 
     <group>
+        <item
+            android:id="@+id/favourites"
+            android:icon="@drawable/ic_favorite_border_black_24dp"
+            android:orderInCategory="100"
+            android:title="organisers"
+            app:showAsAction="ifRoom" />
 
         <item
             android:id="@+id/info"
@@ -19,6 +25,8 @@
             android:orderInCategory="100"
             android:title="organisers"
             app:showAsAction="ifRoom" />
+
+
 
     </group>
 </menu>
