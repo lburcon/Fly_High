@@ -120,14 +120,14 @@ public class LoginFragment extends Fragment {
             Pattern pattern = Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(emailText.getText().toString());
             if (!matcher.matches())
-                displayToast("Błędny format email");
+                displayToast(mContext.getString(R.string.wrong_email));
             return matcher.matches();
         }
 
         private boolean checkPassword() {
             if (passwordText.getText().toString().isEmpty())//TODO:Czy potrzebujemy innego systemu sprawdzania haseł?
             {
-                displayToast("Błędne hasło!");
+                displayToast(mContext.getString(R.string.wrong_password));
                 return false;
             }
             return true;

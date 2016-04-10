@@ -19,25 +19,34 @@ public class DrawerItem {
     Fragment fragment;
     public Fragment getFragment() {
         switch (text) {
-            case "Plan konferencji":
+            case "Conference schedule":
+            case"Timetable":
+            case"Plan konferencji":
                 fragment = new ConferenceListFragment();
                 break;
-            case "Nawigacja":
+            case "Navigation":
+            case"Nawigacja":
                 fragment = new NavigationFragment();
                 break;
-            case "Pytania":
+            case "Questions":
+            case"Pytania":
                 fragment = new QuestionsListFragment();
                 break;
             case "Uczestnicy":
+            case"Speakers":
                 fragment = new SpeakersListFragment();
                 break;
             case "Sponsorzy":
+            case"Sponsors":
+            case"Partners":
                 fragment = new PartnersListFragment();
                 break;
             case "Zaloguj":
+            case "Log in":
                 fragment = new LoginFragment();
                 break;
             case "Wyloguj":
+            case "Log out":
                 fragment = new LoginOutFragment();
                 break;
             default:

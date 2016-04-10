@@ -52,7 +52,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     @Override
     public void onBindViewHolder(QuestionAdapter.ViewHolder holder, int position) {
 
-        if (mQuestions.length == 0)
+        if (mQuestions == null || mQuestions.length == 0)
             holder.setData(null);
         else
             holder.setData(mQuestions[position]);
@@ -60,7 +60,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        if (mQuestions.length == 0)
+        if (mQuestions == null || mQuestions.length == 0)
             return 1;
         else
             return mQuestions.length;

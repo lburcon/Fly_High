@@ -5,7 +5,7 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="splash_screen_text">Witaj na konferencji!</string>
+    <string name="splash_screen_text">Welcome!</string>
     <string name="title_activity_conference_list">ConferenceListActivity</string>
     <string name="shared_preferences">ConferenceActivityMain</string>
     <string name="shared_preferences_organisers">orgaisersJson</string>
@@ -14,25 +14,25 @@
     <string name="shared_preferences_presentations">presentationsJson</string>
     <string name="shared_preferences_speakers">speakersJson</string>
     <string name="shared_preferences_users">usersJson</string>
-    <string name="splash_internet_error">Błąd połączenia</string>
+    <string name="splash_internet_error">Connection error!</string>
     <string name="shared_preferences_likes">likesJson</string>
-    <string name="login_error_messege">Błąd logowania!</string>
+    <string name="login_error_messege">Logging error</string>
     <string name="shared_preferences_user_logged">userLogged</string>
     <string name="shared_preferences_logged_user_name">loggedUserName</string>
-    <string name="left_drawer_logged_name">Zalogowano jako: </string>
+    <string name="left_drawer_logged_name">Logged in as: </string>
     <string name="shared_preferences_logged_user_id">loggedUserId</string>
     <string name="shared_preferences_presentation_questions_prefix">presentationQuestionsFor</string>
     <string name="shared_preferences_speaker_has_presentations">sharedPreferencesSpeakerHasPresentation</string>
-    <string name="splash_internet_succes">Witaj!</string>
-    <string name="pwr_map_title">Politechnika Wrocławska</string>
-    <string name="login_to_mark_pres">Aby wystawić oraz zobaczyć ocenę musisz być zalogowany.</string>
+    <string name="splash_internet_succes">Welcome!</string>
+    <string name="pwr_map_title">Wrocław University of Technology</string>
+    <string name="login_to_mark_pres">You must be logged in to rate</string>
 
     <string name="fly_high_description">Wierzymy że polepszenie systemu edukacji jest najważnejszym wyzwaniem jakie w tym stuleciu stoi przed ludzkością. Jest to kluczowe zarówno dla rozwoju społecznego jak i ekonomicznego. Właśnie teraz wszystkie kraje na całej Ziemi reformują swoje systemy edukacji. Obserwujemy wiele zmian, jak te w Europejskim Obszarze Szkolnictwa Wyższego. Nam to jednak nie wystarcza. Sądzimy, że studenci to silna lecz bardzo niedoceniana grupa w zakresie klarowania się nowych zasad rozwoju systemu wyższej edukacji. Chcemy dać się zauważyć, dlatego stworzyliśmy tę inicjatywę, dla nas samych, Europejskich studentów. Jesteśmy przekonani, że wiele możemy się od siebie nawajem dowiedzieć. </string>
     <string name="navigation_decription_main">Wrocław University of Technology is an autonomous technical university in Wrocław, Poland. With buildings dispersed throughout the city, its main facilities are gathered at a central location near Plac Grunwaldzki, alongside the Oder river. \n\n Bus stops near Politechnika: \n -Most Grunwaldzki \n -Plac Grunwaldzki \n -Kliniki</string>
 
     <string name="patronage">patronage</string>
     <string name="sponsor">sponsor</string>
-    <string name="no_questions_to_prelection">Aktualnie nie ma żadnych pytań do tej prelekcji</string>
+    <string name="no_questions_to_prelection">There are no questions to this lecture</string>
     <string name="rating">Likes: </string>
     <string name="logged_out">Logged out</string>
 
@@ -52,6 +52,8 @@
     <string name="organisers_title">Organisers</string>
     <string name="sponsors_title">Sponsors</string>
     <string name="prelegents_title">Prelegents</string>
+    <string name="wrong_email">Wrong email</string>
+    <string name="wrong_password">Wrong password</string>
 
 
 </resources>

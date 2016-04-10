@@ -77,7 +77,6 @@ public class QuestionFragment extends Fragment {
 
     private void setRecycler(View view)
     {
-        if (questionArray != null) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -101,7 +100,6 @@ public class QuestionFragment extends Fragment {
                 .load(presentation.getImage())
                 .placeholder(R.drawable.fly_high_logotype)
                 .into(imageTop);
-    }
 
     }
 
