@@ -2,6 +2,7 @@ package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 // sets recycler view to show questions to one speaker
 
+import android.app.Application;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,11 +29,11 @@ import butterknife.ButterKnife;
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
     private Question[] mQuestions;
-    private Context context;
+    private Application application;
 
-    public QuestionAdapter(Question[] mQuestions, Context context) {
+    public QuestionAdapter(Question[] mQuestions, Application application) {
         this.mQuestions = mQuestions;
-        this.context = context;
+        this.application = application;
     }
 
     @Override
@@ -84,7 +85,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             if (question != null) {
                 try
                 {
-                    String mail = DataGetter.getUserById(context, question.getUser()).getMail();
+                    String mail = new DataGetter(application).getUserById( question.getUser()).getMail();
                     nick.setText(mail.substring(0, mail.indexOf('@')));
                 } catch (Exception ex)
                 {

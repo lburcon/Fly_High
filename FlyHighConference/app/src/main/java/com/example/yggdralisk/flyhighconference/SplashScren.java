@@ -23,7 +23,7 @@ public class SplashScren extends Activity {
         setContentView(R.layout.activity_splash_scren);
         ButterKnife.bind(this);
         ServerConnector serverConnector = new ServerConnector();
-        serverConnector.refreshData(getApplicationContext(), new ConnectorResultInterface() {
+        serverConnector.refreshData(getApplication(),getApplicationContext(), new ConnectorResultInterface() {
             @Override
             public void onDownloadFinished(boolean succeeded) {
                 if (!succeeded)

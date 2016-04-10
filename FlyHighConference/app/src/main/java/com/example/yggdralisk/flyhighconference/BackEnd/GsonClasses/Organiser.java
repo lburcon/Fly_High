@@ -1,15 +1,20 @@
 package com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * Created by yggdralisk on 19.03.16.
  */
+@DatabaseTable(tableName = "organisers")
 public class Organiser {
+    @DatabaseField(columnName = "id",id = true)
     int id;
-    String name;
-    String title;
-    String email;
-    String description;
-    String image; //Url to image
+    @DatabaseField String name;
+    @DatabaseField  String title;
+    @DatabaseField String email;
+    @DatabaseField String description;
+    @DatabaseField String image; //Url to image
 
     public int getId() {
         return id;
@@ -52,5 +57,10 @@ public class Organiser {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Organiser()
+    {
+
     }
 }

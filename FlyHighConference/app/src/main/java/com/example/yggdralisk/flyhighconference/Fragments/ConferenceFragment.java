@@ -44,14 +44,19 @@ public class ConferenceFragment extends Fragment {
     private Presentation presentation = new Presentation();
     private Speaker speakerObject = new Speaker();
     private int[] speakerIds = null;
+
     boolean isFavourite;
     @Bind(R.id.conference_favourite)
     ImageButton favourite;
+
+    private DataGetter dataGetter;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        dataGetter = new DataGetter(getActivity().getApplication());
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null)
@@ -94,7 +99,7 @@ public class ConferenceFragment extends Fragment {
 
     private void setData() {
 
-        presentation = DataGetter.getPresentationById(getContext(), getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
+        presentation = dataGetter.getPresentationById(getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
 
         ButterKnife.bind(this, view);
 
@@ -116,7 +121,7 @@ public class ConferenceFragment extends Fragment {
         speakerIds = getSpeakerIds();
 
         for (int i = 0; i < speakerIds.length; i++) {
-            speakerObject = DataGetter.getSpeakerById(getContext(), speakerIds[i]);
+            speakerObject = dataGetter.getSpeakerById( speakerIds[i]);
             if (speakerIds.length > 1 && i != speakerIds.length - 1)
                 speakerName.setText(speakerName.getText() + speakerObject.getName() + ", ");
             else
@@ -140,7 +145,7 @@ public class ConferenceFragment extends Fragment {
 
 
     private void setMap(View view) {
-        final Place myPlace = DataGetter.getPlaceById(getContext(), presentation.getPlace());
+        final Place myPlace = dataGetter.getPlaceById(presentation.getPlace());
 
         if (myPlace != null) {
 

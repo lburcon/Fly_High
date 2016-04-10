@@ -50,11 +50,11 @@ public class QuestionsListFragment extends Fragment {
     }
 
     private Speaker[] getSpeakers(){
-        return DataGetter.getSpeakers(getContext());
+        return new DataGetter(getActivity().getApplication()).getSpeakers();
     }
 
     private Presentation[] getPresentations(){
-        return DataGetter.getPresentations(getContext());
+        return new DataGetter(getActivity().getApplication()).getPresentations();
     }
 
 }

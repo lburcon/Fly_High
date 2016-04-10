@@ -51,6 +51,8 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
 
     @Override
     public int getItemCount() {
+        if(mDataset == null)
+            return 0;
         return mDataset.length;
     }
 

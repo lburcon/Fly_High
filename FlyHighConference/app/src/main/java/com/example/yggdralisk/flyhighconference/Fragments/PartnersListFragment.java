@@ -50,7 +50,7 @@ public class PartnersListFragment extends Fragment {
     }
 
     private Partner[] getPartners(){
-        return DataGetter.getPartners(getContext());
+        return new DataGetter(getActivity().getApplication()).getPartners();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.yggdralisk.flyhighconference.BackEnd;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -12,87 +13,163 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.SpeakerPresentationPair;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.User;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.DaoFactory;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.gson.Gson;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import org.json.JSONException;
+
+import java.sql.SQLException;
+import java.util.Arrays;
 
 /**
  * Created by yggdralisk on 29.02.16.
  */
 public class DataGetter {
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
+    Application application;
+    DaoFactory daoFactory;
+    Dao<Like, Integer> ormLikes;
+    Dao<User, Integer> ormUsers;
+    Dao<Organiser, Integer> ormOrganisers;
+    Dao<Presentation, Integer> ormPresentations;
+    Dao<SpeakerPresentationPair, Integer> ormSpeakerPresentationPairs;
+    Dao<Partner, Integer> ormPartners;
+    Dao<Place, Integer> ormPlaces;
+    Dao<Question, Integer> ormQuestions;
+    Dao<Speaker, Integer> ormSpeakers;
 
-    public static SpeakerPresentationPair[] getSpeakerHasPresentations(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_speaker_has_presentations), "");
-        return new Gson().fromJson(str, SpeakerPresentationPair[].class);
-    }
+    public DataGetter(Application application) {
+        this.application = application;
+        daoFactory = (DaoFactory) application;
 
-    public static Presentation[]  getPresentations(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_presentations), "");
-        return new Gson().fromJson(str, Presentation[].class);
-    }
-
-    public static Question[] getQuestionsToPresentation(Context context, int presentationID) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, "");
-        return new Gson().fromJson(str, Question[].class);
-    }
-
-    public static Speaker[] getSpeakers(Context context)  {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_speakers), "");
-        return new Gson().fromJson(str, Speaker[].class);
-    }
-
-    public static Partner[] getPartners(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_partners), "");
-        return new Gson().fromJson(str, Partner[].class);
-    }
-
-    public static User[] getUsers(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_users), "");
-        return new Gson().fromJson(str, User[].class);
-    }
-
-    public static Place[] getPlaces(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_places), "");
-        return new Gson().fromJson(str, Place[].class);
-    }
-
-    public static Like[] getLikes(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_likes), "");
-        return new Gson().fromJson(str, Like[].class);
-    }
-
-    public static Organiser[] getOrganisers(Context context)  {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString(context.getString(R.string.shared_preferences_organisers), "");
-        return new Gson().fromJson(str, Organiser[].class);
-    }
-
-    public static Speaker getSpeakerById(Context context, int speakerId) {
-        for (Speaker s :
-                getSpeakers(context)) {
-            if (s.getId() == speakerId) return s;
+        try {
+            ormLikes = daoFactory.getOrmLikes();
+            ormUsers = daoFactory.getOrmUsers();
+            ormOrganisers = daoFactory.getOrmOrganisers();
+            ormPresentations = daoFactory.getOrmPresentations();
+            ormSpeakerPresentationPairs = daoFactory.getOrmSpeakerPresentationPairs();
+            ormPartners = daoFactory.getOrmPartners();
+            ormPlaces = daoFactory.getOrmPlaces();
+            ormQuestions = daoFactory.getOrmQuestions();
+            ormSpeakers = daoFactory.getOrmSpeakers();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+    }
+    public SpeakerPresentationPair[] getSpeakerHasPresentations() {
+        QueryBuilder<SpeakerPresentationPair, Integer> builder = ormSpeakerPresentationPairs.queryBuilder();
+        builder.orderBy("id", true);
+        try {
+            return (SpeakerPresentationPair[])ormSpeakerPresentationPairs.query(builder.prepare()).toArray();
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
-    public static String[] getPresentationSpeakersNames(Context context, int presentationId)
+    public Presentation[]  getPresentations(){
+        QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
+        builder.orderBy("start", true);
+        try {
+            Object[] x = ormPresentations.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Presentation[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Question[] getQuestionsToPresentation(int presentationId) {
+        QueryBuilder<Question, Integer> builder = ormQuestions.queryBuilder();
+        builder.orderBy("id", true);
+        try {
+            builder.where().eq("presentationId",presentationId);
+            Object[] x = ormQuestions.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Question[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Speaker[] getSpeakers()  {
+        QueryBuilder<Speaker, Integer> builder = ormSpeakers.queryBuilder();
+        try {
+            Object[] x = ormSpeakers.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Speaker[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Partner[] getPartners() {
+        QueryBuilder<Partner, Integer> builder = ormPartners.queryBuilder();
+        try {
+            Object[] x = ormPartners.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Partner[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public User[] getUsers() {
+        QueryBuilder<User, Integer> builder = ormUsers.queryBuilder();
+        try {
+            Object[] x = ormUsers.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, User[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Place[] getPlaces() {
+        QueryBuilder<Place, Integer> builder = ormPlaces.queryBuilder();
+        try {
+            Object[] x = ormPlaces.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Place[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Like[] getLikes(){
+        QueryBuilder<Like, Integer> builder = ormLikes.queryBuilder();
+        try {
+            Object[] x = ormLikes.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Like[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Organiser[] getOrganisers()  {
+        QueryBuilder<Organiser, Integer> builder = ormOrganisers.queryBuilder();
+        try {
+            Object[] x = ormOrganisers.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Organiser[].class);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Speaker getSpeakerById(int speakerId) {
+        QueryBuilder<Speaker, Integer> builder = ormSpeakers.queryBuilder();
+        try {
+            builder.where().eq("id", speakerId);
+            return  ormSpeakers.query(builder.prepare()).get(0);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public String[] getPresentationSpeakersNames(int presentationId)
     {
         String [] names;
         try {
-            int[] ids = getPresentationById(context, presentationId).getSpeakers();
+            int[] ids = getPresentationById(presentationId).getSpeakers();
             names = new String[ids.length];
             for (int i = 0; i < ids.length; i++)
-                names[i] = getSpeakerById(context,ids[i]).getName();
+                names[i] = getSpeakerById(ids[i]).getName();
 
             return names;
         }catch (NullPointerException e)
@@ -103,27 +180,34 @@ public class DataGetter {
         return new String[]{""};
     }
 
-    public static Presentation getPresentationById(Context context, int presentationId) {
-        for (Presentation p :
-                getPresentations(context)) {
-            if (p.getId() == presentationId) return p;
+    public Presentation getPresentationById(int presentationId) {
+        QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
+        try {
+            builder.where().eq("id",presentationId);
+            return ormPresentations.query(builder.prepare()).get(0);
+        } catch (SQLException e) {
+            return null;
         }
-        return null;
     }
 
-    public static Place getPlaceById(Context context, int placeId)
-    {
-        for (Place p : getPlaces(context)) {
-            if (p.getId() == placeId) return p;
+    public Place getPlaceById(int placeId) {
+        QueryBuilder<Place, Integer> builder = ormPlaces.queryBuilder();
+        try {
+            builder.where().eq("id",placeId);
+            return ormPlaces.query(builder.prepare()).get(0);
+        } catch (SQLException e) {
+            return null;
         }
-        return null;
     }
 
-    public static User getUserById(Context context,int userID) {
-        for (User p : getUsers(context)) {
-            if (p.getId() == userID) return p;
+    public User getUserById(int userID) {
+        QueryBuilder<User, Integer> builder = ormUsers.queryBuilder();
+        try {
+            builder.where().eq("id",userID);
+            return ormUsers.query(builder.prepare()).get(0);
+        } catch (SQLException e) {
+            return null;
         }
-        return null;
     }
 
     public static Boolean checkUserLogged(Context context) {

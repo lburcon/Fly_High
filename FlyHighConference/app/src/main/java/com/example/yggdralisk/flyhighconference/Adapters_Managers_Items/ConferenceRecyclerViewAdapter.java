@@ -122,7 +122,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         private String getPresentationAuth() {
             if (id != -1)
                 try {
-                    String[] names = DataGetter.getPresentationSpeakersNames(mContext, id);
+                    String[] names = new DataGetter(mUpLayout.getApplication()).getPresentationSpeakersNames(id);
                     String temp = "";
                     for (int i = 0; i < names.length; i++) {
                         temp += names[i] + " ";

@@ -1,11 +1,20 @@
 package com.example.yggdralisk.flyhighconference.BackEnd;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Import;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.SpeakerPresentationPair;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.User;
+import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.DaoFactory;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ImportInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.LikeInterface;
@@ -14,6 +23,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostQ
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.QuestionToPresentationsInterface;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.gson.Gson;
+import com.j256.ormlite.dao.Dao;
 
 import okhttp3.*;
 import okhttp3.Response;
@@ -23,6 +33,8 @@ import retrofit2.Callback;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.concurrent.Callable;
 
 /**
  * Created by yggdralisk on 03.03.16.
@@ -33,12 +45,15 @@ import java.io.IOException;
 public class ServerConnector {
     private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/";
     private Context context;
+    private Application application;
     private int presentationID;
 
     //------------------------------------------------------------------------DATA_POST_PART --------------------------------------------------------------------------------
-    public void postLikeToQuestion(Context context, int questionID, int userID, final ConnectorResultInterface callback) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
+    public void postLikeToQuestion(Application application, Context context,
+                                   int questionID, int userID, final ConnectorResultInterface callback) //Questions_to_speaker - Post like for question to presentation. Returns true on succesful post
     {
         this.context = context;
+        this.application = application;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_HOST_URL)
@@ -66,9 +81,11 @@ public class ServerConnector {
         });
     }
 
-    public void postQuestionToPresentation(Context context, int presentationID, int userID, String questionContent, final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
+    public void postQuestionToPresentation(Application application, Context context,
+                                           int presentationID, int userID, String questionContent, final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
     {
         this.context = context;
+        this.application = application;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_HOST_URL)
@@ -97,8 +114,9 @@ public class ServerConnector {
     }
 
     //------------------------------------------------------------------------DATA_GET_PART ------------------------------------------------------------------------
-    public void refreshLikes(Context context, final ConnectorResultInterface callback) {
+    public void refreshLikes(Application application, Context context, final ConnectorResultInterface callback) {
         this.context = context;
+        this.application = application;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_HOST_URL)
@@ -128,8 +146,9 @@ public class ServerConnector {
         });
     }
 
-    public void refreshData(Context context, final ConnectorResultInterface callback) {
+    public void refreshData(Application application, Context context, final ConnectorResultInterface callback) {
         this.context = context;
+        this.application = application;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_HOST_URL)
@@ -159,8 +178,9 @@ public class ServerConnector {
         });
     }
 
-    public void getQuestionsToPresentation(Context context, int presentationID, final ConnectorResultInterface callback) {
+    public void getQuestionsToPresentation(Application application, Context context, int presentationID, final ConnectorResultInterface callback) {
         this.context = context;
+        this.application = application;
         this.presentationID = presentationID;
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -191,30 +211,122 @@ public class ServerConnector {
         });
     }
 
-    private void saveData(Object data) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    private void saveData(final Object data) {
+        DaoFactory daoFactory = (DaoFactory) application;
 
-        Gson gson = new Gson();
-        if (data instanceof Import) {
-            editor.putString(context.getString(R.string.shared_preferences_organisers), gson.toJson(((Import) data).getOrganisers()));
-            editor.putString(context.getString(R.string.shared_preferences_partners), gson.toJson(((Import) data).getPartners()));
-            editor.putString(context.getString(R.string.shared_preferences_places), gson.toJson(((Import) data).getPlaces()));
-            editor.putString(context.getString(R.string.shared_preferences_presentations), gson.toJson(((Import) data).getPresentations()));
-            editor.putString(context.getString(R.string.shared_preferences_speakers), gson.toJson(((Import) data).getSpeakers()));
-            editor.putString(context.getString(R.string.shared_preferences_users), gson.toJson(((Import) data).getUsers()));
-            editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(((Import) data).getLikes()));
-            editor.putString(context.getString(R.string.shared_preferences_speaker_has_presentations), gson.toJson(((Import) data).getSpeakerPresentationPairs()));
-        } else if (data instanceof Like[]) {
-            editor.putString(context.getString(R.string.shared_preferences_likes), gson.toJson(data));
-        } else if (data instanceof Question[]) {
-            editor.putString(context.getString(R.string.shared_preferences_presentation_questions_prefix) + presentationID, gson.toJson(data));
-        } else {
+        try {
+            final Dao<Like, Integer> ormLikes = daoFactory.getOrmLikes();
+            final Dao<User, Integer> ormUsers = daoFactory.getOrmUsers();
+            final Dao<Organiser, Integer> ormOrganisers = daoFactory.getOrmOrganisers();
+            final Dao<Presentation, Integer> ormPresentations = daoFactory.getOrmPresentations();
+            final Dao<SpeakerPresentationPair, Integer> ormSpeakerPresentationPairs = daoFactory.getOrmSpeakerPresentationPairs();
+            final Dao<Partner, Integer> ormPartners = daoFactory.getOrmPartners();
+            final Dao<Place, Integer> ormPlaces = daoFactory.getOrmPlaces();
+            final Dao<Question, Integer> ormQuestions = daoFactory.getOrmQuestions();
+            final Dao<Speaker, Integer> ormSpeakers = daoFactory.getOrmSpeakers();
+            if (data instanceof Import) {
+
+                ormOrganisers.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Organiser o : ((Import) data).getOrganisers())
+                            ormOrganisers.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+                ormPresentations.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Presentation o : ((Import) data).getPresentations())
+                            ormPresentations.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+
+                ormQuestions.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Question o : ((Import) data).getQuestions())
+                        if(o.getContent() != "")
+                            ormQuestions.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+                ormLikes.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Like o : ((Import) data).getLikes())
+                            ormLikes.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+                ormPartners.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Partner o : ((Import) data).getPartners())
+                            ormPartners.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+
+                ormPlaces.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Place o : ((Import) data).getPlaces())
+                            ormPlaces.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+
+                ormSpeakers.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Speaker o : ((Import) data).getSpeakers())
+                            ormSpeakers.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+
+                ormSpeakerPresentationPairs.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (SpeakerPresentationPair o : ((Import) data).getSpeakerPresentationPairs())
+                            ormSpeakerPresentationPairs.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+
+                ormUsers.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (User o : ((Import) data).getUsers())
+                            ormUsers.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+            } else if (data instanceof Like[]) {
+                ormLikes.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Like o : (Like[]) data)
+                            ormLikes.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+            } else if (data instanceof Question[]) {
+                ormQuestions.callBatchTasks(new Callable<Void>() {
+                    public Void call() throws Exception {
+                        for (Question o : (Question[]) data)
+                            ormQuestions.createOrUpdate(o);
+                        return null;
+                    }
+                });
+
+            } else {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        editor.apply();
-
-
     }
 }
 
