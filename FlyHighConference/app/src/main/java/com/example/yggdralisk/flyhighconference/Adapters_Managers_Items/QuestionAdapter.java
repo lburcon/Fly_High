@@ -91,9 +91,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 {
                     nick.setText("");
                 }
-                    rating.setText("Ocena: " + question.getRating());
+                    rating.setText("Likes: " + question.getRating());
                     questionField.setText(question.getContent()); }
-            else questionField.setText("Aktualnie nie ma żadnych pytań do tej prelekcji");
+            else questionField.setText(R.string.no_questions_to_prelection);
 
         }
 

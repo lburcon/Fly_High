@@ -38,13 +38,14 @@ public class SpeakerFragment extends Fragment {
 
 
         description.setText(speaker.getDescription() +//todo: add description
-                "\n Kraj pochodzenia: " + speaker.getCountry() +
+                "\n Country: " + speaker.getCountry() +
                 "\n URL: " + speaker.getUrl());
 
 
         Glide.with(this)
                 .load(speaker.getImage())
-                .placeholder(R.drawable.fly_high_logotype)
+                .placeholder(R.drawable.fly_high)
+                .dontAnimate()
                 .into(image);
 
 

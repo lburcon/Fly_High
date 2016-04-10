@@ -49,7 +49,7 @@ public class LoginOutFragment extends Fragment{
             public void onClick(View v) {
                 if (DataGetter.checkUserLogged(mContext)) {
                     DataGetter.toggleUserLogged(getContext(), "", -1);
-                    displayToast("Wylogowano");
+                    displayToast(getString(R.string.logged_out));
 
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {

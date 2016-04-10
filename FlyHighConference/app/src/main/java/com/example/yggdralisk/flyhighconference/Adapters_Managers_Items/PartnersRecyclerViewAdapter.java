@@ -81,8 +81,8 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
             name.setText(partner.getName());
 
             if (partner.getType().equals("patronage"))
-                title.setText("patron");
-            else title.setText("sponsor");
+                title.setText(R.string.patronage);
+            else title.setText(R.string.sponsor);
 
 
             Glide.with(itemView.getContext())

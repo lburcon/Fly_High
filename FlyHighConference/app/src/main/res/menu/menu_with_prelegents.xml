@@ -10,7 +10,7 @@
             android:id="@+id/favourites"
             android:icon="@drawable/ic_favorite_border_black_24dp"
             android:orderInCategory="100"
-            android:title="organisers"
+            android:title="favourites"
             app:showAsAction="ifRoom" />
         <item
             android:id="@+id/info"

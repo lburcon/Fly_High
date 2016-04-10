@@ -4,18 +4,21 @@
     android:layout_height="match_parent"
     android:background="@color/background_main">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/speaker_image"
-        android:layout_width="200dp"
+        android:layout_width="170dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:src="@drawable/fly_high_logotype"
+        android:layout_marginBottom="5dp"
         android:layout_height="170dp"
-        android:layout_gravity="center" />
+        android:src="@drawable/fly_high"
+        app:civ_border_width="0dp"
+        app:civ_border_color="@color/main_yellow"/>
 
     <TextView
         android:id="@+id/speaker_name"
         android:layout_marginTop="3dp"
-        android:text="Imię i nazwisko"
         android:textSize="25sp"
         android:layout_gravity="center"
         android:gravity="center"
@@ -51,7 +54,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Opis"
                 android:textColor="@color/text_white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

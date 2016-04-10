@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/question_to_speaker_nick"
             android:gravity="center"
-            android:text="@string/no_question_to_presentation"
+            android:text="@string/no_questions_to_prelection"
             android:textColor="@color/text_white"
             android:textSize="20dp" />
 

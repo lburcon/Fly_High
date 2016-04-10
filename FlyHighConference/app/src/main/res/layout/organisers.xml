@@ -11,7 +11,7 @@
         android:layout_marginBottom="5dp"
         android:gravity="center"
         android:background="@color/backgroung_dark"
-        android:text="Organizatorzy"
+        android:text="@string/organisers_title"
         android:textColor="@color/text_white"
         android:textSize="35sp" />
 

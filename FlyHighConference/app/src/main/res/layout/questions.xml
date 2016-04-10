@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Pytania do prelekcji"
+        android:text="@string/questions_title"
         android:textColor="@color/text_white"
         android:textSize="35sp"
         android:background="@color/backgroung_dark" />

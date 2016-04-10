@@ -28,7 +28,6 @@
             android:layout_marginTop="30dp"
             android:layout_toLeftOf="@id/partners_image"
             android:gravity="center"
-            android:text="Przykladowa nazwa"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
 
@@ -42,7 +41,6 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/partners_image"
             android:gravity="center"
-            android:text="Tytuł"
             android:textColor="@color/text_white"
             android:textSize="15sp" />
 

@@ -111,9 +111,9 @@ public class QuestionFragment extends Fragment {
 
         if (DataGetter.checkUserLogged(getContext())) {
             if (editText.getVisibility() == View.GONE) {
-                Toast.makeText(getContext(), "Możesz dodać pytanie.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.question_available), Toast.LENGTH_SHORT).show();
                 editText.setVisibility(View.VISIBLE);
-                editText.setHint("Wpisz pytanie");
+                editText.setHint(getString(R.string.question_write));
             } else {
                 ServerConnector serverConnector = new ServerConnector();
                 editText.setVisibility(View.GONE);
@@ -124,18 +124,18 @@ public class QuestionFragment extends Fragment {
                     @Override
                     public void onDownloadFinished(boolean succeeded) {
                         if (succeeded)
-                            Toast.makeText(getContext(), "Pytanie zostało dodane.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
                         else
-                            Toast.makeText(getContext(), "Błąd dodawania pytania.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.question_error), Toast.LENGTH_SHORT).show();
 
                         editText.getText().clear();
                     }
                 });}
-                else Toast.makeText(getContext(), "Musisz najpierw zadać pytanie.", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getContext(), getString(R.string.question_error_second), Toast.LENGTH_SHORT).show();
 
 
             }
         } else
-            Toast.makeText(getContext(), "Musisz się zalogować.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.question_error_logged), Toast.LENGTH_SHORT).show();
     }
 }

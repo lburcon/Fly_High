@@ -27,9 +27,31 @@
     <string name="pwr_map_title">Politechnika Wrocławska</string>
     <string name="login_to_mark_pres">Aby wystawić oraz zobaczyć ocenę musisz być zalogowany.</string>
 
-
     <string name="fly_high_description">Wierzymy że polepszenie systemu edukacji jest najważnejszym wyzwaniem jakie w tym stuleciu stoi przed ludzkością. Jest to kluczowe zarówno dla rozwoju społecznego jak i ekonomicznego. Właśnie teraz wszystkie kraje na całej Ziemi reformują swoje systemy edukacji. Obserwujemy wiele zmian, jak te w Europejskim Obszarze Szkolnictwa Wyższego. Nam to jednak nie wystarcza. Sądzimy, że studenci to silna lecz bardzo niedoceniana grupa w zakresie klarowania się nowych zasad rozwoju systemu wyższej edukacji. Chcemy dać się zauważyć, dlatego stworzyliśmy tę inicjatywę, dla nas samych, Europejskich studentów. Jesteśmy przekonani, że wiele możemy się od siebie nawajem dowiedzieć. </string>
-    <string name="no_question_to_presentation">Aktualnie nie ma żadnych pytań do tej prezentacji.</string>
     <string name="navigation_decription_main">Opis dojazdu</string>
+
+    <string name="patronage">patronage</string>
+    <string name="sponsor">sponsor</string>
+    <string name="no_questions_to_prelection">Aktualnie nie ma żadnych pytań do tej prelekcji</string>
+    <string name="rating">Likes: </string>
+    <string name="logged_out">Logged out</string>
+
+    <string name="question_available">You can add a question</string>
+    <string name="question_write">Write your question</string>
+    <string name="question_done">Your question has been added</string>
+    <string name="question_error">Error</string>
+    <string name="question_error_second">You have to write your question</string>
+    <string name="question_error_logged">You have to be logged in</string>
+
+    <string name="favourite_conferences">Favourite conferences</string>
+    <string name="conference_timetable">Timetable</string>
+    <string name="logging_out">Log out</string>
+    <string name="logging_in">Log in</string>
+    <string name="questions_title">Questions to prelections</string>
+
+    <string name="organisers_title">Organisers</string>
+    <string name="sponsors_title">Sponsors</string>
+    <string name="prelegents_title">Prelegents</string>
+
 
 </resources>

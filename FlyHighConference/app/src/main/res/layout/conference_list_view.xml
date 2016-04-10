@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Plan konferencji"
+        android:text="@string/conference_timetable"
         android:background="@color/backgroung_dark"
         android:textColor="@color/text_white"
         android:textSize="35sp"
