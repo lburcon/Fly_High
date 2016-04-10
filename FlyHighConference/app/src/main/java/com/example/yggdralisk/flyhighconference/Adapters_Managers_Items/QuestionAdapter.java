@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
@@ -73,6 +74,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         TextView rating;
         @Bind(R.id.question_to_speaker_question)
         TextView questionField;
+        @Bind(R.id.question_plus_one)
+        ImageButton plusOne;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -83,6 +86,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         public void setData(Question question) {
 
             if (question != null) {
+                plusOne.setVisibility(View.VISIBLE);
                 try
                 {
                     String mail = new DataGetter(application).getUserById( question.getUser()).getMail();
@@ -93,8 +97,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 }
                     rating.setText("Likes: " + question.getRating());
                     questionField.setText(question.getContent()); }
-            else questionField.setText(R.string.no_questions_to_prelection);
-
+            else {
+                questionField.setText(R.string.no_questions_to_prelection);
+                plusOne.setVisibility(View.GONE);
+                rating.setVisibility(View.GONE);
+                nick.setVisibility(View.GONE);
+            }
         }
 
     }
