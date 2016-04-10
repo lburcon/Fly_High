@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
@@ -350,4 +351,5 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
             manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
+
 }

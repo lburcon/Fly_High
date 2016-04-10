@@ -13,11 +13,9 @@
             android:id="@+id/conference_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="5dp"
-
-            android:gravity="right"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
             android:text="10:00 - 11:00"
             android:textColor="@color/text_white"
             android:textSize="12sp" />
@@ -26,16 +24,13 @@
             android:id="@+id/conference_localization_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_alignLeft="@+id/conference_time"
+            android:layout_marginTop="5dp"
             android:gravity="left"
             android:scrollbars="vertical"
             android:text="Dojazd"
             android:textColor="@color/text_white"
-            android:textSize="12sp"
-
-            android:layout_marginTop="5dp"
-
-            android:layout_alignLeft="@+id/conference_time"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/conference_speaker"
@@ -58,46 +53,52 @@
             android:textColor="@color/text_white"
             android:textSize="25sp" />
 
+        <ImageButton
+            android:clickable="true"
+            android:layout_marginTop="5dp"
+            android:background="@color/background_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/conference_favourite"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_favorite_border_black_24dp" />
+
         <TextView
             android:id="@+id/conference_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/conference_map"
             android:layout_below="@id/conference_name"
             android:background="@color/backgroung_dark"
             android:gravity="center_horizontal"
             android:scrollbars="vertical"
             android:text="Opis"
             android:textColor="@color/text_white"
-            android:textSize="20sp"
-            android:layout_above="@+id/conference_map"
-            />
+            android:textSize="20sp" />
 
-        <fragment
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/conference_map"
+            class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            class="com.google.android.gms.maps.SupportMapFragment"
-
-            android:layout_marginTop="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            />
+            android:layout_marginTop="2dp" />
 
 
         <ImageButton
-            android:background="@color/background_main"
             android:id="@+id/conference_zoom_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_white_24dp"
+            android:layout_alignBottom="@+id/conference_map"
             android:layout_alignRight="@+id/conference_map"
-            android:layout_alignBottom="@+id/conference_map"/>
+            android:background="@color/background_main"
+            android:src="@drawable/ic_add_white_24dp" />
 
     </RelativeLayout>
 

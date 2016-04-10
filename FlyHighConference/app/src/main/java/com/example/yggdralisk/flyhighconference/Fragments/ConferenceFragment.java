@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
@@ -43,6 +44,9 @@ public class ConferenceFragment extends Fragment {
     private Presentation presentation = new Presentation();
     private Speaker speakerObject = new Speaker();
     private int[] speakerIds = null;
+    boolean isFavourite;
+    @Bind(R.id.conference_favourite)
+    ImageButton favourite;
 
     @Nullable
     @Override
@@ -59,6 +63,31 @@ public class ConferenceFragment extends Fragment {
             setMap(view);
         } catch (InflateException e) {
         }
+
+        Glide.with(this)
+                .load("")
+                .placeholder(R.drawable.ic_favorite_border_black_24dp)
+                .into(favourite);
+        isFavourite = false;
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (isFavourite) {
+                    Glide.with(v.getContext())
+                            .load("")
+                            .placeholder(R.drawable.ic_favorite_border_black_24dp)
+                            .into(favourite);
+                    isFavourite = false;
+                }
+                else {
+                    Glide.with(v.getContext())
+                            .load("")
+                            .placeholder(R.drawable.ic_favorite_black_24dp)
+                            .into(favourite);
+                    isFavourite = true;
+                }
+            }
+        });
 
         return view;
     }

@@ -6,8 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
@@ -26,6 +29,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
     public Context mContext;
     public MainActivity mUpLayout;
 
+
     public ConferenceRecyclerViewAdapter(Presentation[] myDataset, Context context) {
         mConferences = myDataset;
         mContext = context;
@@ -43,7 +47,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
     @Override
     public void onBindViewHolder(ConferenceRecyclerViewAdapter.ViewHolder holder, int position) {
-            holder.setData(mConferences[position]);
+        holder.setData(mConferences[position]);
     }
 
     @Override
@@ -60,6 +64,10 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         TextView auth;
         @Bind(R.id.conference_list_itemt_time)
         TextView time;
+        @Bind(R.id.conference_favourite)
+        ImageButton favourite;
+
+        public boolean isFavourite;
         public int id = -1;
         ConferenceRecyclerListner nListner = new ConferenceRecyclerListner();
 
@@ -73,20 +81,45 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         }
 
         public void setData(Presentation presentation) {
-                id = presentation.getId();
-                nListner.setId(id);
+            id = presentation.getId();
+            nListner.setId(id);
 
-                title.setText(presentation.getTitle());
+            title.setText(presentation.getTitle());
 
-                descr.setText(presentation.getDescription());
+            descr.setText(presentation.getDescription());
 
-                time.setText(getPresentationTime(presentation));
+            time.setText(getPresentationTime(presentation));
 
-                auth.setText(getPresentationAuth());
+            auth.setText(getPresentationAuth());
+
+            Glide.with(itemView.getContext())
+                    .load("")
+                    .placeholder(R.drawable.ic_favorite_border_black_24dp)
+                    .into(favourite);
+            isFavourite = false;
+
+            favourite.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (isFavourite) {
+                        Glide.with(itemView.getContext())
+                                .load("")
+                                .placeholder(R.drawable.ic_favorite_border_black_24dp)
+                                .into(favourite);
+                        isFavourite = false;
+                    }
+                        else {
+                        Glide.with(itemView.getContext())
+                                .load("")
+                                .placeholder(R.drawable.ic_favorite_black_24dp)
+                                .into(favourite);
+                        isFavourite = true;
+                    }
+                    }
+            });
 
         }
 
-        private String getPresentationAuth(){
+        private String getPresentationAuth() {
             if (id != -1)
                 try {
                     String[] names = DataGetter.getPresentationSpeakersNames(mContext, id);
@@ -97,7 +130,9 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                     }
 
                     return temp;
-                }catch (NullPointerException e) {e.printStackTrace();}
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
 
             return "";
         }

@@ -4,26 +4,41 @@
     android:layout_height="match_parent" android:layout_width="match_parent"
     android:background="@color/backgroung_dark"
     android:orientation="vertical">
+
+
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
             android:id="@+id/conference_list_item_auth"
             android:textSize="12sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@color/text_white"
             android:gravity="left"
             android:text="Auth"
             android:layout_weight="1"/>
 
+        <ImageButton
+            android:clickable="true"
+            android:background="@color/backgroung_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/conference_favourite"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:layout_weight="0"/>
+
         <TextView
             android:id="@+id/conference_list_itemt_time"
             android:textSize="12sp"
-            android:layout_width="match_parent"
+            android:layout_width="70dp"
+            android:layout_marginRight="5dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@color/text_white"
@@ -31,6 +46,7 @@
             android:text="DataTime"
             android:layout_weight="1"/>
     </LinearLayout>
+
 
     <TextView
         android:id="@+id/conference_list_item_titlext"
@@ -60,6 +76,5 @@
         android:layout_height="3dp"
         android:background="@drawable/dotted_line"
         android:layerType="software"
-        android:id="@+id/view"
-        android:layout_marginBottom="1dp"/>
+        android:id="@+id/view" />
 </LinearLayout>
