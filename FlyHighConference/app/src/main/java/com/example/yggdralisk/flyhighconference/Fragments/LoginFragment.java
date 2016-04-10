@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment {
         if (id != -1) {
             if (!DataGetter.checkUserLogged(mContext))
                 DataGetter.toggleUserLogged(mContext, emailText.getText().toString(), id);
+
             String userName = emailText.getText().toString().substring(0, emailText.getText().toString().indexOf('@'));
             ((MainActivity) getContext()).setLoggedNameOnDrawer(userName);
             displayToast("Zalogowano jako: " + userName);
