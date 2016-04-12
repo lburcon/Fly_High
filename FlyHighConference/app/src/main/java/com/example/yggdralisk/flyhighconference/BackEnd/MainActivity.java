@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         setDrawer();
 
+        if(DataGetter.checkUserLogged(getApplicationContext()))
+            setLoggedNameOnDrawer(DataGetter.getLoggedUserName(getApplicationContext()));
+
         setFragment(savedInstanceState, new ConferenceListFragment(), null);
 
 

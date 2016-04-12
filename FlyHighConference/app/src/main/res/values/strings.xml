@@ -54,6 +54,7 @@
     <string name="prelegents_title">Prelegents</string>
     <string name="wrong_email">Wrong email</string>
     <string name="wrong_password">Wrong password</string>
+    <string name="favs_of">favs_of</string>
 
 
 </resources>

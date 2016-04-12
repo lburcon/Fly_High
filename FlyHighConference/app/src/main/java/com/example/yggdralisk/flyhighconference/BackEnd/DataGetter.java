@@ -22,7 +22,10 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import org.json.JSONException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by yggdralisk on 29.02.16.
@@ -59,17 +62,18 @@ public class DataGetter {
             e.printStackTrace();
         }
     }
+
     public SpeakerPresentationPair[] getSpeakerHasPresentations() {
         QueryBuilder<SpeakerPresentationPair, Integer> builder = ormSpeakerPresentationPairs.queryBuilder();
         builder.orderBy("id", true);
         try {
-            return (SpeakerPresentationPair[])ormSpeakerPresentationPairs.query(builder.prepare()).toArray();
+            return (SpeakerPresentationPair[]) ormSpeakerPresentationPairs.query(builder.prepare()).toArray();
         } catch (SQLException e) {
             return null;
         }
     }
 
-    public Presentation[]  getPresentations(){
+    public Presentation[] getPresentations() {
         QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
         builder.orderBy("start", true);
         try {
@@ -84,7 +88,7 @@ public class DataGetter {
         QueryBuilder<Question, Integer> builder = ormQuestions.queryBuilder();
         builder.orderBy("id", true);
         try {
-            builder.where().eq("presentationId",presentationId);
+            builder.where().eq("presentationId", presentationId);
             Object[] x = ormQuestions.query(builder.prepare()).toArray();
             return Arrays.copyOf(x, x.length, Question[].class);
         } catch (SQLException e) {
@@ -92,7 +96,7 @@ public class DataGetter {
         }
     }
 
-    public Speaker[] getSpeakers()  {
+    public Speaker[] getSpeakers() {
         QueryBuilder<Speaker, Integer> builder = ormSpeakers.queryBuilder();
         try {
             Object[] x = ormSpeakers.query(builder.prepare()).toArray();
@@ -132,7 +136,7 @@ public class DataGetter {
         }
     }
 
-    public Like[] getLikes(){
+    public Like[] getLikes() {
         QueryBuilder<Like, Integer> builder = ormLikes.queryBuilder();
         try {
             Object[] x = ormLikes.query(builder.prepare()).toArray();
@@ -142,7 +146,7 @@ public class DataGetter {
         }
     }
 
-    public Organiser[] getOrganisers()  {
+    public Organiser[] getOrganisers() {
         QueryBuilder<Organiser, Integer> builder = ormOrganisers.queryBuilder();
         try {
             Object[] x = ormOrganisers.query(builder.prepare()).toArray();
@@ -156,15 +160,14 @@ public class DataGetter {
         QueryBuilder<Speaker, Integer> builder = ormSpeakers.queryBuilder();
         try {
             builder.where().eq("id", speakerId);
-            return  ormSpeakers.query(builder.prepare()).get(0);
+            return ormSpeakers.query(builder.prepare()).get(0);
         } catch (SQLException e) {
             return null;
         }
     }
 
-    public String[] getPresentationSpeakersNames(int presentationId)
-    {
-        String [] names;
+    public String[] getPresentationSpeakersNames(int presentationId) {
+        String[] names;
         try {
             int[] ids = getPresentationById(presentationId).getSpeakers();
             names = new String[ids.length];
@@ -172,8 +175,7 @@ public class DataGetter {
                 names[i] = getSpeakerById(ids[i]).getName();
 
             return names;
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -183,7 +185,7 @@ public class DataGetter {
     public Presentation getPresentationById(int presentationId) {
         QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
         try {
-            builder.where().eq("id",presentationId);
+            builder.where().eq("id", presentationId);
             return ormPresentations.query(builder.prepare()).get(0);
         } catch (SQLException e) {
             return null;
@@ -193,7 +195,7 @@ public class DataGetter {
     public Place getPlaceById(int placeId) {
         QueryBuilder<Place, Integer> builder = ormPlaces.queryBuilder();
         try {
-            builder.where().eq("id",placeId);
+            builder.where().eq("id", placeId);
             return ormPlaces.query(builder.prepare()).get(0);
         } catch (SQLException e) {
             return null;
@@ -203,7 +205,7 @@ public class DataGetter {
     public User getUserById(int userID) {
         QueryBuilder<User, Integer> builder = ormUsers.queryBuilder();
         try {
-            builder.where().eq("id",userID);
+            builder.where().eq("id", userID);
             return ormUsers.query(builder.prepare()).get(0);
         } catch (SQLException e) {
             return null;
@@ -216,32 +218,26 @@ public class DataGetter {
     }
 
     public static String getLoggedUserName(Context context) {
-        if(checkUserLogged(context))
-        {
+        if (checkUserLogged(context)) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             return sharedPreferences.getString(context.getString(R.string.shared_preferences_logged_user_name), "");
-        }
-        else
-        {
+        } else {
             return "";
         }
     }
 
     public static int getLoggedUserId(Context context) {
-        if(checkUserLogged(context))
-        {
+        if (checkUserLogged(context)) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             return sharedPreferences.getInt(context.getString(R.string.shared_preferences_logged_user_id), -1);
-        }
-        else
-        {
+        } else {
             return -1;
         }
     }
 
-    public static Boolean toggleUserLogged(Context context,String userName, int userId)//Returns true if method logged user in or false otherwise.
+    public static Boolean toggleUserLogged(Context context, String userName, int userId)//Returns true if user is logged in or false otherwise.
     {
-        if(checkUserLogged(context)  ) {
+        if (checkUserLogged(context)) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(context.getString(R.string.shared_preferences_user_logged), false);
@@ -249,15 +245,67 @@ public class DataGetter {
             editor.putInt(context.getString(R.string.shared_preferences_logged_user_id), -1);
             editor.apply();
             return false;
-        }
-        else {
+        } else {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(context.getString(R.string.shared_preferences_user_logged), true);
             editor.putString(context.getString(R.string.shared_preferences_logged_user_name), userName);
-            editor.putInt(context.getString(R.string.shared_preferences_logged_user_id),userId);
+            editor.putInt(context.getString(R.string.shared_preferences_logged_user_id), userId);
             editor.apply();
             return true;
         }
     }
+
+    public static ArrayList<Integer> getLoggedUserFavs(Context context) {
+        if (checkUserLogged(context)) {
+            Set<Integer> temp = new HashSet<>();
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            for (String s :
+                    sharedPreferences.getString(context.getString(R.string.favs_of) + getLoggedUserId(context), "").split("\\s+")) {
+                temp.add(Integer.parseInt(s));
+            }
+            return new ArrayList<>(temp);
+        } else {
+
+            return new ArrayList<>();
+        }
+    }
+
+    public static boolean addLoggedUserFav(Context context, int presentationId) {
+        if (checkUserLogged(context) && !getLoggedUserFavs(context).contains(presentationId)) {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String ts = "";
+            for (int i :
+                    getLoggedUserFavs(context)) {
+                ts += Integer.toString(i) + " ";
+            }
+
+            editor.putString(context.getString(R.string.favs_of) + getLoggedUserId(context), ts);
+            editor.apply();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean removeLoggedUserFav(Context context, int presentationId) {
+        if (checkUserLogged(context) && getLoggedUserFavs(context).contains(presentationId)) {
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String ts = "";
+            for (int i :
+                    getLoggedUserFavs(context)) {
+                if (i != presentationId)
+                    ts += Integer.toString(i) + " ";
+            }
+
+            editor.putString(context.getString(R.string.favs_of) + getLoggedUserId(context), ts);
+            editor.apply();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
