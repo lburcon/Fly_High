@@ -11,13 +11,13 @@
 
         <TextView
             android:id="@+id/question_to_speaker_nick"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
             android:layout_alignParentTop="true"
             android:textColor="@color/text_white"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/question_to_speaker_rating"
@@ -25,28 +25,30 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="3dp"
+            android:layout_marginRight="5dp"
             android:textColor="@color/text_white"
-            android:textSize="15dp" />
+            android:textSize="12sp" />
 
 
         <TextView
             android:id="@+id/question_to_speaker_question"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/question_to_speaker_nick"
             android:gravity="center"
             android:text="@string/no_questions_to_prelection"
             android:textColor="@color/text_white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/question_plus_one"
+            android:layout_marginTop="5dp"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/question_to_speaker_rating"
-            android:layout_marginRight="3dp"
+            android:layout_marginRight="5dp"
             android:background="@color/backgroung_dark"
             android:src="@drawable/ic_plus_one_white_24dp" />
 
