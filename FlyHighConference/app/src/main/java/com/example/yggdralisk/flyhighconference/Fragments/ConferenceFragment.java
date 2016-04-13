@@ -3,6 +3,7 @@ package com.example.yggdralisk.flyhighconference.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
@@ -32,6 +34,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -45,10 +49,10 @@ public class ConferenceFragment extends Fragment {
     private Speaker speakerObject = new Speaker();
     private int[] speakerIds = null;
 
-    boolean isFavourite;
     @Bind(R.id.conference_favourite)
     ImageButton favourite;
 
+    boolean isFavourite = false;
     private DataGetter dataGetter;
 
 
@@ -69,11 +73,25 @@ public class ConferenceFragment extends Fragment {
         } catch (InflateException e) {
         }
 
-        Glide.with(this)
-                .load("")
-                .placeholder(R.drawable.ic_favorite_border_black_24dp)
-                .into(favourite);
-        isFavourite = false;
+        ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
+
+        if (favList.size() > 0)
+            for (int id : favList) {
+                if (id == presentation.getId());
+                isFavourite = true;
+            }
+
+        if (isFavourite)
+            Glide.with(this)
+                    .load("")
+                    .placeholder(R.drawable.ic_favorite_black_24dp)
+                    .into(favourite);
+        else
+            Glide.with(this)
+                    .load("")
+                    .placeholder(R.drawable.ic_favorite_border_black_24dp)
+                    .into(favourite);
+
 
         favourite.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -83,6 +101,8 @@ public class ConferenceFragment extends Fragment {
                             .placeholder(R.drawable.ic_favorite_border_black_24dp)
                             .into(favourite);
                     isFavourite = false;
+                    DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
+                    Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Glide.with(v.getContext())
@@ -90,6 +110,8 @@ public class ConferenceFragment extends Fragment {
                             .placeholder(R.drawable.ic_favorite_black_24dp)
                             .into(favourite);
                     isFavourite = true;
+                    DataGetter.addLoggedUserFav(getContext(), presentation.getId());
+                    Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
                 }
             }
         });

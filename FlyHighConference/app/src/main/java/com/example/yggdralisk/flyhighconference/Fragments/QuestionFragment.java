@@ -83,7 +83,7 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication());
+        mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
 
         mRecyclerView.setAdapter(mAdapter);
 

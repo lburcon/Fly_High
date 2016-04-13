@@ -262,6 +262,7 @@ public class DataGetter {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             for (String s :
                     sharedPreferences.getString(context.getString(R.string.favs_of) + getLoggedUserId(context), "").split("\\s+")) {
+                if(s!="")
                 temp.add(Integer.parseInt(s));
             }
             return new ArrayList<>(temp);

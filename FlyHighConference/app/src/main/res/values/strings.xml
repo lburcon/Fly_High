@@ -56,5 +56,11 @@
     <string name="wrong_password">Wrong password</string>
     <string name="favs_of">favs_of</string>
 
+    <string name="like_added">Liked</string>
+    <string name="like_not_added">Already liked</string>
+
+    <string name="question_added_to_favs">Added to favourites</string>
+    <string name="question_removed_from_favs">Removed from favourites</string>
+
 
 </resources>

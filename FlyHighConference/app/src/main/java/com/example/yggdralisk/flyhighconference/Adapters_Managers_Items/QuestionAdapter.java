@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
@@ -31,10 +35,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     private Question[] mQuestions;
     private Application application;
+    private Context context;
 
-    public QuestionAdapter(Question[] mQuestions, Application application) {
+    public QuestionAdapter(Question[] mQuestions, Application application, Context context) {
         this.mQuestions = mQuestions;
         this.application = application;
+        this.context = context;
     }
 
     @Override
@@ -83,7 +89,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(Question question) {
+        public void setData(final Question question) {
 
             if (question != null) {
                 plusOne.setVisibility(View.VISIBLE);
@@ -103,7 +109,25 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 rating.setVisibility(View.GONE);
                 nick.setVisibility(View.GONE);
             }
-        }
 
+
+        plusOne.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+              if (plusOne.getVisibility() == View.VISIBLE) {
+                  ServerConnector serverConnector = new ServerConnector();
+                  serverConnector.postLikeToQuestion(application, context, question.getId(), DataGetter.getLoggedUserId(context), new ConnectorResultInterface() {
+                      @Override
+                      public void onDownloadFinished(boolean succeeded) {
+                          if (succeeded)
+                              Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
+                          else
+                              Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
+
+                      }
+                  });
+              }
+            }
+        });
+        }
     }
 }
