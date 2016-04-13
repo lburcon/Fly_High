@@ -92,7 +92,7 @@ public class DataGetter {
             Object[] x = ormQuestions.query(builder.prepare()).toArray();
             return Arrays.copyOf(x, x.length, Question[].class);
         } catch (SQLException e) {
-            return null;
+            return new Question[]{};
         }
     }
 

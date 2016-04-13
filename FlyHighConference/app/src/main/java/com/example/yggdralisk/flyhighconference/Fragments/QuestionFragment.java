@@ -52,9 +52,7 @@ public class QuestionFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-
         getArrayOfIds(conferenceId, view);
-
 
         return view;
     }
@@ -68,6 +66,9 @@ public class QuestionFragment extends Fragment {
             public void onDownloadFinished(boolean succeeded) {
                 if(succeeded) {
                     questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
+                    setRecycler(view);
+                }else
+                {
                     setRecycler(view);
                 }
             }
