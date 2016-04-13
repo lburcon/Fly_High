@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_corner">
+            android:background="@drawable/selector_rounded">
 
                 <LinearLayout
                     android:layout_width="match_parent"

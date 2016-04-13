@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/conference_map"
             android:layout_alignRight="@+id/conference_map"
-            android:background="@color/background_main"
+            android:background="@color/transparent"
             android:src="@drawable/ic_add_white_24dp" />
 
     </RelativeLayout>

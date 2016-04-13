@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_main">#484848</color>
-    <color name="main_yellow">#ffe100</color>
-    <color name="background_black">#000000</color>
     <color name="backgroung_dark">#3B3B3B</color>
-    <color name="text_white">#FFFFFF</color>
+    <color name="brighter_yellow">#F6E933</color>
+    <color name="main_yellow">#FFE100</color>
     <color name="main_yellow_dark">#FFCC00</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="background_black">#000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent" android:layout_width="match_parent"
-    android:background="@color/backgroung_dark"
+    android:background="@drawable/selector_background"
     android:orientation="vertical">
 
 
@@ -26,7 +26,7 @@
 
         <ImageButton
             android:clickable="true"
-            android:background="@color/backgroung_dark"
+            android:background="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/conference_favourite"
