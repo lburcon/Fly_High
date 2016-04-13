@@ -282,6 +282,8 @@ public class DataGetter {
                 ts += Integer.toString(i) + " ";
             }
 
+            ts+=Integer.toString(presentationId);
+
             editor.putString(context.getString(R.string.favs_of) + getLoggedUserId(context), ts);
             editor.apply();
             return true;
