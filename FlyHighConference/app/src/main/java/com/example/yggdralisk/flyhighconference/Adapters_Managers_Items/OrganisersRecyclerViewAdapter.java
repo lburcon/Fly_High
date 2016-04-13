@@ -1,5 +1,7 @@
 package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -11,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
@@ -27,6 +33,7 @@ import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lukasz on 31.03.16.
@@ -35,11 +42,13 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
 
     private Organiser[] mDataset;
     public MainActivity mUpLayout;
+    public Context mContext;
     private final int TYPE_0 = 0;
     private final int TYPE_1 = 1;
 
-    public OrganisersRecyclerViewAdapter(Organiser[] myDataset) {
+    public OrganisersRecyclerViewAdapter(Organiser[] myDataset, Context context) {
         mDataset = myDataset;
+        mContext = context;
     }
 
     @Override
@@ -74,7 +83,7 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
     public int getItemViewType(int position) {
         int id = -1;
 
-        id =mDataset[position].getId();
+        id = mDataset[position].getId();
 
         return id % 2;
     }
@@ -105,7 +114,7 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(Organiser speakerObject) {
+        public void setData(final Organiser speakerObject) {
 
 
             name.setText(speakerObject.getName());
@@ -116,37 +125,48 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
 
             email.setText(speakerObject.getEmail());
 
-        //A MOZE BY TAK UZYC SWITCHA?
+            //A MOZE BY TAK UZYC SWITCHA?
 
-            if (speakerObject.getImage().equals("photo_john") || speakerObject.getImage().equals("photo_lukas"))
-            {
+            if (speakerObject.getImage().equals("photo_john") || speakerObject.getImage().equals("photo_lukas")) {
                 if (speakerObject.getImage().equals("photo_john"))
-                Glide.with(itemView.getContext())
-                        .load("")
-                        .placeholder(R.drawable.photo_john)
-                        .dontAnimate()
-                        .into(image);
+                    Glide.with(itemView.getContext())
+                            .load("")
+                            .placeholder(R.drawable.photo_john)
+                            .dontAnimate()
+                            .into(image);
                 else
+                    Glide.with(itemView.getContext())
+                            .load("")
+                            .placeholder(R.drawable.photo_lukas)
+                            .dontAnimate()
+                            .into(image);
+
+
+            } else
                 Glide.with(itemView.getContext())
-                        .load("")
-                        .placeholder(R.drawable.photo_lukas)
+                        .load(speakerObject.getImage())
+                        .placeholder(R.drawable.fly_high)
                         .dontAnimate()
                         .into(image);
-
-
-            }
-            else
-            Glide.with(itemView.getContext())
-                    .load(speakerObject.getImage())
-                    .placeholder(R.drawable.fly_high)
-                    .dontAnimate()
-                    .into(image);
 
             id = speakerObject.getId();
 
-        }
-    }
+            email.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("message/rfc822");
+                    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{speakerObject.getEmail()});
+                    try {
+                        mContext.startActivity(Intent.createChooser(i, "Send mail..."));
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(mContext, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
+        }
+
+    }
 }
 
 

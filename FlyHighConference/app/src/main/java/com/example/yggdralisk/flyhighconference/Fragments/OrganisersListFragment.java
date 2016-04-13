@@ -36,7 +36,7 @@ public class OrganisersListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         organisers = new Organiser[new DataGetter(getActivity().getApplication()).getOrganisers().length + 2];
         addDevelopers();
-        mAdapter = new OrganisersRecyclerViewAdapter(organisers);
+        mAdapter = new OrganisersRecyclerViewAdapter(organisers, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
 

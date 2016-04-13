@@ -2,7 +2,7 @@
 <resources>
     <color name="background_main">#484848</color>
     <color name="backgroung_dark">#3B3B3B</color>
-    <color name="brighter_yellow">#F6E933</color>
+    <color name="brighter_yellow">#FFFF5F</color>
     <color name="main_yellow">#FFE100</color>
     <color name="main_yellow_dark">#FFCC00</color>
     <color name="text_white">#FFFFFF</color>
