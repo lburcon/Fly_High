@@ -73,48 +73,7 @@ public class ConferenceFragment extends Fragment {
         } catch (InflateException e) {
         }
 
-        ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
 
-        if (favList.size() > 0)
-            for (int id : favList) {
-                if (id == presentation.getId());
-                isFavourite = true;
-            }
-
-        if (isFavourite)
-            Glide.with(this)
-                    .load("")
-                    .placeholder(R.drawable.ic_favorite_black_24dp)
-                    .into(favourite);
-        else
-            Glide.with(this)
-                    .load("")
-                    .placeholder(R.drawable.ic_favorite_border_black_24dp)
-                    .into(favourite);
-
-
-        favourite.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (isFavourite) {
-                    Glide.with(v.getContext())
-                            .load("")
-                            .placeholder(R.drawable.ic_favorite_border_black_24dp)
-                            .into(favourite);
-                    isFavourite = false;
-                    DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
-                    Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Glide.with(v.getContext())
-                            .load("")
-                            .placeholder(R.drawable.ic_favorite_black_24dp)
-                            .into(favourite);
-                    isFavourite = true;
-                    DataGetter.addLoggedUserFav(getContext(), presentation.getId());
-                    Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         return view;
     }
@@ -143,12 +102,57 @@ public class ConferenceFragment extends Fragment {
         speakerIds = getSpeakerIds();
 
         for (int i = 0; i < speakerIds.length; i++) {
-            speakerObject = dataGetter.getSpeakerById( speakerIds[i]);
+            speakerObject = dataGetter.getSpeakerById(speakerIds[i]);
             if (speakerIds.length > 1 && i != speakerIds.length - 1)
                 speakerName.setText(speakerName.getText() + speakerObject.getName() + ", ");
             else
                 speakerName.setText(speakerName.getText() + speakerObject.getName());
         }
+
+        ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
+
+        if (favList.size() > 0)
+            for (int id : favList) {
+                if (id == presentation.getId())
+                {
+                    isFavourite = true;
+                    break;
+                }
+            }
+
+        if (isFavourite)
+            Glide.with(this)
+                    .load("")
+                    .placeholder(R.drawable.ic_favorite_white_24dp)
+                    .into(favourite);
+        else
+            Glide.with(this)
+                    .load("")
+                    .placeholder(R.drawable.ic_favorite_border_white_24dp)
+                    .into(favourite);
+
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (isFavourite) {
+                    Glide.with(v.getContext())
+                            .load("")
+                            .placeholder(R.drawable.ic_favorite_border_white_24dp)
+                            .into(favourite);
+                    isFavourite = false;
+                    DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
+                    Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
+                } else {
+                    Glide.with(v.getContext())
+                            .load("")
+                            .placeholder(R.drawable.ic_favorite_white_24dp)
+                            .into(favourite);
+                    isFavourite = true;
+                    DataGetter.addLoggedUserFav(getContext(), presentation.getId());
+                    Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         setToolbarData();
     }

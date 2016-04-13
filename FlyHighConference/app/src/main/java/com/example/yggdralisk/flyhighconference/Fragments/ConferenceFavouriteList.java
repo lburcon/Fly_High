@@ -14,8 +14,10 @@ import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.R;
 
+import java.nio.channels.DatagramChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -39,7 +41,13 @@ public class ConferenceFavouriteList extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
+        ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
+
+        Presentation[] mDataSet = new Presentation[favList.size()];
+
+        for (int i = 0; i < favList.size() ; i++) {
+            mDataSet[i] = new DataGetter(getActivity().getApplication()).getPresentationById(favList.get(i));
+        }
         mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
         mRecyclerView.setAdapter(mAdapter);
 

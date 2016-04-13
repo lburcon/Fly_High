@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
@@ -16,6 +17,8 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.R;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,7 +83,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(Presentation presentation) {
+        public void setData(final Presentation presentation) {
             id = presentation.getId();
             nListner.setId(id);
 
@@ -96,26 +99,51 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                     .load("")
                     .placeholder(R.drawable.ic_favorite_border_black_24dp)
                     .into(favourite);
-            isFavourite = false;
+            ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(mContext);
+
+            if (favList.size() > 0)
+                for (int id : favList) {
+                    if (id == presentation.getId())
+                    {
+                        isFavourite = true;
+                        break;
+                    }
+                }
+
+            if (isFavourite)
+                Glide.with(mContext)
+                        .load("")
+                        .placeholder(R.drawable.ic_favorite_white_24dp)
+                        .into(favourite);
+            else
+                Glide.with(mContext)
+                        .load("")
+                        .placeholder(R.drawable.ic_favorite_border_white_24dp)
+                        .into(favourite);
+
 
             favourite.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (isFavourite) {
-                        Glide.with(itemView.getContext())
+                        Glide.with(v.getContext())
                                 .load("")
-                                .placeholder(R.drawable.ic_favorite_border_black_24dp)
+                                .placeholder(R.drawable.ic_favorite_border_white_24dp)
                                 .into(favourite);
                         isFavourite = false;
-                    }
-                        else {
-                        Glide.with(itemView.getContext())
+                        DataGetter.removeLoggedUserFav(mContext, presentation.getId());
+                        Toast.makeText(mContext, R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Glide.with(v.getContext())
                                 .load("")
-                                .placeholder(R.drawable.ic_favorite_black_24dp)
+                                .placeholder(R.drawable.ic_favorite_white_24dp)
                                 .into(favourite);
                         isFavourite = true;
+                        DataGetter.addLoggedUserFav(mContext, presentation.getId());
+                        Toast.makeText(mContext, R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
                     }
-                    }
+                }
             });
+
 
         }
 
