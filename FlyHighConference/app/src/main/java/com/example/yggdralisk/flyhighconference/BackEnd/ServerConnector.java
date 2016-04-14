@@ -322,7 +322,6 @@ public class ServerConnector {
                     }
                 });
 
-            } else {
             }
         } catch (Exception e) {
             e.printStackTrace();
