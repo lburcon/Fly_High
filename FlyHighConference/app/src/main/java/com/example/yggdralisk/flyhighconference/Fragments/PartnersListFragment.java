@@ -38,18 +38,14 @@ public class PartnersListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //TODO: hamburger icon
-
-
-            mAdapter = new PartnersRecyclerViewAdapter(getPartners());
-            mRecyclerView.setAdapter(mAdapter);
-
+        mAdapter = new PartnersRecyclerViewAdapter(getPartners());
+        mRecyclerView.setAdapter(mAdapter);
 
 
         return view;
     }
 
-    private Partner[] getPartners(){
+    private Partner[] getPartners() {
         return new DataGetter(getActivity().getApplication()).getPartners();
     }
 

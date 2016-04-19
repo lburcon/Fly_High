@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment {
 
             String userName = emailText.getText().toString().substring(0, emailText.getText().toString().indexOf('@'));
             ((MainActivity) getContext()).setLoggedNameOnDrawer(userName);
-            displayToast("Zalogowano jako: " + userName);
+            displayToast("Logged in as: " + userName);
             ((MainActivity) getContext()).changeLoginLogoutDrawer();
 
 
