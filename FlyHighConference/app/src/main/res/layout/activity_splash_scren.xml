@@ -16,13 +16,4 @@
         android:layout_gravity="center_horizontal"
         android:indeterminate="true"
         android:indeterminateDrawable="@xml/progress_yellow" />
-
-    <TextView
-        android:id="@+id/splash_messege"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:text="@string/splash_screen_text"
-        android:textSize="30sp"
-        android:textStyle="bold" />
 </LinearLayout>
