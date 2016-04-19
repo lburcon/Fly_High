@@ -6,9 +6,11 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id = "@+id/splash_image"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:src="@drawable/fly_high" />
+        android:layout_margin="5dp"
+       />
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -16,4 +18,13 @@
         android:layout_gravity="center_horizontal"
         android:indeterminate="true"
         android:indeterminateDrawable="@xml/progress_yellow" />
+
+    <TextView
+        android:id="@+id/splash_messege"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="30sp"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -14,9 +14,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
@@ -39,9 +41,14 @@ import okhttp3.Response;
  */
 public class LoginFragment extends Fragment {
 
-    @Bind(R.id.login_layout_email) EditText emailText;
-    @Bind(R.id.login_layout_password) EditText passwordText;
-    @Bind(R.id.login_layout_login_button) Button loginButton;
+    @Bind(R.id.login_layout_email)
+    EditText emailText;
+    @Bind(R.id.login_layout_password)
+    EditText passwordText;
+    @Bind(R.id.login_layout_login_button)
+    Button loginButton;
+    @Bind(R.id.login_image)
+    ImageView image;
     Context mContext;
 
     @Override
@@ -49,8 +56,10 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_layout, container, false);
 
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         mContext = container.getContext();
+
+        Glide.with(mContext).load(R.drawable.fly_high).placeholder(R.drawable.fly_high_temp).crossFade().fitCenter().into(image);
 
         loginButton.setOnClickListener(new loginListener());
 
@@ -73,12 +82,13 @@ public class LoginFragment extends Fragment {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ((MainActivity) getContext()).setFragment(null, new LoginOutFragment(),null);
+                    ((MainActivity) getContext()).setFragment(null, new LoginOutFragment(), null);
                     try {
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-                    }catch (NullPointerException ex)
-                    {ex.printStackTrace();}
+                    } catch (NullPointerException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }, 750);
             return true;

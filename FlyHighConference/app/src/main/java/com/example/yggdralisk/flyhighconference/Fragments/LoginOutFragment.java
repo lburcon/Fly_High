@@ -10,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
@@ -24,26 +25,30 @@ import butterknife.ButterKnife;
 /**
  * Created by yggdralisk on 02.03.16.
  */
-public class LoginOutFragment extends Fragment{
+public class LoginOutFragment extends Fragment {
 
-    @Bind(R.id.login_out_layout_button) Button logOutbutton;
+    @Bind(R.id.login_out_layout_button)
+    Button logOutbutton;
+    @Bind(R.id.login_out_image)
+    ImageView image;
     Context mContext;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_out_layout,container,false);
+        View view = inflater.inflate(R.layout.login_out_layout, container, false);
 
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         mContext = container.getContext();
+
+        Glide.with(mContext).load(R.drawable.fly_high).placeholder(R.drawable.fly_high_temp).crossFade().fitCenter().into(image);
 
         setButtons();
 
         return view;
     }
 
-    private void setButtons()
-    {
+    private void setButtons() {
         logOutbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +60,7 @@ public class LoginOutFragment extends Fragment{
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            ((MainActivity) getContext()).setFragment(null, new LoginFragment(),null);
+                            ((MainActivity) getContext()).setFragment(null, new LoginFragment(), null);
                         }
                     }, 750);
                 }
