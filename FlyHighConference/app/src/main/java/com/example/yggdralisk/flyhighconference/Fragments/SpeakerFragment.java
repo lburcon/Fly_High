@@ -44,10 +44,9 @@ public class SpeakerFragment extends Fragment {
 
         Glide.with(this)
                 .load(speaker.getImage())
-                .placeholder(R.drawable.fly_high)
+                .placeholder(R.drawable.fly_high_temp)
                 .dontAnimate()
                 .into(image);
-
 
         return view;
     }

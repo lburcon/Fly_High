@@ -340,7 +340,9 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                     setFragment(null, new ConferenceFavouriteList(), null);
                 return true;
             case R.id.prelegents:
-                if (toolbarData.getIntArray("speakersIds") != null)
+                if(toolbarData == null){
+                    return false;
+                } else if (toolbarData.getIntArray("speakersIds") != null)
                     {setFragment(null, new SpeakersConferenceListFragment(), toolbarData);
                     return true;}
                 else

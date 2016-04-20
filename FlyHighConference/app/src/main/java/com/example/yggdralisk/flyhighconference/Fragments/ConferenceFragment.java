@@ -100,13 +100,14 @@ public class ConferenceFragment extends Fragment {
         //setting speaker and checking their number in case of adding ','
 
         speakerIds = getSpeakerIds();
-
-        for (int i = 0; i < speakerIds.length; i++) {
-            speakerObject = dataGetter.getSpeakerById(speakerIds[i]);
-            if (speakerIds.length > 1 && i != speakerIds.length - 1)
-                speakerName.setText(speakerName.getText() + speakerObject.getName() + ", ");
-            else
-                speakerName.setText(speakerName.getText() + speakerObject.getName());
+        if(speakerIds != null) {
+            for (int i = 0; i < speakerIds.length; i++) {
+                speakerObject = dataGetter.getSpeakerById(speakerIds[i]);
+                if (speakerIds.length > 1 && i != speakerIds.length - 1)
+                    speakerName.setText(speakerName.getText() + speakerObject.getName() + ", ");
+                else
+                    speakerName.setText(speakerName.getText() + speakerObject.getName());
+            }
         }
 
         ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
@@ -160,7 +161,9 @@ public class ConferenceFragment extends Fragment {
     private void setToolbarData() {
         OnDataPass activity = ((OnDataPass) getContext());
         Bundle args = new Bundle();
-        if (presentation.getSpeakers().length > 1) {
+        if(presentation.getSpeakers() == null) {
+
+        } else if (presentation.getSpeakers().length > 1) {
             args.putIntArray("speakersIds", presentation.getSpeakers());
             activity.dataPass(args);
         } else {

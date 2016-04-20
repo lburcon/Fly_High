@@ -106,7 +106,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
 
                 Glide.with(itemView.getContext())
                         .load(presentationObject.getImage())
-                        .placeholder(R.drawable.fly_high)
+                        .placeholder(R.drawable.fly_high_temp)
                         .dontAnimate()
                         .into(image);
 

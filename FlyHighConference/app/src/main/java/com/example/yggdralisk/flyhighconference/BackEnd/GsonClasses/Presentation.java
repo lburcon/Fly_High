@@ -47,7 +47,9 @@ public class Presentation {
         String[] numberStrs = speakers.split(",");
         int[] speakersIds = new int[numberStrs.length];
         for(int i = 0;i < numberStrs.length;i++)
-            speakersIds[i] = Integer.parseInt(numberStrs[i]);
+            try {
+                speakersIds[i] = Integer.parseInt(numberStrs[i]);
+            }catch(NumberFormatException ex){ return null;}
         return speakersIds;
     }
 

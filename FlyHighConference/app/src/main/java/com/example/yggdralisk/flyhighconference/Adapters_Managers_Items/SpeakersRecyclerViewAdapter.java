@@ -111,7 +111,7 @@ public class SpeakersRecyclerViewAdapter extends RecyclerView.Adapter<SpeakersRe
 
             Glide.with(itemView.getContext())
                     .load(speakerObject.getImage())
-                    .placeholder(R.drawable.fly_high)
+                    .placeholder(R.drawable.fly_high_temp)
                     .dontAnimate()
                     .into(image);
 

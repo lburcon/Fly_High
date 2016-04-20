@@ -145,7 +145,8 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
             } else
                 Glide.with(itemView.getContext())
                         .load(speakerObject.getImage())
-                        .placeholder(R.drawable.fly_high)
+                        .placeholder(R.drawable.fly_high_temp)
+                        .fitCenter()
                         .dontAnimate()
                         .into(image);
 
@@ -155,7 +156,7 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
                 public void onClick(View v) {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("message/rfc822");
-                    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{speakerObject.getEmail()});
+                    i.putExtra(Intent.EXTRA_EMAIL, new String[]{speakerObject.getEmail()});
                     try {
                         mContext.startActivity(Intent.createChooser(i, "Send mail..."));
                     } catch (android.content.ActivityNotFoundException ex) {

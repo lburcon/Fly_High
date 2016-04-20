@@ -161,7 +161,7 @@ public class DataGetter {
         try {
             builder.where().eq("id", speakerId);
             return ormSpeakers.query(builder.prepare()).get(0);
-        } catch (SQLException e) {
+        } catch (SQLException|IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -175,7 +175,7 @@ public class DataGetter {
                 names[i] = getSpeakerById(ids[i]).getName();
 
             return names;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException|IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
@@ -187,7 +187,7 @@ public class DataGetter {
         try {
             builder.where().eq("id", presentationId);
             return ormPresentations.query(builder.prepare()).get(0);
-        } catch (SQLException e) {
+        } catch (SQLException|IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -197,7 +197,7 @@ public class DataGetter {
         try {
             builder.where().eq("id", placeId);
             return ormPlaces.query(builder.prepare()).get(0);
-        } catch (SQLException e) {
+        } catch (SQLException|IndexOutOfBoundsException e) {
             return null;
         }
     }
