@@ -41,7 +41,6 @@
         android:background="@color/main_yellow"
         android:orientation="vertical">
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
@@ -56,7 +55,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/background_black" />
+            android:background="@color/grey_light" />
 
         <ListView
             android:id="@+id/left_drawer_list_view"
@@ -72,12 +71,13 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_marginBottom="25dp"
-            android:background="@color/background_black" />
+            android:background="@color/grey_light" />
 
         <TextView
             android:id="@+id/left_drawer_logged_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="" />
 
     </LinearLayout>
