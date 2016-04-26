@@ -52,10 +52,10 @@ public class QuestionsListFragment extends Fragment {
                 case "Breakfast":
                 case "Supper":
                 case "Coffee break":
-                case "Coffee lunch":
                 case "Dinner":
                 case "Lunch":
                     presList.remove(i);
+                    break;
 
             }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         TextView time;
         @Bind(R.id.conference_favourite)
         ImageButton favourite;
+        @Bind(R.id.linear_conference)
+        LinearLayout linear;
 
         public boolean isFavourite;
         public int id = -1;
@@ -103,8 +106,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
             if (favList.size() > 0)
                 for (int id : favList) {
-                    if (id == presentation.getId())
-                    {
+                    if (id == presentation.getId()) {
                         isFavourite = true;
                         break;
                     }
@@ -121,29 +123,33 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                         .placeholder(R.drawable.ic_favorite_border_white_24dp)
                         .into(favourite);
 
-
-            favourite.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (isFavourite) {
-                        Glide.with(v.getContext())
-                                .load("")
-                                .placeholder(R.drawable.ic_favorite_border_white_24dp)
-                                .into(favourite);
-                        isFavourite = false;
-                        DataGetter.removeLoggedUserFav(mContext, presentation.getId());
-                        Toast.makeText(mContext, R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Glide.with(v.getContext())
-                                .load("")
-                                .placeholder(R.drawable.ic_favorite_white_24dp)
-                                .into(favourite);
-                        isFavourite = true;
-                        DataGetter.addLoggedUserFav(mContext, presentation.getId());
-                        Toast.makeText(mContext, R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
+            if (!(presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
+                    presentation.getTitle().equals("Dinner") || presentation.getTitle().equals("Coffee break") ||
+                    presentation.getTitle().equals("Lunch"))) {
+                favourite.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (isFavourite) {
+                            Glide.with(v.getContext())
+                                    .load("")
+                                    .placeholder(R.drawable.ic_favorite_border_white_24dp)
+                                    .into(favourite);
+                            isFavourite = false;
+                            DataGetter.removeLoggedUserFav(mContext, presentation.getId());
+                            Toast.makeText(mContext, R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Glide.with(v.getContext())
+                                    .load("")
+                                    .placeholder(R.drawable.ic_favorite_white_24dp)
+                                    .into(favourite);
+                            isFavourite = true;
+                            DataGetter.addLoggedUserFav(mContext, presentation.getId());
+                            Toast.makeText(mContext, R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
-
+                });
+            } else{
+                linear.setBackgroundResource(R.color.backgroung_dark);
+                favourite.setVisibility(View.GONE);}
 
         }
 
@@ -196,9 +202,18 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             @Override
             public void onClick(View v) {
                 if (id > 0) {
-                    Bundle args = new Bundle();
-                    args.putInt("conferenceId", id);
-                    mUpLayout.setFragment(null, new ConferenceFragment(), args);
+
+                    for (Presentation p : mConferences) {
+                        if (p.getId() == id)
+                            if (!(p.getTitle().equals("Breakfast") || p.getTitle().equals("Supper") ||
+                                    p.getTitle().equals("Dinner") || p.getTitle().equals("Coffee break") ||
+                                    p.getTitle().equals("Lunch"))) {
+                                Bundle args = new Bundle();
+                                args.putInt("conferenceId", id);
+                                mUpLayout.setFragment(null, new ConferenceFragment(), args);
+                            }
+                    }
+
                 }
 
             }

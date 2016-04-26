@@ -74,7 +74,6 @@ public class ConferenceFragment extends Fragment {
         }
 
 
-
         return view;
     }
 
@@ -100,7 +99,7 @@ public class ConferenceFragment extends Fragment {
         //setting speaker and checking their number in case of adding ','
 
         speakerIds = getSpeakerIds();
-        if(speakerIds != null) {
+        if (speakerIds != null) {
             for (int i = 0; i < speakerIds.length; i++) {
                 speakerObject = dataGetter.getSpeakerById(speakerIds[i]);
                 if (speakerIds.length > 1 && i != speakerIds.length - 1)
@@ -114,8 +113,7 @@ public class ConferenceFragment extends Fragment {
 
         if (favList.size() > 0)
             for (int id : favList) {
-                if (id == presentation.getId())
-                {
+                if (id == presentation.getId()) {
                     isFavourite = true;
                     break;
                 }
@@ -132,36 +130,42 @@ public class ConferenceFragment extends Fragment {
                     .placeholder(R.drawable.ic_favorite_border_white_24dp)
                     .into(favourite);
 
+        if (!(presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
+                presentation.getTitle().equals("Dinner") || presentation.getTitle().equals("Coffee break") ||
+                presentation.getTitle().equals("Lunch"))) {
 
-        favourite.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (isFavourite) {
-                    Glide.with(v.getContext())
-                            .load("")
-                            .placeholder(R.drawable.ic_favorite_border_white_24dp)
-                            .into(favourite);
-                    isFavourite = false;
-                    DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
-                    Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
-                } else {
-                    Glide.with(v.getContext())
-                            .load("")
-                            .placeholder(R.drawable.ic_favorite_white_24dp)
-                            .into(favourite);
-                    isFavourite = true;
-                    DataGetter.addLoggedUserFav(getContext(), presentation.getId());
-                    Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
+            favourite.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (isFavourite) {
+                        Glide.with(v.getContext())
+                                .load("")
+                                .placeholder(R.drawable.ic_favorite_border_white_24dp)
+                                .into(favourite);
+                        isFavourite = false;
+                        DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
+                        Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Glide.with(v.getContext())
+                                .load("")
+                                .placeholder(R.drawable.ic_favorite_white_24dp)
+                                .into(favourite);
+                        isFavourite = true;
+                        DataGetter.addLoggedUserFav(getContext(), presentation.getId());
+                        Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
-
+            });
+        } else{
+            favourite.setVisibility(View.GONE);
+            speakerName.setVisibility(View.GONE);
+        }
         setToolbarData();
     }
 
     private void setToolbarData() {
         OnDataPass activity = ((OnDataPass) getContext());
         Bundle args = new Bundle();
-        if(presentation.getSpeakers() == null) {
+        if (presentation.getSpeakers() == null) {
 
         } else if (presentation.getSpeakers().length > 1) {
             args.putIntArray("speakersIds", presentation.getSpeakers());
