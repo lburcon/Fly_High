@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -28,12 +30,12 @@ import butterknife.ButterKnife;
  */
 public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<QuestionsRecyclerViewAdapter.ViewHolder> {
         private Speaker[] mDataset;
-        private Presentation[] mPresentations;
+        private ArrayList<Presentation> mPresentations;
         public MainActivity mUpLayout;
         private final int TYPE_0 = 0;
         private final int TYPE_1 = 1;
 
-        public QuestionsRecyclerViewAdapter(Speaker[] myDataset, Presentation[] myDatasetPresentations) {
+        public QuestionsRecyclerViewAdapter(Speaker[] myDataset, ArrayList<Presentation> myDatasetPresentations) {
             mDataset = myDataset;
             mPresentations = myDatasetPresentations;
         }
@@ -62,21 +64,21 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         @Override
         public void onBindViewHolder(QuestionsRecyclerViewAdapter.ViewHolder holder, int position) {
 
-                holder.setData(mPresentations[position]);
+                holder.setData(mPresentations.get(position));
         }
 
         @Override
         public int getItemViewType(int position) {
             int id = -1;
 
-                id = mPresentations[position].getId();
+                id = position;
 
             return id % 2;
         }
 
         @Override
         public int getItemCount() {
-            return mPresentations.length;
+            return mPresentations.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

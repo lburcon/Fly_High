@@ -18,6 +18,8 @@ import com.example.yggdralisk.flyhighconference.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 /**
  * Created by lukasz on 03.03.16.
  */
@@ -35,6 +37,31 @@ public class QuestionsListFragment extends Fragment {
         speakerArray = getSpeakers();
         if (presentationArray == null)
         presentationArray = getPresentations();
+        ArrayList<Presentation> presList = new ArrayList<>();
+
+        for (Presentation p : presentationArray) {
+
+            presList.add(p);
+
+        }
+
+        for (int i = 0; i < presList.size() ; i++) {
+
+            switch (presList.get(i).getTitle()){
+
+                case "Breakfast":
+                case "Supper":
+                case "Coffee break":
+                case "Coffee lunch":
+                case "Dinner":
+                case "Lunch":
+                    presList.remove(i);
+
+            }
+
+        }
+
+
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -42,7 +69,7 @@ public class QuestionsListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        RecyclerView.Adapter mAdapter = new QuestionsRecyclerViewAdapter(speakerArray, presentationArray);
+        RecyclerView.Adapter mAdapter = new QuestionsRecyclerViewAdapter(speakerArray, presList);
 
             mRecyclerView.setAdapter(mAdapter);
 
