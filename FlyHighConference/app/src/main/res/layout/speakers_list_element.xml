@@ -26,6 +26,9 @@
 
                     <TextView
                         android:id="@+id/speakers_name"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"

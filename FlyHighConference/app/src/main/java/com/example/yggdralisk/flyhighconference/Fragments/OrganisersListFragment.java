@@ -8,17 +8,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.OrganisersRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.SpeakersRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
 import com.example.yggdralisk.flyhighconference.R;
 
+import butterknife.Bind;
+
 /**
  * Created by lukasz on 31.03.16.
  */
 public class OrganisersListFragment extends Fragment {
+
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -29,6 +34,7 @@ public class OrganisersListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.organisers, container, false);
+
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.organisers_recycler_view);
         mRecyclerView.setHasFixedSize(true);

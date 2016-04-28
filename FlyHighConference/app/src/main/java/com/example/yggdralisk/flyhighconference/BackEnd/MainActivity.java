@@ -327,10 +327,10 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.info:
+            /*case R.id.info:
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof InfoFragment))
                     setFragment(null, new InfoFragment(), null);
-                return true;
+                return true;*/
             case R.id.organisers:
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
                     setFragment(null, new OrganisersListFragment(), null);

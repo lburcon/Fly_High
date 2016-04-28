@@ -12,12 +12,12 @@
             android:orderInCategory="100"
             android:title="favourites"
             app:showAsAction="ifRoom" />
-        <item
+       <!-- <item
             android:id="@+id/info"
             android:icon="@drawable/ic_info_outline_black_24dp"
             android:orderInCategory="200"
             android:title="info"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="ifRoom" />-->
         <item
             android:id="@+id/prelegents"
             android:icon="@drawable/ic_face_black_24dp"
