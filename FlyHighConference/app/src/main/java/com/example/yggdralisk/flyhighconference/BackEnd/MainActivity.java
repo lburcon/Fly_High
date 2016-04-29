@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         mDrawerToggle.syncState();
     }
 
-    @Override
+/*    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
 
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         }
 
         return super.onPrepareOptionsMenu(menu);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
                     setFragment(null, new ConferenceFavouriteList(), null);
                 return true;
-            case R.id.prelegents:
+            /*case R.id.prelegents:
                 if(toolbarData == null){
                     return false;
                 } else if (toolbarData.getIntArray("speakersIds") != null)
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                     return true;}
                 else
                     {setFragment(null, new SpeakerFragment(), toolbarData);
-                    return true;}
+                    return true;}*/
         }
         return super.onOptionsItemSelected(item);
     }

@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:background="@color/backgroung_dark"
+            android:background="@drawable/selector_background"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
             android:src="@drawable/ic_face_white_48dp" />
@@ -154,7 +154,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:background="@color/backgroung_dark"
+            android:background="@drawable/selector_background"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
             android:src="@drawable/ic_school_white_48dp" />
