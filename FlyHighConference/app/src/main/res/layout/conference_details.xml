@@ -31,21 +31,21 @@
             android:textSize="12sp" />
 
         <ImageButton
-            android:clickable="true"
-            android:layout_marginTop="5dp"
-            android:background="@color/background_main"
+            android:id="@+id/conference_favourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/conference_favourite"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@color/background_main"
+            android:clickable="true"
             android:src="@drawable/ic_favorite_border_black_24dp" />
 
         <TextView
-            android:layout_below="@id/conference_favourite"
             android:id="@+id/conference_speaker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/conference_favourite"
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal"
             android:textColor="@color/text_white"
@@ -62,7 +62,6 @@
             android:textSize="25sp" />
 
 
-
         <TextView
             android:id="@+id/conference_description"
             android:layout_width="match_parent"
@@ -71,23 +70,90 @@
             android:layout_below="@id/conference_name"
             android:background="@color/backgroung_dark"
             android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:maxLines="9"
             android:scrollbars="vertical"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/conference_text_to_enlarge"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/conference_description"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/enlarge_the_map"
+            android:textColor="@color/text_white" />
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/conference_map"
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_height="210dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentRight="false"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="30dp" />
 
+        <TextView
+            android:id="@+id/conference_see_speakers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_description"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/conference_map"
+            android:gravity="center"
+            android:text="@string/see_speakers"
+            android:textColor="@color/text_white" />
+
+        <ImageButton
+            android:id="@+id/move_to_speakers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_see_speakers"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@id/conference_map"
+            android:background="@color/backgroung_dark"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/ic_face_white_48dp" />
+
+        <TextView
+            android:id="@+id/conference_see_questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/move_to_speakers"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/conference_map"
+            android:gravity="center"
+            android:text="@string/see_questions"
+            android:textColor="@color/text_white" />
+
+        <ImageButton
+            android:id="@+id/move_to_questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/conference_see_questions"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@id/conference_map"
+            android:background="@color/backgroung_dark"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/ic_school_white_48dp" />
 
         <ImageButton
             android:id="@+id/conference_zoom_button"
