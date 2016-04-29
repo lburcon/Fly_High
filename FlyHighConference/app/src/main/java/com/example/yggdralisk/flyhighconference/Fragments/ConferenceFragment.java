@@ -38,6 +38,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lukasz on 23.02.16.
@@ -51,6 +52,10 @@ public class ConferenceFragment extends Fragment {
 
     @Bind(R.id.conference_favourite)
     ImageButton favourite;
+    @Bind(R.id.move_to_speakers)
+    ImageButton moveToSpeakers;
+    @Bind(R.id.move_to_questions)
+    ImageButton moveToQuestions;
 
     boolean isFavourite = false;
     private DataGetter dataGetter;
@@ -160,6 +165,32 @@ public class ConferenceFragment extends Fragment {
             speakerName.setVisibility(View.GONE);
         }
         setToolbarData();
+    }
+
+    @OnClick(R.id.move_to_speakers)
+    public void setMoveToSpeakers(){
+        Bundle args = new Bundle();
+        MainActivity mainActivity = (MainActivity) getContext();
+
+        if (presentation.getSpeakers() == null) {
+
+        } else if (presentation.getSpeakers().length > 1) {
+            args.putIntArray("speakersIds", presentation.getSpeakers());
+            mainActivity.setFragment(null, new SpeakersConferenceListFragment(), args);
+        } else {
+            args.putInt("speakerId", presentation.getSpeakers()[0]);
+            mainActivity.setFragment(null, new SpeakerFragment(), args);
+        }
+    }
+
+    @OnClick(R.id.move_to_questions)
+    public void setMoveToQuestions() {
+
+        Bundle args = new Bundle();
+        MainActivity mainActivity = (MainActivity) getContext();
+        args.putInt("conferenceId", presentation.getId());
+        mainActivity.setFragment(null, new QuestionFragment(), args);
+
     }
 
     private void setToolbarData() {

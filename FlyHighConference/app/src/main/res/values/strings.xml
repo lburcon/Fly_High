@@ -62,7 +62,7 @@
     <string name="question_added_to_favs">Added to favourites</string>
     <string name="question_removed_from_favs">Removed from favourites</string>
 
-    <string name="enlarge_the_map">Click to enlarge</string>
+    <string name="enlarge_the_map">Click on map to enlarge</string>
     <string name="see_speakers">Speakers</string>
     <string name="see_questions">Questions</string>
 
