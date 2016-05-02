@@ -68,8 +68,6 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         TextView auth;
         @Bind(R.id.conference_list_itemt_time)
         TextView time;
-        @Bind(R.id.conference_favourite)
-        ImageButton favourite;
         @Bind(R.id.linear_conference)
         LinearLayout linear;
 
@@ -91,66 +89,18 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             nListner.setId(id);
 
             title.setText(presentation.getTitle());
-
             descr.setText(presentation.getDescription());
-
             time.setText(getPresentationTime(presentation));
-
             auth.setText(getPresentationAuth());
 
-            Glide.with(itemView.getContext())
-                    .load("")
-                    .placeholder(R.drawable.ic_favorite_border_black_24dp)
-                    .into(favourite);
             ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(mContext);
+        }
 
-            if (favList.size() > 0)
-                for (int id : favList) {
-                    if (id == presentation.getId()) {
-                        isFavourite = true;
-                        break;
-                    }
-                }
-
-            if (isFavourite)
-                Glide.with(mContext)
-                        .load("")
-                        .placeholder(R.drawable.ic_favorite_white_24dp)
-                        .into(favourite);
-            else
-                Glide.with(mContext)
-                        .load("")
-                        .placeholder(R.drawable.ic_favorite_border_white_24dp)
-                        .into(favourite);
-
-            if (!(presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
+        private boolean isClickablePresentation(Presentation presentation)//Możesz śmiało zmienić nazwę jeżeli znajdziesz lepszą :D
+        {
+          return  (presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
                     presentation.getTitle().equals("Dinner") || presentation.getTitle().equals("Coffee break") ||
-                    presentation.getTitle().equals("Lunch"))) {
-                favourite.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (isFavourite) {
-                            Glide.with(v.getContext())
-                                    .load("")
-                                    .placeholder(R.drawable.ic_favorite_border_white_24dp)
-                                    .into(favourite);
-                            isFavourite = false;
-                            DataGetter.removeLoggedUserFav(mContext, presentation.getId());
-                            Toast.makeText(mContext, R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Glide.with(v.getContext())
-                                    .load("")
-                                    .placeholder(R.drawable.ic_favorite_white_24dp)
-                                    .into(favourite);
-                            isFavourite = true;
-                            DataGetter.addLoggedUserFav(mContext, presentation.getId());
-                            Toast.makeText(mContext, R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            } else{
-                linear.setBackgroundResource(R.color.backgroung_dark);
-                favourite.setVisibility(View.GONE);}
-
+                    presentation.getTitle().equals("Lunch"));
         }
 
         private String getPresentationAuth() {

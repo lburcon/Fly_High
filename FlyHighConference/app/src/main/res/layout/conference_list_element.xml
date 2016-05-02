@@ -25,15 +25,6 @@
             android:gravity="left"
             android:layout_weight="1"/>
 
-        <ImageButton
-            android:clickable="true"
-            android:background="@color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/conference_favourite"
-            android:src="@drawable/ic_favorite_border_black_24dp"
-            android:layout_weight="0"/>
-
         <TextView
             android:id="@+id/conference_list_itemt_time"
             android:textSize="12sp"

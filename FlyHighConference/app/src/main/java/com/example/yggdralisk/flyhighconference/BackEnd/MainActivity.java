@@ -38,7 +38,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements ConferenceFragment.OnDataPass{
+public class MainActivity extends AppCompatActivity implements ConferenceFragment.OnDataPass {
 
     @Bind(R.id.main_drawer)
     DrawerLayout mDrawerLayout;
@@ -68,15 +68,12 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         setDrawer();
 
-        if(DataGetter.checkUserLogged(getApplicationContext()))
+        if (DataGetter.checkUserLogged(getApplicationContext()))
             setLoggedNameOnDrawer(DataGetter.getLoggedUserName(getApplicationContext()));
 
         setFragment(savedInstanceState, new ConferenceListFragment(), null);
 
-
         toolbarOnclick();
-
-
     }
 
     public void toggleDrawer() {
@@ -134,9 +131,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
         }
-
-
-
     }
 
     @Override
@@ -167,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
 
             loggedName.invalidate();
         }
-
     }
 
     public boolean changeLoginLogoutDrawer() //Returns true if drawer has been changed to zaloguj
@@ -204,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 setPreviousFragment();
             }
         });
@@ -223,8 +215,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
     }
 
     public boolean setPreviousFragment() {
-
-
         if (getSupportActionBar() != null) {
             if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -360,5 +350,4 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
             manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
-
 }

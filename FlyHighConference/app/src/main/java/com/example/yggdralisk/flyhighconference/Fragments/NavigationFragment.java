@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
@@ -74,20 +75,36 @@ public class NavigationFragment extends Fragment {
 
         @OnClick(R.id.navigation_jakdojad_ic)
         public void setJakdojad() {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            //intent.setAction(Intent.ACTION_VIEW);
+           // intent.addCategory(Intent.CATEGORY_BROWSABLE);
             intent.setData(Uri.parse("http://wroclaw.jakdojade.pl"));
+            try {
             startActivity(intent);
+            } catch (android.content.ActivityNotFoundException ex) {
+                intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://wroclaw.jakdojade.pl"));
+                startActivity(intent);
+            }
         }
 
     @OnClick(R.id.navigation_mpk_ic)
             public void setMpk() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+       // intent.setAction(Intent.ACTION_VIEW);
+      //  intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setData(Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
+        try{
         startActivity(intent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setData(Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
+            startActivity(intent);
+        }
     }
 
 

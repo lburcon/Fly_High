@@ -27,7 +27,8 @@ public class SplashScren extends Activity {
         setContentView(R.layout.activity_splash_scren);
         ButterKnife.bind(this);
 
-        Glide.with(this).load(R.drawable.fly_high).fitCenter().placeholder(R.drawable.fly_high_temp).crossFade().into(image);
+        Glide.with(this).load("").fitCenter().placeholder(R.drawable.fly_high).crossFade().into(image);
+
         ServerConnector serverConnector = new ServerConnector();
         serverConnector.refreshData(getApplication(),getApplicationContext(), new ConnectorResultInterface() {
             @Override
