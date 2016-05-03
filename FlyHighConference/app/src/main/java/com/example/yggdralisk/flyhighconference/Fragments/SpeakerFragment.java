@@ -3,6 +3,7 @@ package com.example.yggdralisk.flyhighconference.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ public class SpeakerFragment extends Fragment {
         TextView name = (TextView) view.findViewById(R.id.speaker_name);
         TextView description = (TextView) view.findViewById(R.id.speaker_description);
         ImageView image = (ImageView) view.findViewById(R.id.speaker_image);
+
+        description.setMovementMethod(new ScrollingMovementMethod());
 
         name.setText(speaker.getName());
 

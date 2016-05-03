@@ -41,7 +41,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/rounded_corner_yellow"
@@ -50,6 +50,8 @@
             <TextView
                 android:id="@+id/speaker_description"
                 android:textSize="15sp"
+                android:maxLines="16"
+                android:scrollbars="vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
