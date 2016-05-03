@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 fragmentTransaction.commit();
                 fragmentManager.executePendingTransactions();
                 invalidateOptionsMenu();
-
             }
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
@@ -204,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
 
     @Override
     public void onBackPressed() {
-
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
             toggleDrawer();
 
@@ -224,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 ifLast = false;
                 getSupportFragmentManager().executePendingTransactions();
                 invalidateOptionsMenu();
-                return true;
             } else if (getSupportFragmentManager().getBackStackEntryCount() == 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -233,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 ifLast = getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment;
                 getSupportFragmentManager().executePendingTransactions();
                 invalidateOptionsMenu();
-                return true;
             } else if (getSupportFragmentManager().getBackStackEntryCount() == 1 && !ifLast) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -241,15 +237,14 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 ifLast = true;
                 getSupportFragmentManager().executePendingTransactions();
                 invalidateOptionsMenu();
-                return true;
             } else {
-                return false;
+                getSupportFragmentManager().popBackStack();
             }
         } else {
             getSupportFragmentManager().popBackStack();
-            return true;
         }
 
+        return getSupportFragmentManager().getBackStackEntryCount() != 0;
     }
 
     private void setupToolbar(boolean count) { //only used when back arrow clicked

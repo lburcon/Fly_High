@@ -110,6 +110,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
                         .load(presentationObject.getImage())
                         .placeholder(R.drawable.fly_high_temp)
                         .dontAnimate()
+                        .fitCenter()
                         .into(image);
 
                     id = presentationObject.getId();

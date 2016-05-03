@@ -1,7 +1,13 @@
 package com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses;
 
+import com.j256.ormlite.android.compat.ApiCompatibility;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by yggdralisk on 19.03.16.
@@ -18,6 +24,8 @@ public class Presentation {
     @DatabaseField String type;
     @DatabaseField int place; //place id
     @DatabaseField String speakers; //Array of speaker's ids
+
+    public static Calendar c = Calendar.getInstance();
 
     public int getId() {
         return id;
@@ -51,6 +59,12 @@ public class Presentation {
                 speakersIds[i] = Integer.parseInt(numberStrs[i]);
             }catch(NumberFormatException ex){ return null;}
         return speakersIds;
+    }
+
+    public int getStartDay() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        c.setTime(formatter.parse(start));
+        return c.get(Calendar.DAY_OF_MONTH);
     }
 
     public Presentation() {
