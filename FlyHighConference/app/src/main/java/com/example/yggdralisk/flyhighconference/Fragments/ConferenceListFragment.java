@@ -2,7 +2,9 @@ package com.example.yggdralisk.flyhighconference.Fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by yggdralisk on 20.02.16.
  */
@@ -25,7 +29,6 @@ public class ConferenceListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +63,6 @@ public class ConferenceListFragment extends Fragment {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             Date date1 = formatter.parse(dt1);
-
             Date date2 = formatter.parse(dt2);
 
             return date1.compareTo(date2);
@@ -74,9 +76,10 @@ public class ConferenceListFragment extends Fragment {
             String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             try {
                 for (int i = 0; i < mDataSet.length; i++) {
-                    if (compareDates(mDataSet[i].getStart(), currentDate) >= 0 && compareDates(mDataSet[i].getEnd(), currentDate) <= 0)
+                    if (compareDates(mDataSet[i].getStart(), currentDate) >= 0 && compareDates(mDataSet[i].getEnd(), currentDate) <= 0) {
                         index = i;
-
+                        break;
+                    }
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

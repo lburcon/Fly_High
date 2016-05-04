@@ -6,7 +6,6 @@
         android:background="@color/background_main"
         android:orientation="vertical">
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,10 +21,10 @@
         android:background="@color/main_yellow"
         android:layerType="software" />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:id="@+id/conference_recycler_view"
-            android:background="@color/background_main" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/conference_recycler_view"
+        android:background="@color/background_main" />
 </LinearLayout>
