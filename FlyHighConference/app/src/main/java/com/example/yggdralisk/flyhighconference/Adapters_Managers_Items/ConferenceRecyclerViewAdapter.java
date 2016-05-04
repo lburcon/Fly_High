@@ -71,7 +71,6 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
         @Bind(R.id.linear_conference)
         LinearLayout linear;
 
-        public boolean isFavourite;
         public int id = -1;
         ConferenceRecyclerListner nListner = new ConferenceRecyclerListner();
 
@@ -93,7 +92,9 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             time.setText(getPresentationTime(presentation));
             auth.setText(getPresentationAuth());
 
-            ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(mContext);
+            if (isClickablePresentation(presentation))
+                linear.setBackgroundColor(mContext.getResources().getColor(R.color.backgroung_dark));
+
         }
 
         private boolean isClickablePresentation(Presentation presentation)//Możesz śmiało zmienić nazwę jeżeli znajdziesz lepszą :D

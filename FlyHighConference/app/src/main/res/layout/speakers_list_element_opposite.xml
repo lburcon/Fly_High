@@ -14,11 +14,10 @@
             android:id="@+id/speakers_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/speakers_linear"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="35dp"
             app:civ_border_width="0dp"
             app:civ_border_color="@color/main_yellow"/>
 

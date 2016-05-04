@@ -58,7 +58,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+
             android:layout_toRightOf="@id/speakers_linear"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="20dp"

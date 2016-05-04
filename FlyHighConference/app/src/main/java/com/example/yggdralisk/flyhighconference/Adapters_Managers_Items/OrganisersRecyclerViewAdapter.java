@@ -119,7 +119,8 @@ public class OrganisersRecyclerViewAdapter extends RecyclerView.Adapter<Organise
 
             name.setText(speakerObject.getName());
 
-            description.setText(speakerObject.getDescription());
+            //description.setText(speakerObject.getDescription());
+            description.setVisibility(View.GONE);
 
             title.setText(speakerObject.getTitle());
 
