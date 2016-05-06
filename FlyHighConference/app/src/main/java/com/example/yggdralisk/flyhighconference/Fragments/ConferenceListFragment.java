@@ -1,5 +1,6 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
+import android.media.audiofx.PresetReverb;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,9 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.ConferenceRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
@@ -18,6 +22,7 @@ import com.example.yggdralisk.flyhighconference.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.ButterKnife;
@@ -29,6 +34,8 @@ public class ConferenceListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    ArrayList<ArrayList<Presentation>> separatedDaysPresentations;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,18 +49,59 @@ public class ConferenceListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-            Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
+        Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
+        try {
+           separatedDaysPresentations = separateByDay(mDataSet);
+        } catch (ParseException e) {
             mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
             mRecyclerView.setAdapter(mAdapter);
+        }
 
-
-        new TimeFinder().execute(mDataSet);
+        LinearLayout ll = (LinearLayout)view.findViewById(R.id.conference_list_buttons_layout);
+        setButtons(ll);
 
         return view;
     }
 
+    private void setButtons(LinearLayout ll) {
+            if(separatedDaysPresentations != null && separatedDaysPresentations.size() != 0){
+                for (int i = 0; i < separatedDaysPresentations.size(); i++)
+                {
+                    Button tempButt = new Button(getContext());
+                    tempButt.setText("Day " + (i+1));
+
+                    Presentation[] presArray = new Presentation[separatedDaysPresentations.get(i).size()];
+                    presArray = separatedDaysPresentations.get(i).toArray(presArray);
+
+                    tempButt.setOnClickListener(new MyOnClick(presArray));
+
+                    ll.addView(tempButt);
+                }
+            }
+    }
+
+    private ArrayList<ArrayList<Presentation>> separateByDay(Presentation[] mDataSet) throws ParseException {
+        ArrayList<ArrayList<Presentation>> tempSeparatedPres = new ArrayList<>();
+        ArrayList<Presentation> tempPresetatnions = new ArrayList<>();
+
+        for (Presentation presentation : mDataSet) {
+                if(tempPresetatnions.size() == 0 || tempPresetatnions.get(0).getStartDay() == presentation.getStartDay()) {
+                    tempPresetatnions.add(presentation);
+                }
+                else{
+                    tempSeparatedPres.add(tempPresetatnions);
+                    tempPresetatnions = new ArrayList<>();
+                }
+        }
+
+        tempSeparatedPres.add(tempPresetatnions);
+
+        return tempSeparatedPres;
+    }
+
     protected void scrollToCurrentPresentation(int index) {
-        mLayoutManager.scrollToPosition(index);
+        if(mLayoutManager != null)
+            mLayoutManager.scrollToPosition(index);
     }
 
     private class TimeFinder extends AsyncTask<Presentation[], Void, Void> {
@@ -91,6 +139,22 @@ public class ConferenceListFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             scrollToCurrentPresentation(index);
+        }
+    }
+
+    private class MyOnClick implements View.OnClickListener {
+        Presentation[] mDataSet;
+
+        public MyOnClick(Presentation[] mDataSet){
+            this.mDataSet = mDataSet;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(mDataSet != null) {
+                mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+                mRecyclerView.setAdapter(mAdapter);
+            }
         }
     }
 }
