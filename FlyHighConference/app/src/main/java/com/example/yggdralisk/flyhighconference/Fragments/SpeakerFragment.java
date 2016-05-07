@@ -16,6 +16,9 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
 
 import org.json.JSONArray;
+import org.w3c.dom.Text;
+
+import butterknife.Bind;
 
 /**
  * Created by lukasz on 01.03.16.
@@ -23,6 +26,8 @@ import org.json.JSONArray;
 public class SpeakerFragment extends Fragment {
 
     private Speaker speaker = new Speaker();
+
+
 
     @Nullable
     @Override
@@ -32,6 +37,7 @@ public class SpeakerFragment extends Fragment {
         speaker = new DataGetter(getActivity().getApplication()).getSpeakerById(getArguments().getInt("speakerId"));
 
         TextView name = (TextView) view.findViewById(R.id.speaker_name);
+        TextView country = (TextView) view.findViewById(R.id.speaker_country);
         TextView description = (TextView) view.findViewById(R.id.speaker_description);
         ImageView image = (ImageView) view.findViewById(R.id.speaker_image);
 
@@ -41,9 +47,9 @@ public class SpeakerFragment extends Fragment {
 
 
         description.setText(speaker.getDescription() +//todo: add description
-                "\n Country: " + speaker.getCountry() +
                 "\n URL: " + speaker.getUrl());
 
+        country.setText("Country: " + speaker.getCountry());
 
         Glide.with(this)
                 .load(speaker.getImage())

@@ -113,6 +113,8 @@ public class ConferenceFragment extends Fragment {
                     speakerName.setText(speakerName.getText() + speakerObject.getName());
             }
         }
+        else
+            speakerName.setVisibility(View.GONE);
 
         ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
 

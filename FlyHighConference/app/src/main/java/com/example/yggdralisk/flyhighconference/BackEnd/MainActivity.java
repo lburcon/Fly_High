@@ -215,8 +215,6 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
     }
 
     public boolean setPreviousFragment() {
-        if (getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment)
-            android.os.Process.killProcess(android.os.Process.myPid());
         if (getSupportActionBar() != null) {
             if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
