@@ -71,7 +71,6 @@
             android:background="@color/backgroung_dark"
             android:gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:maxLines="9"
             android:scrollbars="vertical"
             android:textColor="@color/text_white"
             android:textSize="20sp" />
