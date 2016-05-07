@@ -2,6 +2,7 @@ package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,12 +93,12 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             time.setText(getPresentationTime(presentation));
             auth.setText(getPresentationAuth());
 
-            if (isClickablePresentation(presentation))
-                linear.setBackgroundColor(mContext.getResources().getColor(R.color.backgroung_dark));
+            if (isNotClickablePresentation(presentation))
+                linear.setBackgroundColor(ContextCompat.getColor(mContext, R.color.backgroung_dark));
 
         }
 
-        private boolean isClickablePresentation(Presentation presentation)//Możesz śmiało zmienić nazwę jeżeli znajdziesz lepszą :D
+        private boolean isNotClickablePresentation(Presentation presentation)//Możesz śmiało zmienić nazwę jeżeli znajdziesz lepszą :D
         {
           return  (presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
                     presentation.getTitle().equals("Dinner") || presentation.getTitle().equals("Coffee break") ||

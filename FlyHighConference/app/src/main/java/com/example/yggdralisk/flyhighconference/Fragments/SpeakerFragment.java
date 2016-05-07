@@ -46,8 +46,7 @@ public class SpeakerFragment extends Fragment {
         name.setText(speaker.getName());
 
 
-        description.setText(speaker.getDescription() +//todo: add description
-                "\n URL: " + speaker.getUrl());
+        description.setText(speaker.getDescription());
 
         country.setText("Country: " + speaker.getCountry());
 
@@ -57,6 +56,23 @@ public class SpeakerFragment extends Fragment {
                 .dontAnimate()
                 .into(image);
 
+        setToolbarData();
+
         return view;
+    }
+
+    private void setToolbarData() {
+        OnDataPassSpeaker activity = ((OnDataPassSpeaker) getContext());
+        String args;
+        if (speaker.getUrl() == null) {
+            args = "";
+        } else
+            args = speaker.getUrl();
+            activity.dataPassSpeaker(args);
+
+    }
+
+    public interface OnDataPassSpeaker {
+        public void dataPassSpeaker(String data);
     }
 }

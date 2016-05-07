@@ -1,6 +1,8 @@
 package com.example.yggdralisk.flyhighconference.BackEnd;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,7 +41,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements ConferenceFragment.OnDataPass {
+public class MainActivity extends AppCompatActivity implements SpeakerFragment.OnDataPassSpeaker {
 
     @Bind(R.id.main_drawer)
     DrawerLayout mDrawerLayout;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private Bundle toolbarData;
+    private String toolbarData;
     private String[] navMenuTitles;
     boolean ifLast = false;
     private List<Integer> navMenuIcons = new ArrayList<>();
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
     }
 
     @Override
-    public void dataPass(Bundle data) {
+    public void dataPassSpeaker(String data) {
         toolbarData = data;
     }
 
@@ -293,17 +295,17 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         mDrawerToggle.syncState();
     }
 
-/*    @Override
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
 
-        if ((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof ConferenceFragment)) {
+        if ((getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof SpeakerFragment) && !toolbarData.equals("")) {
             menu.clear();
-            getMenuInflater().inflate(R.menu.menu_with_prelegents, menu);
+            getMenuInflater().inflate(R.menu.menu_speaker, menu);
         }
 
         return super.onPrepareOptionsMenu(menu);
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -330,15 +332,16 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 else
                     Toast.makeText(this, R.string.not_logged_fav, Toast.LENGTH_SHORT).show();
                 return true;
-            /*case R.id.prelegents:
-                if(toolbarData == null){
+
+
+            case R.id.site:
+                if (toolbarData.equals("")) {
                     return false;
-                } else if (toolbarData.getIntArray("speakersIds") != null)
-                    {setFragment(null, new SpeakersConferenceListFragment(), toolbarData);
-                    return true;}
-                else
-                    {setFragment(null, new SpeakerFragment(), toolbarData);
-                    return true;}*/
+                } else {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(toolbarData));
+                    startActivity(i);
+                }
         }
         return super.onOptionsItemSelected(item);
     }

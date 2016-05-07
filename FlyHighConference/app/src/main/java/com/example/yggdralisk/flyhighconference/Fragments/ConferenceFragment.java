@@ -169,7 +169,6 @@ public class ConferenceFragment extends Fragment {
             favourite.setVisibility(View.GONE);
             speakerName.setVisibility(View.GONE);
         }
-        setToolbarData();
     }
 
     @OnClick(R.id.move_to_speakers)
@@ -198,19 +197,7 @@ public class ConferenceFragment extends Fragment {
 
     }
 
-    private void setToolbarData() {
-        OnDataPass activity = ((OnDataPass) getContext());
-        Bundle args = new Bundle();
-        if (presentation.getSpeakers() == null) {
 
-        } else if (presentation.getSpeakers().length > 1) {
-            args.putIntArray("speakersIds", presentation.getSpeakers());
-            activity.dataPass(args);
-        } else {
-            args.putInt("speakerId", presentation.getSpeakers()[0]);
-            activity.dataPass(args);
-        }
-    }
 
 
     private void setMap(View view) {
@@ -280,7 +267,4 @@ public class ConferenceFragment extends Fragment {
         return speakerIds;
     }
 
-    public interface OnDataPass {
-        public void dataPass(Bundle data);
-    }
 }
