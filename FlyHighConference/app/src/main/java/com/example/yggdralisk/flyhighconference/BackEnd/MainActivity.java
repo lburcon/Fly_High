@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
@@ -209,10 +210,13 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
         if (!setPreviousFragment()) {
             this.finish();
             System.exit(0);
+            //android.os.Process.killProcess(android.os.Process.myPid()); // mozna tez uzyć tego do killowania
         }
     }
 
     public boolean setPreviousFragment() {
+        if (getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment)
+            android.os.Process.killProcess(android.os.Process.myPid());
         if (getSupportActionBar() != null) {
             if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -238,13 +242,15 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                 getSupportFragmentManager().executePendingTransactions();
                 invalidateOptionsMenu();
             } else {
-                getSupportFragmentManager().popBackStack();
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         } else {
             getSupportFragmentManager().popBackStack();
         }
 
-        return getSupportFragmentManager().getBackStackEntryCount() != 0;
+        return getSupportFragmentManager().getBackStackEntryCount() != 0
+                || !(getSupportFragmentManager().getFragments().get(0) instanceof LoginFragment)
+                || !(getSupportFragmentManager().getFragments().get(0) instanceof LoginOutFragment);
     }
 
     private void setupToolbar(boolean count) { //only used when back arrow clicked
@@ -321,8 +327,10 @@ public class MainActivity extends AppCompatActivity implements ConferenceFragmen
                     setFragment(null, new OrganisersListFragment(), null);
                 return true;
             case R.id.favourites:
-                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
+                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof ConferenceFavouriteList) && DataGetter.checkUserLogged(this))
                     setFragment(null, new ConferenceFavouriteList(), null);
+                else
+                    Toast.makeText(this, R.string.not_logged_fav, Toast.LENGTH_SHORT).show();
                 return true;
             /*case R.id.prelegents:
                 if(toolbarData == null){

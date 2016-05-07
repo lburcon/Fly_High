@@ -141,6 +141,7 @@ public class ConferenceFragment extends Fragment {
 
             favourite.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    if (DataGetter.checkUserLogged(getContext()))
                     if (isFavourite) {
                         Glide.with(v.getContext())
                                 .load("")
@@ -158,6 +159,8 @@ public class ConferenceFragment extends Fragment {
                         DataGetter.addLoggedUserFav(getContext(), presentation.getId());
                         Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
                     }
+                    else
+                        Toast.makeText(getContext(), R.string.not_logged_fav, Toast.LENGTH_SHORT).show();
                 }
             });
         } else{

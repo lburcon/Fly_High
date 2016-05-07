@@ -99,7 +99,7 @@ public class QuestionFragment extends Fragment {
 
         Glide.with(getContext())
                 .load(presentation.getImage())
-                .placeholder(R.drawable.fly_high_logotype)
+                .placeholder(R.drawable.fly_high)
                 .into(imageTop);
 
     }

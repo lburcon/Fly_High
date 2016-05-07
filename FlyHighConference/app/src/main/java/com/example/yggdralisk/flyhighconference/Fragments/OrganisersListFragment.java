@@ -72,8 +72,8 @@ public class OrganisersListFragment extends Fragment {
         Lukas.setId(place + 1);
         Lukas.setName("Łukasz Burcon");
         Lukas.setTitle("FlyHigh App Developer");
-        Lukas.setEmail("kaix96@gmail.com");
-        Lukas.setDescription("On jest całkiem wporzo");
+        Lukas.setEmail("lukasburcon@gmail.com");
+        Lukas.setDescription("Student on Politechnika Wrocławska");
         Lukas.setImage("photo_lukas");
 
         Organiser John = new Organiser();
@@ -81,7 +81,7 @@ public class OrganisersListFragment extends Fragment {
         John.setName("Jan Stoltman");
         John.setTitle("FlyHigh App Developer");
         John.setEmail("stoltmanjan@gmail.com");
-        John.setDescription("App destroyer");
+        John.setDescription("Student on Politechnika Wrocławska");
         John.setImage("photo_john");
 
         devArray[0] = John;

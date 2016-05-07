@@ -66,5 +66,7 @@
     <string name="see_speakers">Speakers</string>
     <string name="see_questions">Questions</string>
 
+    <string name="not_logged_fav">You have to be logged in</string>
+
 
 </resources>
