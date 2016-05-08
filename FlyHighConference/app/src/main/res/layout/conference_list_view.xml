@@ -21,6 +21,20 @@
         android:background="@color/main_yellow"
         android:layerType="software" />
 
+    <LinearLayout
+        android:id="@+id/conference_list_buttons_layout"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/backgroung_dark"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/main_yellow"
+        android:layerType="software" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

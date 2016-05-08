@@ -57,7 +57,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
     @Override
     public int getItemCount() {
-        return mConferences.length;
+        return mConferences==null?0:mConferences.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
