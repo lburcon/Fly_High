@@ -1,5 +1,6 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
+import android.content.res.Resources;
 import android.media.audiofx.PresetReverb;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,21 +68,28 @@ public class ConferenceListFragment extends Fragment {
     }
 
     private void setButtons(LinearLayout ll) {
-        final float fontSize = 7f;
-        final int maxWidth = 50;
+        final int fontSize = 9;
+        final int width = 62;
+        Resources r = getResources();
+        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, r.getDisplayMetrics());
+
         if (separatedDaysPresentations != null && separatedDaysPresentations.size() != 0) {
             Button tempButt = new Button(getContext());
             tempButt.setText("All\npresentations");
-            tempButt.setTextSize(fontSize);
-            tempButt.setMaxWidth(maxWidth);
+            tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP,fontSize);
+            tempButt.setBackgroundColor(getResources().getColor(R.color.background_main));
+            tempButt.setTextColor(getResources().getColor(R.color.text_white));
+            tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,90/separatedDaysPresentations.size()));
 
             tempButt.setOnClickListener(new MyOnClick(new DataGetter(getActivity().getApplication()).getPresentations()));
             ll.addView(tempButt);
             for (int i = 0; i < separatedDaysPresentations.size(); i++) {
                 tempButt = new Button(getContext());
-                tempButt.setText("Day " + (i + 1));
-                tempButt.setTextSize(fontSize);
-                tempButt.setMaxWidth(maxWidth);
+                tempButt.setText("Day\n" + (i + 1));
+                tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP,fontSize);
+                tempButt.setBackgroundColor(getResources().getColor(R.color.background_main));
+                tempButt.setTextColor(getResources().getColor(R.color.text_white));
+                tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,(float)100/separatedDaysPresentations.size()));
 
                 Presentation[] presArray = new Presentation[separatedDaysPresentations.get(i).size()];
                 presArray = separatedDaysPresentations.get(i).toArray(presArray);
