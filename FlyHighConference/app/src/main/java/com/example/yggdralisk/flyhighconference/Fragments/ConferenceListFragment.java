@@ -52,32 +52,44 @@ public class ConferenceListFragment extends Fragment {
         Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
         try {
            separatedDaysPresentations = separateByDay(mDataSet);
+            LinearLayout ll = (LinearLayout)view.findViewById(R.id.conference_list_buttons_layout);
+            setButtons(ll);
         } catch (ParseException e) {
             mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
             mRecyclerView.setAdapter(mAdapter);
         }
 
-        LinearLayout ll = (LinearLayout)view.findViewById(R.id.conference_list_buttons_layout);
-        setButtons(ll);
+        mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+        mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
 
     private void setButtons(LinearLayout ll) {
-            if(separatedDaysPresentations != null && separatedDaysPresentations.size() != 0){
-                for (int i = 0; i < separatedDaysPresentations.size(); i++)
-                {
-                    Button tempButt = new Button(getContext());
-                    tempButt.setText("Day " + (i+1));
+        final float fontSize = 7f;
+        final int maxWidth = 50;
+        if (separatedDaysPresentations != null && separatedDaysPresentations.size() != 0) {
+            Button tempButt = new Button(getContext());
+            tempButt.setText("All\npresentations");
+            tempButt.setTextSize(fontSize);
+            tempButt.setMaxWidth(maxWidth);
 
-                    Presentation[] presArray = new Presentation[separatedDaysPresentations.get(i).size()];
-                    presArray = separatedDaysPresentations.get(i).toArray(presArray);
+            tempButt.setOnClickListener(new MyOnClick(new DataGetter(getActivity().getApplication()).getPresentations()));
+            ll.addView(tempButt);
+            for (int i = 0; i < separatedDaysPresentations.size(); i++) {
+                tempButt = new Button(getContext());
+                tempButt.setText("Day " + (i + 1));
+                tempButt.setTextSize(fontSize);
+                tempButt.setMaxWidth(maxWidth);
 
-                    tempButt.setOnClickListener(new MyOnClick(presArray));
+                Presentation[] presArray = new Presentation[separatedDaysPresentations.get(i).size()];
+                presArray = separatedDaysPresentations.get(i).toArray(presArray);
 
-                    ll.addView(tempButt);
-                }
+                tempButt.setOnClickListener(new MyOnClick(presArray));
+
+                ll.addView(tempButt);
             }
+        }
     }
 
     private ArrayList<ArrayList<Presentation>> separateByDay(Presentation[] mDataSet) throws ParseException {
