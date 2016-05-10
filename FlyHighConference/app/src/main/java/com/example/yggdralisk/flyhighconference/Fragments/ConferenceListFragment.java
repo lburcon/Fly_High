@@ -53,8 +53,8 @@ public class ConferenceListFragment extends Fragment {
 
         Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
         try {
-           separatedDaysPresentations = separateByDay(mDataSet);
-            LinearLayout ll = (LinearLayout)view.findViewById(R.id.conference_list_buttons_layout);
+            separatedDaysPresentations = separateByDay(mDataSet);
+            LinearLayout ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
             setButtons(ll);
         } catch (ParseException e) {
             mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
@@ -68,33 +68,30 @@ public class ConferenceListFragment extends Fragment {
     }
 
     private void setButtons(LinearLayout ll) {
-        final int fontSize = 9;
-        final int width = 62;
-        Resources r = getResources();
-        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, r.getDisplayMetrics());
+        final int fontSize = 10;
 
         if (separatedDaysPresentations != null && separatedDaysPresentations.size() != 0) {
             Button tempButt = new Button(getContext());
             tempButt.setText("All\npresentations");
-            tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP,fontSize);
-            tempButt.setBackgroundColor(getResources().getColor(R.color.background_main));
+            tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+            tempButt.setBackgroundColor(getResources().getColor(R.color.main_yellow_dark));
             tempButt.setTextColor(getResources().getColor(R.color.text_white));
-            tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,90/separatedDaysPresentations.size()));
+            tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 90 / separatedDaysPresentations.size()));
 
-            tempButt.setOnClickListener(new MyOnClick(new DataGetter(getActivity().getApplication()).getPresentations()));
+            tempButt.setOnClickListener(new MyOnClick(new DataGetter(getActivity().getApplication()).getPresentations(),ll));
             ll.addView(tempButt);
             for (int i = 0; i < separatedDaysPresentations.size(); i++) {
                 tempButt = new Button(getContext());
                 tempButt.setText("Day\n" + (i + 1));
-                tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP,fontSize);
+                tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                 tempButt.setBackgroundColor(getResources().getColor(R.color.background_main));
                 tempButt.setTextColor(getResources().getColor(R.color.text_white));
-                tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,(float)100/separatedDaysPresentations.size()));
+                tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float) 100 / separatedDaysPresentations.size()));
 
                 Presentation[] presArray = new Presentation[separatedDaysPresentations.get(i).size()];
                 presArray = separatedDaysPresentations.get(i).toArray(presArray);
 
-                tempButt.setOnClickListener(new MyOnClick(presArray));
+                tempButt.setOnClickListener(new MyOnClick(presArray,ll));
 
                 ll.addView(tempButt);
             }
@@ -106,13 +103,12 @@ public class ConferenceListFragment extends Fragment {
         ArrayList<Presentation> tempPresetatnions = new ArrayList<>();
 
         for (Presentation presentation : mDataSet) {
-                if(tempPresetatnions.size() == 0 || tempPresetatnions.get(0).getStartDay() == presentation.getStartDay()) {
-                    tempPresetatnions.add(presentation);
-                }
-                else{
-                    tempSeparatedPres.add(tempPresetatnions);
-                    tempPresetatnions = new ArrayList<>();
-                }
+            if (tempPresetatnions.size() == 0 || tempPresetatnions.get(0).getStartDay() == presentation.getStartDay()) {
+                tempPresetatnions.add(presentation);
+            } else {
+                tempSeparatedPres.add(tempPresetatnions);
+                tempPresetatnions = new ArrayList<>();
+            }
         }
 
         tempSeparatedPres.add(tempPresetatnions);
@@ -121,7 +117,7 @@ public class ConferenceListFragment extends Fragment {
     }
 
     protected void scrollToCurrentPresentation(int index) {
-        if(mLayoutManager != null)
+        if (mLayoutManager != null)
             mLayoutManager.scrollToPosition(index);
     }
 
@@ -153,7 +149,6 @@ public class ConferenceListFragment extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -165,16 +160,26 @@ public class ConferenceListFragment extends Fragment {
 
     private class MyOnClick implements View.OnClickListener {
         Presentation[] mDataSet;
+        LinearLayout ll;
 
-        public MyOnClick(Presentation[] mDataSet){
+        public MyOnClick(Presentation[] mDataSet, LinearLayout ll) {
             this.mDataSet = mDataSet;
+            this.ll = ll;
         }
 
         @Override
         public void onClick(View v) {
-            if(mDataSet != null) {
+            if (mDataSet != null) {
                 mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
                 mRecyclerView.setAdapter(mAdapter);
+            }
+
+            if (ll != null) {
+                int childcount = ll.getChildCount();
+                for (int i = 0; i < childcount; i++)
+                    ll.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.background_main));
+
+                v.setBackgroundColor(getResources().getColor(R.color.main_yellow_dark));
             }
         }
     }
