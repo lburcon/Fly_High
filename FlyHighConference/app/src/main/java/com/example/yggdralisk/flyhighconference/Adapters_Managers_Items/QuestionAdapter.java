@@ -125,6 +125,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
                       }
                   });
+
+                  serverConnector.refreshLikes(application, context, new ConnectorResultInterface() {
+                      @Override
+                      public void onDownloadFinished(boolean succeeded) {
+                      }
+                  });
               }
             }
         });

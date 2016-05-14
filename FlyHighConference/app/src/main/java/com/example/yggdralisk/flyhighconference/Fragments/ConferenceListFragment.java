@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,6 +38,9 @@ public class ConferenceListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    int activeLLChild = 0;
+    LinearLayout ll;
+
     ArrayList<ArrayList<Presentation>> separatedDaysPresentations;
 
     @Override
@@ -54,7 +58,7 @@ public class ConferenceListFragment extends Fragment {
         Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
         try {
             separatedDaysPresentations = separateByDay(mDataSet);
-            LinearLayout ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
+            ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
             setButtons(ll);
         } catch (ParseException e) {
             mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
@@ -64,6 +68,20 @@ public class ConferenceListFragment extends Fragment {
         mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (ll != null) {
+                        if (activeLLChild == ll.getChildCount()-1) ll.getChildAt(0).callOnClick();
+                        else ll.getChildAt(activeLLChild + 1).callOnClick();
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        });
         return view;
     }
 
@@ -180,6 +198,7 @@ public class ConferenceListFragment extends Fragment {
                     ll.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.background_main));
 
                 v.setBackgroundColor(getResources().getColor(R.color.main_yellow_dark));
+               activeLLChild = ll.indexOfChild(v);
             }
         }
     }
