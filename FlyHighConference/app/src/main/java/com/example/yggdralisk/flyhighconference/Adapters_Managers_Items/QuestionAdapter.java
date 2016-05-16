@@ -2,8 +2,10 @@ package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 // sets recycler view to show questions to one speaker
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,8 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
+import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -118,9 +117,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                   serverConnector.postLikeToQuestion(application, context, question.getId(), DataGetter.getLoggedUserId(context), new ConnectorResultInterface() {
                       @Override
                       public void onDownloadFinished(boolean succeeded) {
-                          if (succeeded)
+                          if (succeeded) {
                               Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
-                          else
+                          }else
                               Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
 
                       }
@@ -131,6 +130,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                       public void onDownloadFinished(boolean succeeded) {
                       }
                   });
+
               }
             }
         });

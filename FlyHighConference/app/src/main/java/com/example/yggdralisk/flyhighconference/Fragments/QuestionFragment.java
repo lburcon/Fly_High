@@ -122,9 +122,10 @@ public class QuestionFragment extends Fragment {
                 serverConnector.postQuestionToPresentation(getActivity().getApplication(),getContext(), conferenceId, DataGetter.getLoggedUserId(getContext()), question, new ConnectorResultInterface() {
                     @Override
                     public void onDownloadFinished(boolean succeeded) {
-                        if (succeeded)
+                        if (succeeded) {
                             Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
-                        else
+                            mAdapter.notifyDataSetChanged();
+                        }else
                             Toast.makeText(getContext(), getString(R.string.question_error), Toast.LENGTH_SHORT).show();
 
                         editText.getText().clear();
