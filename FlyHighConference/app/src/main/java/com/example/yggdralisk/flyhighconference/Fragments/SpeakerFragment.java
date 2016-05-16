@@ -48,7 +48,7 @@ public class SpeakerFragment extends Fragment {
 
         description.setText(speaker.getDescription());
 
-        country.setText("Country: " + speaker.getCountry());
+        country.setText( speaker.getCountry());
 
         Glide.with(this)
                 .load(speaker.getImage())
