@@ -15,6 +15,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/fly_high_logotype"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
