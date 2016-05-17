@@ -34,6 +34,8 @@ import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakersConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
         setFragment(savedInstanceState, new ConferenceListFragment(), null);
 
         toolbarOnclick();
+
+
     }
 
     public void toggleDrawer() {

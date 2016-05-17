@@ -7,9 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +23,7 @@ public class SplashScren extends Activity {
     TextView splashMessege;
     @Bind(R.id.splash_image)
     ImageView image;
+    Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,18 @@ public class SplashScren extends Activity {
                 startMain();
             }
         });
+
+
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Main Activity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+
+
     }
 
     protected void startMain() {

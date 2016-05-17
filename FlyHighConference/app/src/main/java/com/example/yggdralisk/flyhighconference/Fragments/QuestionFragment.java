@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
@@ -22,6 +23,8 @@ import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
 import com.example.yggdralisk.flyhighconference.R;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.WrappingLinearLayoutManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,6 +46,8 @@ public class QuestionFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private int conferenceId;
+    Tracker mTracker;
+
 
     @Nullable
     @Override
@@ -53,6 +58,15 @@ public class QuestionFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         getArrayOfIds(conferenceId, view);
+
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Navigate Activity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         return view;
     }
@@ -106,6 +120,11 @@ public class QuestionFragment extends Fragment {
 
     @OnClick(R.id.question_fab)
     public void onFabClicked(View view) {
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("FAB")
+                .setAction("Clicked")
+                .build());
 
 
         if (DataGetter.checkUserLogged(getContext())) {

@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -16,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class NavigateActivity extends AppCompatActivity {
     private GoogleMap map;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -35,6 +39,14 @@ public class NavigateActivity extends AppCompatActivity {
                 }
             });
         }
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Navigate Activity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
     }
 
     //   LatLng loc = new LatLng(51.108636, 17.060155);
