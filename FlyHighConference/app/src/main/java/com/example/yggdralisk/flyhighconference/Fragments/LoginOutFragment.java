@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +33,7 @@ public class LoginOutFragment extends Fragment {
     @Bind(R.id.login_out_image)
     ImageView image;
     Context mContext;
+    private Tracker mTracker;
 
     @Nullable
     @Override

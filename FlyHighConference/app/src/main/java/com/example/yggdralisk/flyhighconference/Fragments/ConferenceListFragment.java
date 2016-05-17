@@ -22,6 +22,7 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.Conferen
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ public class ConferenceListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Tracker mTracker;
 
     int activeLLChild = 0;
     LinearLayout ll;

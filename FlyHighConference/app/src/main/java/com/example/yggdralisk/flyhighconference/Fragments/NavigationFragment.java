@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,6 +40,7 @@ public class NavigationFragment extends Fragment {
     private static View view;
     private GoogleMap map;
     SupportMapFragment mapFragment;
+    private Tracker mTracker;
 
     @Nullable
     @Override

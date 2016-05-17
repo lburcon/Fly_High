@@ -67,7 +67,7 @@ public class QuestionFragment extends Fragment {
         mTracker = application.getDefaultTracker();
 
 
-        mTracker.setScreenName("Navigate Activity");
+        mTracker.setScreenName("Question Fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 

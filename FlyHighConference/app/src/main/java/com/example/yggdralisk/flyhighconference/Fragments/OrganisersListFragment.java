@@ -16,6 +16,7 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.Speakers
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
 
@@ -29,6 +30,7 @@ public class OrganisersListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     Organiser[] organisers;
+    private Tracker mTracker;
 
     @Nullable
     @Override

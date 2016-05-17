@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "1053994852193",
-    "project_id": "fly-high-conference"
+    "project_number": "984908408220",
+    "project_id": "fly-high-34649"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1053994852193:android:99340dfe7c83de71",
+        "mobilesdk_app_id": "1:984908408220:android:0d98ad605ce90df9",
         "android_client_info": {
-          "package_name": "com.example.yggdralisk.flyhighconference"
+          "package_name": "yggdralisk.flyhighconference"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC5ke7V4dQRdujdY6-xYNOObc5CFa4cIYg"
+          "current_key": "AIzaSyCWKDflw8346ItigMC4-le9Y_gqLylb3Jw"
         }
       ],
       "services": {
         "analytics_service": {
           "status": 2,
           "analytics_property": {
-            "tracking_id": "UA-62602314-3"
+            "tracking_id": "UA-77889756-1"
           }
         },
         "appinvite_service": {

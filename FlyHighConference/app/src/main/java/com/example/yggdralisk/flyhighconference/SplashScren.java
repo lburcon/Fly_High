@@ -50,7 +50,7 @@ public class SplashScren extends Activity {
         mTracker = application.getDefaultTracker();
 
 
-        mTracker.setScreenName("Main Activity");
+        mTracker.setScreenName("Splash Screen");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 

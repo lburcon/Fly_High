@@ -13,6 +13,7 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.Conferen
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import java.nio.channels.DatagramChannel;
 import java.text.ParseException;
@@ -27,7 +28,7 @@ public class ConferenceFavouriteList extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    private Tracker mTracker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

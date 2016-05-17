@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.w3c.dom.Text;
@@ -26,8 +27,7 @@ import butterknife.Bind;
 public class SpeakerFragment extends Fragment {
 
     private Speaker speaker = new Speaker();
-
-
+    private Tracker mTracker;
 
     @Nullable
     @Override

@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +51,7 @@ public class LoginFragment extends Fragment {
     @Bind(R.id.login_image)
     ImageView image;
     Context mContext;
+    private Tracker mTracker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -14,6 +14,7 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.Question
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ public class QuestionsListFragment extends Fragment {
 
     Speaker[] speakerArray;
     Presentation[] presentationArray;
+    private Tracker mTracker;
 
 
     @Nullable
