@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  * Created by yggdralisk on 25.03.16.
  */
 public interface PostQuestionToPresentationInterface {
-    @GET("api/like")
+    @GET("api/question")
     Call<ResponseBody> load(@Query("presentation") int presentationID, @Query("user") int userID, @Query("content") String content);
 }

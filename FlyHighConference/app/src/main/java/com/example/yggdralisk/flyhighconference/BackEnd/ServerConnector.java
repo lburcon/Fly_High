@@ -16,6 +16,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.SpeakerPrese
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.User;
 import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.DaoFactory;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ImportInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.LikeInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostLikeInterface;
@@ -81,8 +82,8 @@ public class ServerConnector {
         });
     }
 
-    public void postQuestionToPresentation(Application application, Context context,
-                                           int presentationID, int userID, String questionContent, final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
+    public void postQuestionToPresentation(final Application application, final Context context,
+                                           final int presentationID, int userID, String questionContent, final ConnectorResultInterface callback)//Questions_to_speaker - Post question for presentation
     {
         this.context = context;
         this.application = application;
@@ -91,8 +92,8 @@ public class ServerConnector {
                 .baseUrl(DATA_HOST_URL)
                 .build();
 
-        PostQuestionToPresentationInterface importInterface = retrofit.create(PostQuestionToPresentationInterface.class);
-        Call<ResponseBody> call = importInterface.load(presentationID, userID, questionContent);
+        PostQuestionToPresentationInterface postInterface = retrofit.create(PostQuestionToPresentationInterface.class);
+        Call<ResponseBody> call = postInterface.load(presentationID, userID, questionContent);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -178,7 +179,7 @@ public class ServerConnector {
         });
     }
 
-    public void getQuestionsToPresentation(Application application, Context context, int presentationID, final ConnectorResultInterface callback) {
+    public void getQuestionsToPresentation(Application application, Context context, int presentationID, final GetQuestionsResultInterface callback) {
         this.context = context;
         this.application = application;
         this.presentationID = presentationID;
@@ -196,17 +197,17 @@ public class ServerConnector {
                 if (response.code() >= 200 && response.code() < 300) {
                     saveData(response.body());
                     if (callback != null)
-                        callback.onDownloadFinished(true);
+                        callback.onDownloadFinished(response.body());
                 } else {
                     if (callback != null)
-                        callback.onDownloadFinished(false);
+                        callback.onDownloadFinished(response.body());
                 }
             }
 
             @Override
             public void onFailure(retrofit2.Call<Question[]> call, Throwable t) {
                 if (callback != null)
-                    callback.onDownloadFinished(false);
+                    callback.onDownloadFinished(new Question[]{});
             }
         });
     }
@@ -225,7 +226,6 @@ public class ServerConnector {
             final Dao<Question, Integer> ormQuestions = daoFactory.getOrmQuestions();
             final Dao<Speaker, Integer> ormSpeakers = daoFactory.getOrmSpeakers();
             if (data instanceof Import) {
-
                 ormOrganisers.callBatchTasks(new Callable<Void>() {
                     public Void call() throws Exception {
                         for (Organiser o : ((Import) data).getOrganisers())
