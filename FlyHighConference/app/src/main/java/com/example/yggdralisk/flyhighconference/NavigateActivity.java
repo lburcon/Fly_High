@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class NavigateActivity extends AppCompatActivity {
     private GoogleMap map;
-    private Tracker mTracker;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -39,14 +38,6 @@ public class NavigateActivity extends AppCompatActivity {
                 }
             });
         }
-
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-
-
-        mTracker.setScreenName("Navigate Activity");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
     }
 
     //   LatLng loc = new LatLng(51.108636, 17.060155);

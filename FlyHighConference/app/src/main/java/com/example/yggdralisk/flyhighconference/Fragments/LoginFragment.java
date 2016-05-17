@@ -19,9 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONException;
@@ -64,6 +66,14 @@ public class LoginFragment extends Fragment {
         Glide.with(mContext).load(R.drawable.fly_high).placeholder(R.drawable.fly_high_temp).crossFade().fitCenter().into(image);
 
         loginButton.setOnClickListener(new loginListener());
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Login Fragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         return view;
     }

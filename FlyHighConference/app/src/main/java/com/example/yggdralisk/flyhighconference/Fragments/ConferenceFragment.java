@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
@@ -25,6 +26,8 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.NavigateActivity;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -59,6 +62,7 @@ public class ConferenceFragment extends Fragment {
 
     boolean isFavourite = false;
     private DataGetter dataGetter;
+    private Tracker mTracker;
 
 
     @Nullable
@@ -77,7 +81,6 @@ public class ConferenceFragment extends Fragment {
             setMap(view);
         } catch (InflateException e) {
         }
-
 
         return view;
     }
@@ -101,6 +104,14 @@ public class ConferenceFragment extends Fragment {
 
         time.setText(getPresentationTime(presentation));
 
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Conference Fragment: " + presentation.getTitle());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+
         //setting speaker and checking their number in case of adding ','
 
         speakerIds = getSpeakerIds();
@@ -112,8 +123,7 @@ public class ConferenceFragment extends Fragment {
                 else
                     speakerName.setText(speakerName.getText() + speakerObject.getName());
             }
-        }
-        else
+        } else
             speakerName.setVisibility(View.GONE);
 
         ArrayList<Integer> favList = DataGetter.getLoggedUserFavs(getContext());
@@ -144,35 +154,44 @@ public class ConferenceFragment extends Fragment {
             favourite.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (DataGetter.checkUserLogged(getContext()))
-                    if (isFavourite) {
-                        Glide.with(v.getContext())
-                                .load("")
-                                .placeholder(R.drawable.ic_favorite_border_white_24dp)
-                                .into(favourite);
-                        isFavourite = false;
-                        DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
-                        Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Glide.with(v.getContext())
-                                .load("")
-                                .placeholder(R.drawable.ic_favorite_white_24dp)
-                                .into(favourite);
-                        isFavourite = true;
-                        DataGetter.addLoggedUserFav(getContext(), presentation.getId());
-                        Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
-                    }
+                        if (isFavourite) {
+                            Glide.with(v.getContext())
+                                    .load("")
+                                    .placeholder(R.drawable.ic_favorite_border_white_24dp)
+                                    .into(favourite);
+                            isFavourite = false;
+                            DataGetter.removeLoggedUserFav(getContext(), presentation.getId());
+                            mTracker.send(new HitBuilders.EventBuilder()
+                                    .setCategory("Adding to Favourites: " + presentation.getTitle())
+                                    .setAction("Removed")
+                                    .build());
+
+                            Toast.makeText(getContext(), R.string.question_removed_from_favs, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Glide.with(v.getContext())
+                                    .load("")
+                                    .placeholder(R.drawable.ic_favorite_white_24dp)
+                                    .into(favourite);
+                            isFavourite = true;
+                            DataGetter.addLoggedUserFav(getContext(), presentation.getId());
+                            Toast.makeText(getContext(), R.string.question_added_to_favs, Toast.LENGTH_SHORT).show();
+                            mTracker.send(new HitBuilders.EventBuilder()
+                                    .setCategory("Adding to Favourites: " + presentation.getTitle())
+                                    .setAction("Added")
+                                    .build());
+                        }
                     else
                         Toast.makeText(getContext(), R.string.not_logged_fav, Toast.LENGTH_SHORT).show();
                 }
             });
-        } else{
+        } else {
             favourite.setVisibility(View.GONE);
             speakerName.setVisibility(View.GONE);
         }
     }
 
     @OnClick(R.id.move_to_speakers)
-    public void setMoveToSpeakers(){
+    public void setMoveToSpeakers() {
         Bundle args = new Bundle();
         MainActivity mainActivity = (MainActivity) getContext();
 
@@ -196,8 +215,6 @@ public class ConferenceFragment extends Fragment {
         mainActivity.setFragment(null, new QuestionFragment(), args);
 
     }
-
-
 
 
     private void setMap(View view) {

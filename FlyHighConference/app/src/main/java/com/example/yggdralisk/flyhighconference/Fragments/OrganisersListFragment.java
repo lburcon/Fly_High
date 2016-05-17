@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.OrganisersRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.SpeakersRecyclerViewAdapter;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
@@ -46,6 +48,14 @@ public class OrganisersListFragment extends Fragment {
         addDevelopers();
         mAdapter = new OrganisersRecyclerViewAdapter(organisers, getContext());
         mRecyclerView.setAdapter(mAdapter);
+
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Organisers List Fragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 
         return view;

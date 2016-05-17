@@ -19,9 +19,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.ConferenceRecyclerViewAdapter;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.text.ParseException;
@@ -84,6 +86,15 @@ public class ConferenceListFragment extends Fragment {
                 return false;
             }
         });
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Conference List Fragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+
         return view;
     }
 

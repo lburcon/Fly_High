@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
@@ -57,6 +59,14 @@ public class SpeakerFragment extends Fragment {
                 .into(image);
 
         setToolbarData();
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Speaker Fragment: " + speaker.getName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         return view;
     }

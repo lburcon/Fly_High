@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionsRecyclerViewAdapter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
@@ -42,9 +44,7 @@ public class QuestionsListFragment extends Fragment {
         ArrayList<Presentation> presList = new ArrayList<>();
 
         for (Presentation p : presentationArray) {
-
             presList.add(p);
-
         }
 
         for (int i = 0; i < presList.size() ; i++) {
@@ -74,6 +74,13 @@ public class QuestionsListFragment extends Fragment {
         RecyclerView.Adapter mAdapter = new QuestionsRecyclerViewAdapter(speakerArray, presList);
 
             mRecyclerView.setAdapter(mAdapter);
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Questions List Fragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         return view;
     }

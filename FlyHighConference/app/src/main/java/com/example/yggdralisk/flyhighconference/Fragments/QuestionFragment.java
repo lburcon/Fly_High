@@ -62,15 +62,6 @@ public class QuestionFragment extends Fragment {
 
         getArrayOfIds(conferenceId, view);
 
-
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-
-
-        mTracker.setScreenName("Question Fragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-
         return view;
     }
 
@@ -108,6 +99,16 @@ public class QuestionFragment extends Fragment {
 
         toolbar.setTitle(presentation.getTitle());
 
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Question Fragment: " + presentation.getTitle());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+
+
         Glide.with(getContext())
                 .load(presentation.getImage())
                 .placeholder(R.drawable.fly_high_temp)
@@ -117,12 +118,6 @@ public class QuestionFragment extends Fragment {
 
     @OnClick(R.id.question_fab)
     public void onFabClicked(View view) {
-
-
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("FAB")
-                .setAction("Clicked")
-                .build());
 
 
         if (DataGetter.checkUserLogged(getContext())) {
@@ -140,6 +135,10 @@ public class QuestionFragment extends Fragment {
                     @Override
                     public void onDownloadFinished(boolean succeeded) {
                         if (succeeded) {
+                            mTracker.send(new HitBuilders.EventBuilder()
+                                    .setCategory("Question to" + presentation.getTitle())
+                                    .setAction("Added")
+                                    .build());
                             questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
                             Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
                             mAdapter.notifyDataSetChanged();

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
@@ -22,6 +23,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.Conne
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

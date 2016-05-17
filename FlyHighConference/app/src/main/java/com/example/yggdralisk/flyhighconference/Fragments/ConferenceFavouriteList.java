@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.ConferenceRecyclerViewAdapter;
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.R;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.nio.channels.DatagramChannel;
@@ -54,6 +56,14 @@ public class ConferenceFavouriteList extends Fragment {
 
 
         new TimeFinder().execute(mDataSet);
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Conference Fabvourite List");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         return view;
     }

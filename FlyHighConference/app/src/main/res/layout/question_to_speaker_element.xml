@@ -33,13 +33,15 @@
         <TextView
             android:id="@+id/question_to_speaker_question"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/question_to_speaker_nick"
             android:gravity="center"
             android:text="@string/no_questions_to_prelection"
             android:textColor="@color/text_white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_alignTop="@+id/question_plus_one"
+            android:layout_toLeftOf="@+id/question_plus_one"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <ImageButton
             android:id="@+id/question_plus_one"

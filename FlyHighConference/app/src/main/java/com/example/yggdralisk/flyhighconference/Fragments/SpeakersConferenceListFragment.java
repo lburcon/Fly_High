@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Speaker;
 import com.example.yggdralisk.flyhighconference.R;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.SpeakersRecyclerViewAdapter;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
@@ -55,6 +57,14 @@ public class SpeakersConferenceListFragment extends Fragment {
             mAdapter = new SpeakersRecyclerViewAdapter(temp.toArray(new Speaker[1]));
             mRecyclerView.setAdapter(mAdapter);
         }
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
+
+        mTracker.setScreenName("Speakers Conference List Fragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         return view;
     }
