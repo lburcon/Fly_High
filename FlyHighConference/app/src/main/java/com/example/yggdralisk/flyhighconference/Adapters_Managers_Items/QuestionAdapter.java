@@ -121,6 +121,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                       public void onDownloadFinished(boolean succeeded) {
                           if (succeeded) {
                               Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
+                              notifyDataSetChanged();
                           }else
                               Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
 

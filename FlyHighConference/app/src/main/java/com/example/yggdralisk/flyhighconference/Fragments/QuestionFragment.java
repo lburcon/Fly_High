@@ -1,6 +1,7 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -47,6 +48,7 @@ public class QuestionFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private int conferenceId;
+    View view;
 
     Tracker mTracker;
     private int prelectionId;
@@ -55,7 +57,7 @@ public class QuestionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.question_details, container, false);
+        view = inflater.inflate(R.layout.question_details, container, false);
         conferenceId = getArguments().getInt("conferenceId");
 
         ButterKnife.bind(this, view);
@@ -103,7 +105,6 @@ public class QuestionFragment extends Fragment {
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
 
-
         mTracker.setScreenName("Question Fragment: " + presentation.getTitle());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
@@ -117,7 +118,7 @@ public class QuestionFragment extends Fragment {
     }
 
     @OnClick(R.id.question_fab)
-    public void onFabClicked(View view) {
+    public void onFabClicked(final View view) {
 
 
         if (DataGetter.checkUserLogged(getContext())) {
@@ -128,7 +129,7 @@ public class QuestionFragment extends Fragment {
             } else {
                 ServerConnector serverConnector = new ServerConnector();
                 editText.setVisibility(View.GONE);
-                String question = editText.getText().toString();
+                final String question = editText.getText().toString();
 
                 if (!question.equals("")){
                 serverConnector.postQuestionToPresentation(getActivity().getApplication(),getContext(), conferenceId, DataGetter.getLoggedUserId(getContext()), question, new ConnectorResultInterface() {
@@ -136,12 +137,17 @@ public class QuestionFragment extends Fragment {
                     public void onDownloadFinished(boolean succeeded) {
                         if (succeeded) {
                             mTracker.send(new HitBuilders.EventBuilder()
-                                    .setCategory("Question to" + presentation.getTitle())
+                                    .setCategory("Question to: " + presentation.getTitle())
                                     .setAction("Added")
                                     .build());
                             questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
+
                             Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
+
+                           // mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
                             mAdapter.notifyDataSetChanged();
+                           // mRecyclerView.setAdapter(mAdapter);
+                           // mRecyclerView.invalidate();
                         }
                         else
                             Toast.makeText(getContext(), getString(R.string.question_error), Toast.LENGTH_SHORT).show();
@@ -155,5 +161,6 @@ public class QuestionFragment extends Fragment {
             }
         } else
             Toast.makeText(getContext(), getString(R.string.question_error_logged), Toast.LENGTH_SHORT).show();
+        questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
     }
 }
