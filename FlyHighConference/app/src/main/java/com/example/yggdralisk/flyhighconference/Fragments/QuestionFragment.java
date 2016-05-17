@@ -19,6 +19,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.Conne
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
 import com.example.yggdralisk.flyhighconference.R;
@@ -46,7 +47,9 @@ public class QuestionFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private int conferenceId;
+
     Tracker mTracker;
+    private int prelectionId;
 
 
     @Nullable
@@ -72,26 +75,20 @@ public class QuestionFragment extends Fragment {
     }
 
     private void getArrayOfIds(final int prelectionId, final View view) { //adds questions to mQuestion JSONArray list
-
+        this.prelectionId = prelectionId;
         ServerConnector serverConnector = new ServerConnector();
 
-        serverConnector.getQuestionsToPresentation(getActivity().getApplication(),getContext(), prelectionId, new ConnectorResultInterface() {
+        serverConnector.getQuestionsToPresentation(getActivity().getApplication(),getContext(), prelectionId, new GetQuestionsResultInterface() {
             @Override
-            public void onDownloadFinished(boolean succeeded) {
-                if(succeeded) {
-                    questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
+            public void onDownloadFinished(Question[] res) {
+                    questionArray = res;
                     setRecycler(view);
-                }else
-                {
-                    setRecycler(view);
-                }
             }
         });
     }
 
 
-    private void setRecycler(View view)
-    {
+    private void setRecycler(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.question_details_recycler_view);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -104,7 +101,7 @@ public class QuestionFragment extends Fragment {
 
         presentation = new DataGetter(getActivity().getApplication()).getPresentationById(conferenceId);
 
-            conferenceName.setText(presentation.getTitle());
+        conferenceName.setText(presentation.getTitle());
 
         CollapsingToolbarLayout toolbar = ButterKnife.findById(view, R.id.question_details_collapsing_toolbar);
         ImageView imageTop = ButterKnife.findById(view, R.id.question_details_image);
@@ -113,13 +110,14 @@ public class QuestionFragment extends Fragment {
 
         Glide.with(getContext())
                 .load(presentation.getImage())
-                .placeholder(R.drawable.fly_high)
+                .placeholder(R.drawable.fly_high_temp)
                 .into(imageTop);
 
     }
 
     @OnClick(R.id.question_fab)
     public void onFabClicked(View view) {
+
 
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("FAB")
@@ -142,9 +140,11 @@ public class QuestionFragment extends Fragment {
                     @Override
                     public void onDownloadFinished(boolean succeeded) {
                         if (succeeded) {
+                            questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
                             Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
                             mAdapter.notifyDataSetChanged();
-                        }else
+                        }
+                        else
                             Toast.makeText(getContext(), getString(R.string.question_error), Toast.LENGTH_SHORT).show();
 
                         editText.getText().clear();
