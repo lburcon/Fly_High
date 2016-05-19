@@ -1,18 +1,12 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
-import android.content.res.Resources;
-import android.media.audiofx.PresetReverb;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +16,8 @@ import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.Conferen
 import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetHarmonogramResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -31,8 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by yggdralisk on 20.02.16.
  */
@@ -41,6 +35,7 @@ public class ConferenceListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Tracker mTracker;
+    private Presentation[] mDataSet = {};
 
     int activeLLChild = 0;
     LinearLayout ll;
@@ -51,26 +46,34 @@ public class ConferenceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.conference_list_view, container, false);
+        final View view = inflater.inflate(R.layout.conference_list_view, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.conference_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        final DataGetter dataGetter = new DataGetter(getActivity().getApplication());
 
-        Presentation[] mDataSet = new DataGetter(getActivity().getApplication()).getPresentations();
-        try {
-            separatedDaysPresentations = separateByDay(mDataSet);
-            ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
-            setButtons(ll);
-        } catch (ParseException e) {
-            mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-            mRecyclerView.setAdapter(mAdapter);
-        }
+       if(DataGetter.checkUserLogged(getContext())){
+           new ServerConnector().getHarmonogramToUser(getContext(), 2, new GetHarmonogramResultInterface() {
+               @Override
+               public void onDownloadFinished(Presentation[] res) {
+                   if(res != null) mDataSet =res;
 
-        mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-        mRecyclerView.setAdapter(mAdapter);
+                   if(mDataSet == null || mDataSet.length == 0)  mDataSet = dataGetter.getPresentations();
+
+                   try {
+                       separatedDaysPresentations = separateByDay(mDataSet);
+                       ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
+                       setButtons(ll);
+                   } catch (ParseException e) {
+                       mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+                       mRecyclerView.setAdapter(mAdapter);
+                   }
+
+                   mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+                   mRecyclerView.setAdapter(mAdapter);
 
        /* view.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -87,14 +90,27 @@ public class ConferenceListFragment extends Fragment {
             }
         });*/
 
+               }
+           });} else {
+           mDataSet = dataGetter.getPresentations();
+
+           try {
+               separatedDaysPresentations = separateByDay(mDataSet);
+               ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
+               setButtons(ll);
+           } catch (ParseException e) {
+               mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+               mRecyclerView.setAdapter(mAdapter);
+           }
+
+           mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+           mRecyclerView.setAdapter(mAdapter);
+       }
+
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
-
-
         mTracker.setScreenName("Conference List Fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-
         return view;
     }
 
@@ -102,6 +118,7 @@ public class ConferenceListFragment extends Fragment {
         final int fontSize = 10;
 
         if (separatedDaysPresentations != null && separatedDaysPresentations.size() != 0) {
+            ll.removeAllViews();
             Button tempButt = new Button(getContext());
             tempButt.setText("All\npresentations");
             tempButt.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);

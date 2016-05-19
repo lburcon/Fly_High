@@ -30,6 +30,14 @@
             android:textColor="@color/text_white"
             android:textSize="12sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_localization_info"
+            android:id = '@+id/conference_group'
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/text_white"/>
+
         <ImageButton
             android:id="@+id/conference_favourite"
             android:layout_width="wrap_content"

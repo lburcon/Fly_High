@@ -154,13 +154,13 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             @Override
             public void onClick(View v) {
                 if (id > 0) {
-
                     for (Presentation p : mConferences) {
                         if (p.getId() == id)
                             if (!(p.getTitle().equals("Breakfast") || p.getTitle().equals("Supper") ||
                                     p.getTitle().equals("Dinner") || p.getTitle().equals("Coffee break") ||
                                     p.getTitle().equals("Lunch"))) {
                                 Bundle args = new Bundle();
+                                args.putSerializable("presentation",p);
                                 args.putInt("conferenceId", id);
                                 mUpLayout.setFragment(null, new ConferenceFragment(), args);
                             }

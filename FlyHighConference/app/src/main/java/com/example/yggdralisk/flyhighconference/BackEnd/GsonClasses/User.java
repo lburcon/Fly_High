@@ -11,6 +11,7 @@ public class User {
     int id;
     @DatabaseField String mail;
     @DatabaseField String pass;
+    @DatabaseField(columnName = "userGroup") String group;
 
     public int getId() {
         return id;

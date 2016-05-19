@@ -2,7 +2,6 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Import;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
@@ -16,25 +15,22 @@ import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.SpeakerPrese
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.User;
 import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.DaoFactory;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetHarmonogramInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetHarmonogramResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ImportInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.LikeInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostLikeInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.PostQuestionToPresentationInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.QuestionToPresentationsInterface;
-import com.example.yggdralisk.flyhighconference.R;
-import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 
 import okhttp3.*;
-import okhttp3.Response;
 import retrofit2.*;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
 /**
@@ -208,6 +204,36 @@ public class ServerConnector {
             public void onFailure(retrofit2.Call<Question[]> call, Throwable t) {
                 if (callback != null)
                     callback.onDownloadFinished(new Question[]{});
+            }
+        });
+    }
+
+    public void getHarmonogramToUser(Context context, int userID, final GetHarmonogramResultInterface callback){
+        this.context = context;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DATA_HOST_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GetHarmonogramInterface getHarm = retrofit.create(GetHarmonogramInterface.class);
+        Call<Presentation[]> call = getHarm.load(userID);
+        call.enqueue(new Callback<Presentation[]>() {
+            @Override
+            public void onResponse(retrofit2.Call<Presentation[]> call, retrofit2.Response<Presentation[]> response) {
+                if (response.code() >= 200 && response.code() < 300) {
+                    if (callback != null)
+                        callback.onDownloadFinished(response.body());
+                } else {
+                    if (callback != null)
+                        callback.onDownloadFinished(new Presentation[]{});
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Presentation[]> call, Throwable t) {
+                if (callback != null)
+                    callback.onDownloadFinished(new Presentation[]{});
             }
         });
     }

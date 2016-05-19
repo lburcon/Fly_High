@@ -37,6 +37,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -64,7 +66,6 @@ public class ConferenceFragment extends Fragment {
     private DataGetter dataGetter;
     private Tracker mTracker;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,8 +87,8 @@ public class ConferenceFragment extends Fragment {
     }
 
     private void setData() {
-
-        presentation = dataGetter.getPresentationById(getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
+        presentation =(Presentation) getArguments().getSerializable("presentation");
+        if(presentation == null) presentation = dataGetter.getPresentationById(getArguments().getInt("conferenceId")); //NULL POINTER EXCEPTION//TODO:Co zrobić kiedy bundle jest nullem
 
         ButterKnife.bind(this, view);
 
@@ -95,7 +96,7 @@ public class ConferenceFragment extends Fragment {
         TextView speakerName = ButterKnife.findById(view, R.id.conference_speaker);
         TextView name = ButterKnife.findById(view, R.id.conference_name);
         TextView description = ButterKnife.findById(view, R.id.conference_description);
-
+        TextView groutTextView = ButterKnife.findById(view, R.id.conference_group);
         name.setText(presentation.getTitle());
 
         description.setText(presentation.getDescription());
@@ -104,13 +105,15 @@ public class ConferenceFragment extends Fragment {
 
         time.setText(getPresentationTime(presentation));
 
+        if (presentation.getGroup() != null)
+            groutTextView.setText(presentation.getGroup());
+
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
 
 
         mTracker.setScreenName("Conference Fragment: " + presentation.getTitle());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
 
         //setting speaker and checking their number in case of adding ','
 
@@ -283,5 +286,4 @@ public class ConferenceFragment extends Fragment {
 
         return speakerIds;
     }
-
 }

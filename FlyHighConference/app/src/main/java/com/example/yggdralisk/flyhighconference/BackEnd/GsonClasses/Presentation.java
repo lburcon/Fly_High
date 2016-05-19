@@ -4,6 +4,7 @@ import com.j256.ormlite.android.compat.ApiCompatibility;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import java.util.Date;
  * Created by yggdralisk on 19.03.16.
  */
 @DatabaseTable(tableName = "presentatnions")
-public class Presentation {
+public class Presentation implements Serializable {
     @DatabaseField(id = true)
     int id;
     @DatabaseField String title;
@@ -24,6 +25,7 @@ public class Presentation {
     @DatabaseField(columnName = "presentationType") String type;
     @DatabaseField int place; //place id
     @DatabaseField String speakers; //Array of speaker's ids
+    @DatabaseField(columnName = "presentationGroup") String group;
 
     public static Calendar c = Calendar.getInstance();
 
@@ -59,6 +61,9 @@ public class Presentation {
                 speakersIds[i] = Integer.parseInt(numberStrs[i]);
             }catch(NumberFormatException ex){ return null;}
         return speakersIds;
+    }
+    public String getGroup(){
+        return group;
     }
 
     public int getStartDay() throws ParseException {
