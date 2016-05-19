@@ -56,7 +56,7 @@ public class ConferenceListFragment extends Fragment {
         final DataGetter dataGetter = new DataGetter(getActivity().getApplication());
 
        if(DataGetter.checkUserLogged(getContext())){
-           new ServerConnector().getHarmonogramToUser(getContext(), 2, new GetHarmonogramResultInterface() {
+           new ServerConnector().getHarmonogramToUser(getContext(), DataGetter.getLoggedUserId(getContext()), new GetHarmonogramResultInterface() {
                @Override
                public void onDownloadFinished(Presentation[] res) {
                    if(res != null) mDataSet =res;
