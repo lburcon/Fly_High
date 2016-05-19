@@ -84,6 +84,20 @@ public class DataGetter {
         }
     }
 
+    public Presentation[] getLectures(){
+            QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
+            try {
+                builder.where().eq("presentationType","lecture").or().eq("presentationType","Lecture");
+                builder.orderBy("start", true);
+
+                Object[] x = ormPresentations.query(builder.prepare()).toArray();
+                return Arrays.copyOf(x, x.length, Presentation[].class);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+    }
+
     public Question[] getQuestionsToPresentation(int presentationId) {
         QueryBuilder<Question, Integer> builder = ormQuestions.queryBuilder();
         builder.orderBy("id", true);

@@ -90,7 +90,7 @@ public class QuestionsListFragment extends Fragment {
     }
 
     private Presentation[] getPresentations(){
-        return new DataGetter(getActivity().getApplication()).getPresentations();
+        return new DataGetter(getActivity().getApplication()).getLectures();
     }
 
 }

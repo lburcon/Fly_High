@@ -21,7 +21,7 @@ public class Presentation {
     @DatabaseField(columnName = "start")  String start;
     @DatabaseField String end;
     @DatabaseField String image; //Url to image
-    @DatabaseField String type;
+    @DatabaseField(columnName = "presentationType") String type;
     @DatabaseField int place; //place id
     @DatabaseField String speakers; //Array of speaker's ids
 
