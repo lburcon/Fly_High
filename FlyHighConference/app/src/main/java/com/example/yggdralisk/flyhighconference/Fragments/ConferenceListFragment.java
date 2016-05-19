@@ -72,7 +72,7 @@ public class ConferenceListFragment extends Fragment {
         mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
-        view.setOnTouchListener(new View.OnTouchListener() {
+       /* view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -85,7 +85,7 @@ public class ConferenceListFragment extends Fragment {
 
                 return false;
             }
-        });
+        });*/
 
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
