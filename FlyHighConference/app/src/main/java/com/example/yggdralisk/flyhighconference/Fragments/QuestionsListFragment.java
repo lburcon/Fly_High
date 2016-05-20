@@ -40,16 +40,16 @@ public class QuestionsListFragment extends Fragment {
 
         speakerArray = getSpeakers();
         if (presentationArray == null)
-        presentationArray = getPresentations();
+            presentationArray = getPresentations();
         ArrayList<Presentation> presList = new ArrayList<>();
 
         for (Presentation p : presentationArray) {
             presList.add(p);
         }
 
-        for (int i = 0; i < presList.size() ; i++) {
+        for (int i = 0; i < presList.size(); i++) {
 
-            switch (presList.get(i).getTitle()){
+            switch (presList.get(i).getTitle()) {
 
                 case "Breakfast":
                 case "Supper":
@@ -64,7 +64,6 @@ public class QuestionsListFragment extends Fragment {
         }
 
 
-
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.questions_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -73,7 +72,7 @@ public class QuestionsListFragment extends Fragment {
 
         RecyclerView.Adapter mAdapter = new QuestionsRecyclerViewAdapter(speakerArray, presList);
 
-            mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
@@ -85,13 +84,12 @@ public class QuestionsListFragment extends Fragment {
         return view;
     }
 
-    private Speaker[] getSpeakers(){
+    private Speaker[] getSpeakers() {
         return new DataGetter(getActivity().getApplication()).getSpeakers();
     }
 
-    private Presentation[] getPresentations(){
+    private Presentation[] getPresentations() {
         return new DataGetter(getActivity().getApplication()).getLectures();
     }
-
 }
 

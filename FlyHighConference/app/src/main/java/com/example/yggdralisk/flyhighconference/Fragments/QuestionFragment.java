@@ -140,14 +140,25 @@ public class QuestionFragment extends Fragment {
                                     .setCategory("Question to: " + presentation.getTitle())
                                     .setAction("Added")
                                     .build());
-                            questionArray = new DataGetter(getActivity().getApplication()).getQuestionsToPresentation(prelectionId);
 
-                            Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
+                            ServerConnector serverConnector = new ServerConnector();
+                            serverConnector.getQuestionsToPresentation(getActivity().getApplication(),getContext(), prelectionId, new GetQuestionsResultInterface() {
+                                @Override
+                                public void onDownloadFinished(Question[] res) {
+                                    questionArray = res;
 
-                           // mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
-                            mAdapter.notifyDataSetChanged();
-                           // mRecyclerView.setAdapter(mAdapter);
-                           // mRecyclerView.invalidate();
+                                    Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
+
+                                    // mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
+                                    mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
+
+                                    mRecyclerView.setAdapter(mAdapter);
+
+                                   // mAdapter.notifyDataSetChanged();
+                                    // mRecyclerView.setAdapter(mAdapter);
+                                    // mRecyclerView.invalidate();
+                                }
+                            });
                         }
                         else
                             Toast.makeText(getContext(), getString(R.string.question_error), Toast.LENGTH_SHORT).show();
