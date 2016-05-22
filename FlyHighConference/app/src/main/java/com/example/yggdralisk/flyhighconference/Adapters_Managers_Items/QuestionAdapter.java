@@ -20,6 +20,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.R;
@@ -37,8 +38,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     private Question[] mQuestions;
     private Application application;
     private Context context;
+    private int prelectionId;
 
-    public QuestionAdapter(Question[] mQuestions, Application application, Context context) {
+    public QuestionAdapter(Question[] mQuestions, Application application, Context context, int id) {
+        prelectionId = id;
         this.mQuestions = mQuestions;
         this.application = application;
         this.context = context;
@@ -121,18 +124,39 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                       public void onDownloadFinished(boolean succeeded) {
                           if (succeeded) {
                               Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
-                              notifyDataSetChanged();
+
+                              /*ServerConnector serverConnector1 = new ServerConnector();
+                              serverConnector1.refreshLikes(application, context, new ConnectorResultInterface() {
+                                  @Override
+                                  public void onDownloadFinished(boolean succeeded) {
+                                      notifyDataSetChanged();
+                                  }
+                              });
+*/
+                              /*ServerConnector serverConnector2 = new ServerConnector();
+                              serverConnector2.getQuestionsToPresentation(application,context, prelectionId, new GetQuestionsResultInterface() {
+                                  @Override
+                                  public void onDownloadFinished(Question[] res) {
+                                      mQuestions = res;
+                                      rating.setText("Likes: " + question.getRating());
+                                      notifyDataSetChanged();
+                                  }
+                              });*/
+
                           }else
                               Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
 
                       }
                   });
 
-                  serverConnector.refreshLikes(application, context, new ConnectorResultInterface() {
+                  /*serverConnector.refreshLikes(application, context, new ConnectorResultInterface() {
                       @Override
                       public void onDownloadFinished(boolean succeeded) {
+                          rating.setText("Likes: " + question.getRating());
                       }
-                  });
+                  });*/
+
+
 
               }
             }

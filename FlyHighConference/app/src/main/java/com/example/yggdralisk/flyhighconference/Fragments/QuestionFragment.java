@@ -88,7 +88,7 @@ public class QuestionFragment extends Fragment {
         mLayoutManager = new WrappingLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
+        mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext(), conferenceId);
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -149,14 +149,9 @@ public class QuestionFragment extends Fragment {
 
                                     Toast.makeText(getContext(), getString(R.string.question_done), Toast.LENGTH_SHORT).show();
 
-                                    // mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
-                                    mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext());
+                                    mAdapter = new QuestionAdapter(questionArray, getActivity().getApplication(), getContext(), conferenceId);
 
                                     mRecyclerView.setAdapter(mAdapter);
-
-                                   // mAdapter.notifyDataSetChanged();
-                                    // mRecyclerView.setAdapter(mAdapter);
-                                    // mRecyclerView.invalidate();
                                 }
                             });
                         }

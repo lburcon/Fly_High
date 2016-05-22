@@ -45,6 +45,7 @@
             android:layout_alignParentStart="true" />
 
         <ImageButton
+            android:layout_marginLeft="10dp"
             android:id="@+id/question_plus_one"
             android:layout_marginTop="5dp"
             android:layout_width="15dp"
@@ -53,7 +54,7 @@
             android:layout_below="@id/question_to_speaker_rating"
             android:layout_marginRight="5dp"
             android:background="@color/backgroung_dark"
-            android:src="@drawable/ic_plus_one_white_24dp" />
+            android:src="@drawable/ic_thumb_up_white_24dp" />
 
     </RelativeLayout>
 

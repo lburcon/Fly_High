@@ -103,7 +103,7 @@ public class NavigationFragment extends Fragment {
             }
         }
 
-    @OnClick(R.id.navigation_mpk_ic)
+    //@OnClick(R.id.navigation_mpk_ic)
             public void setMpk() {
         Intent intent = new Intent(Intent.ACTION_SEND);
        // intent.setAction(Intent.ACTION_VIEW);

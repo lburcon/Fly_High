@@ -280,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
                     fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
                     fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment ||
                     fragment instanceof OrganisersListFragment || fragment instanceof ConferenceFavouriteList) {
+                ifLast = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -336,8 +337,6 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
                 else
                     Toast.makeText(this, R.string.not_logged_fav, Toast.LENGTH_SHORT).show();
                 return true;
-
-
             case R.id.site:
                 if (toolbarData.equals("")) {
                     return false;

@@ -1,66 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/navigation_map"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_height="200dp"
+        android:layout_weight="6" />
 
     <View
+        android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@drawable/dotted_line"
-        android:layerType="software"
-        android:id="@+id/view1" />
+        android:layerType="software" />
 
     <TextView
         android:id="@+id/navigation_descr"
-        android:text="@string/navigation_decription_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="3"
         android:background="@color/backgroung_dark"
-        android:textColor="@color/text_white"
         android:gravity="center"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:text="@string/navigation_decription_main"
+        android:textColor="@color/text_white" />
 
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@drawable/dotted_line"
-        android:layerType="software"
-        android:id="@+id/view2"
-        />
+        android:layerType="software" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@color/backgroung_dark"
-        >
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <ImageButton
-            android:id="@+id/navigation_jakdojad_ic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/fly_high_jak_dojade"
-            android:scaleType="fitXY"
-            android:foregroundGravity="center"
-            android:background="@color/main_yellow"
-            android:layout_marginRight="10dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/navigation_mpk_ic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/fly_high_mpk"
-            android:scaleType="fitXY"
-            android:foregroundGravity="center"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/see_bus"
+                android:textColor="@color/text_white" />
+
+
+                <ImageButton
+                    android:layout_gravity="center"
+                    android:id="@+id/navigation_jakdojad_ic"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/main_yellow"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fly_high_jak_dojade" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
             android:background="@color/main_yellow"
-            android:layout_marginRight="10dp"/>
+            android:layerType="software" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/see_campus"
+                android:textColor="@color/text_white" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>

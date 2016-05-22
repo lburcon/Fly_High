@@ -28,7 +28,7 @@
     <string name="login_to_mark_pres">You must be logged in to rate</string>
 
     <string name="fly_high_description">Wierzymy że polepszenie systemu edukacji jest najważnejszym wyzwaniem jakie w tym stuleciu stoi przed ludzkością. Jest to kluczowe zarówno dla rozwoju społecznego jak i ekonomicznego. Właśnie teraz wszystkie kraje na całej Ziemi reformują swoje systemy edukacji. Obserwujemy wiele zmian, jak te w Europejskim Obszarze Szkolnictwa Wyższego. Nam to jednak nie wystarcza. Sądzimy, że studenci to silna lecz bardzo niedoceniana grupa w zakresie klarowania się nowych zasad rozwoju systemu wyższej edukacji. Chcemy dać się zauważyć, dlatego stworzyliśmy tę inicjatywę, dla nas samych, Europejskich studentów. Jesteśmy przekonani, że wiele możemy się od siebie nawajem dowiedzieć. </string>
-    <string name="navigation_decription_main">Wrocław University of Technology is an autonomous technical university in Wrocław, Poland. With buildings dispersed throughout the city, its main facilities are gathered at a central location near Plac Grunwaldzki, alongside the Oder river. \n\n Bus stops near Politechnika: \n -Most Grunwaldzki \n -Plac Grunwaldzki \n -Kliniki</string>
+    <string name="navigation_decription_main"> Bus stops near Politechnika: \n -Most Grunwaldzki \n -Plac Grunwaldzki \n -Kliniki</string>
 
     <string name="patronage">patronage</string>
     <string name="sponsor">sponsor</string>
@@ -67,6 +67,9 @@
     <string name="see_questions">Questions</string>
 
     <string name="not_logged_fav">You have to be logged in</string>
+
+    <string name="see_campus">See the campus map</string>
+    <string name="see_bus">See bus timetable</string>
 
 
 </resources>
