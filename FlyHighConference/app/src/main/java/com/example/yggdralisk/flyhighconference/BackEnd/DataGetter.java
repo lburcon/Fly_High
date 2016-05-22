@@ -3,6 +3,7 @@ package com.example.yggdralisk.flyhighconference.BackEnd;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.LinearLayout;
 
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Organiser;
@@ -31,7 +32,6 @@ import java.util.Set;
  * Created by yggdralisk on 29.02.16.
  */
 public class DataGetter {
-    private final String DATA_HOST_URL = "http://flyhigh.pwr.edu.pl/api/";
     Application application;
     DaoFactory daoFactory;
     Dao<Like, Integer> ormLikes;
@@ -84,18 +84,18 @@ public class DataGetter {
         }
     }
 
-    public Presentation[] getLectures(){
-            QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
-            try {
-                builder.where().eq("presentationType","lecture").or().eq("presentationType","Lecture");
-                builder.orderBy("start", true);
+    public Presentation[] getLectures() {
+        QueryBuilder<Presentation, Integer> builder = ormPresentations.queryBuilder();
+        try {
+            builder.where().eq("presentationType", "lecture").or().eq("presentationType", "Lecture");
+            builder.orderBy("start", true);
 
-                Object[] x = ormPresentations.query(builder.prepare()).toArray();
-                return Arrays.copyOf(x, x.length, Presentation[].class);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
+            Object[] x = ormPresentations.query(builder.prepare()).toArray();
+            return Arrays.copyOf(x, x.length, Presentation[].class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Question[] getQuestionsToPresentation(int presentationId) {
@@ -160,6 +160,16 @@ public class DataGetter {
         }
     }
 
+    public Like[] getLikesByQuestionId(int questionId){
+        QueryBuilder<Like, Integer> builder = ormLikes.queryBuilder();
+        try {
+            builder.where().eq("id", questionId);
+            return ormLikes.query(builder.prepare()).toArray(new Like[]{});
+        } catch (SQLException | IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
     public Organiser[] getOrganisers() {
         QueryBuilder<Organiser, Integer> builder = ormOrganisers.queryBuilder();
         try {
@@ -175,7 +185,7 @@ public class DataGetter {
         try {
             builder.where().eq("id", speakerId);
             return ormSpeakers.query(builder.prepare()).get(0);
-        } catch (SQLException|IndexOutOfBoundsException e) {
+        } catch (SQLException | IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -189,7 +199,7 @@ public class DataGetter {
                 names[i] = getSpeakerById(ids[i]).getName();
 
             return names;
-        } catch (NullPointerException|IndexOutOfBoundsException e) {
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
@@ -201,7 +211,7 @@ public class DataGetter {
         try {
             builder.where().eq("id", presentationId);
             return ormPresentations.query(builder.prepare()).get(0);
-        } catch (SQLException|IndexOutOfBoundsException e) {
+        } catch (SQLException | IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -211,7 +221,7 @@ public class DataGetter {
         try {
             builder.where().eq("id", placeId);
             return ormPlaces.query(builder.prepare()).get(0);
-        } catch (SQLException|IndexOutOfBoundsException e) {
+        } catch (SQLException | IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -276,8 +286,8 @@ public class DataGetter {
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences), Context.MODE_PRIVATE);
             for (String s :
                     sharedPreferences.getString(context.getString(R.string.favs_of) + getLoggedUserId(context), "").split("\\s+")) {
-                if(s!="")
-                temp.add(Integer.parseInt(s));
+                if (s != "")
+                    temp.add(Integer.parseInt(s));
             }
             return new ArrayList<>(temp);
         } else {
@@ -296,7 +306,7 @@ public class DataGetter {
                 ts += Integer.toString(i) + " ";
             }
 
-            ts+=Integer.toString(presentationId);
+            ts += Integer.toString(presentationId);
 
             editor.putString(context.getString(R.string.favs_of) + getLoggedUserId(context), ts);
             editor.apply();
