@@ -17,6 +17,7 @@ import com.example.yggdralisk.flyhighconference.BackEnd.ORMliteClasses.DaoFactor
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetHarmonogramInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetHarmonogramResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetLikesResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ImportInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.LikeInterface;
@@ -111,7 +112,7 @@ public class ServerConnector {
     }
 
     //------------------------------------------------------------------------DATA_GET_PART ------------------------------------------------------------------------
-    public void refreshLikes(Application application, Context context, final ConnectorResultInterface callback) {
+    public void refreshLikes(Application application, Context context, final GetLikesResultInterface callback) {
         this.context = context;
         this.application = application;
 
@@ -128,17 +129,17 @@ public class ServerConnector {
                 if (response.code() >= 200 && response.code() < 300) {
                     saveData(response.body());
                     if (callback != null)
-                        callback.onDownloadFinished(true);
+                        callback.onDownloadFinished(response.body());
                 } else {
                     if (callback != null)
-                        callback.onDownloadFinished(false);
+                        callback.onDownloadFinished(response.body());
                 }
             }
 
             @Override
             public void onFailure(retrofit2.Call<Like[]> call, Throwable t) {
                 if (callback != null)
-                    callback.onDownloadFinished(false);
+                    callback.onDownloadFinished(null);
             }
         });
     }
