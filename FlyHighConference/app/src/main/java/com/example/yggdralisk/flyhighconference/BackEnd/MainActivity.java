@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
                 ifLast = getSupportFragmentManager().getFragments().get(0) instanceof ConferenceListFragment;
                 getSupportFragmentManager().executePendingTransactions();
                 invalidateOptionsMenu();
-            } else if (getSupportFragmentManager().getBackStackEntryCount() == 1 && !ifLast) {
+            } else if (!ifLast) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 mDrawerToggle.setDrawerIndicatorEnabled(true);
                 setFragment(null, new ConferenceListFragment(), null);
