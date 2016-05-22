@@ -29,6 +29,7 @@ import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment
 import com.example.yggdralisk.flyhighconference.Fragments.InfoFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
+import com.example.yggdralisk.flyhighconference.Fragments.MapFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.OrganisersListFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
@@ -279,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
             if (fragment instanceof ConferenceFragment ||
                     fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
                     fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment ||
-                    fragment instanceof OrganisersListFragment || fragment instanceof ConferenceFavouriteList) {
+                    fragment instanceof OrganisersListFragment || fragment instanceof ConferenceFavouriteList
+                    || fragment instanceof MapFragment) {
                 ifLast = false;
                 mDrawerToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
