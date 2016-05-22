@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Place;
+import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -43,6 +44,7 @@ public class NavigationFragment extends Fragment {
     private GoogleMap map;
     SupportMapFragment mapFragment;
     private Tracker mTracker;
+    MainActivity mUpLayout;
 
     @Nullable
     @Override
@@ -52,6 +54,9 @@ public class NavigationFragment extends Fragment {
             if (parent != null)
                 parent.removeView(view);
         }
+
+        mUpLayout = (MainActivity)getActivity();
+
         try {
             view = inflater.inflate(R.layout.navigation_layout, container, false);
 
@@ -103,21 +108,10 @@ public class NavigationFragment extends Fragment {
             }
         }
 
-    //@OnClick(R.id.navigation_mpk_ic)
-            public void setMpk() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-       // intent.setAction(Intent.ACTION_VIEW);
-      //  intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
-        try{
-        startActivity(intent);
-        } catch (android.content.ActivityNotFoundException ex) {
-            intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.addCategory(Intent.CATEGORY_BROWSABLE);
-            intent.setData(Uri.parse("http://www.wroclaw.pl/linie-na-przystanku-pl-grunwaldzki-wroclaw"));
-            startActivity(intent);
-        }
+    @OnClick(R.id.navigation_campus)
+    public void setCampus() {
+        Bundle args = new Bundle();
+        mUpLayout.setFragment(null, new MapFragment(), args);
     }
 
 

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetLikesResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
@@ -97,17 +100,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
             if (question != null) {
                 plusOne.setVisibility(View.VISIBLE);
-                try
-                {
-                    String mail = new DataGetter(application).getUserById( question.getUser()).getMail();
+                try {
+                    String mail = new DataGetter(application).getUserById(question.getUser()).getMail();
                     nick.setText(mail.substring(0, mail.indexOf('@')));
-                } catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     nick.setText("");
                 }
-                    rating.setText("Likes: " + question.getRating());
-                    questionField.setText(question.getContent()); }
-            else {
+                rating.setText("Likes: " + question.getRating());
+                questionField.setText(question.getContent());
+            } else {
                 questionField.setText(R.string.no_questions_to_prelection);
                 plusOne.setVisibility(View.GONE);
                 rating.setVisibility(View.GONE);
@@ -115,52 +116,40 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             }
 
 
-        plusOne.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-              if (plusOne.getVisibility() == View.VISIBLE) {
-                  ServerConnector serverConnector = new ServerConnector();
-                  serverConnector.postLikeToQuestion(application, context, question.getId(), DataGetter.getLoggedUserId(context), new ConnectorResultInterface() {
-                      @Override
-                      public void onDownloadFinished(boolean succeeded) {
-                          if (succeeded) {
-                              Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
+            plusOne.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (plusOne.getVisibility() == View.VISIBLE) {
+                        ServerConnector serverConnector = new ServerConnector();
+                        serverConnector.postLikeToQuestion(application, context, question.getId(), DataGetter.getLoggedUserId(context), new ConnectorResultInterface() {
+                            @Override
+                            public void onDownloadFinished(boolean succeeded) {
+                                if (succeeded) {
+                                    Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
 
-                              /*ServerConnector serverConnector1 = new ServerConnector();
-                              serverConnector1.refreshLikes(application, context, new ConnectorResultInterface() {
-                                  @Override
-                                  public void onDownloadFinished(boolean succeeded) {
-                                      notifyDataSetChanged();
-                                  }
-                              });
-*/
-                              /*ServerConnector serverConnector2 = new ServerConnector();
-                              serverConnector2.getQuestionsToPresentation(application,context, prelectionId, new GetQuestionsResultInterface() {
-                                  @Override
-                                  public void onDownloadFinished(Question[] res) {
-                                      mQuestions = res;
-                                      rating.setText("Likes: " + question.getRating());
-                                      notifyDataSetChanged();
-                                  }
-                              });*/
+                                    ServerConnector serverConnector1 = new ServerConnector();
+                                    serverConnector1.refreshLikes(application, context, new GetLikesResultInterface() {
+                                        @Override
+                                        public void onDownloadFinished(Like[] res) {
+                                            for (Like like : res) {
+                                                if (like.getQuestion() == question.getId()) {
+                                                    rating.setText("Likes: " + "DUPA");
+                                                    rating.invalidate();
+                                                    notifyDataSetChanged();
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    });
 
-                          }else
-                              Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
 
-                      }
-                  });
+                            }
+                        });
 
-                  /*serverConnector.refreshLikes(application, context, new ConnectorResultInterface() {
-                      @Override
-                      public void onDownloadFinished(boolean succeeded) {
-                          rating.setText("Likes: " + question.getRating());
-                      }
-                  });*/
-
-
-
-              }
-            }
-        });
+                    }
+                }
+            });
         }
     }
 }
