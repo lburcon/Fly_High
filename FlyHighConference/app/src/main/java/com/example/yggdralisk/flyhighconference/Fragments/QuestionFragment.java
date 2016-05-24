@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
+import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Presentation;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
+import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetLikesResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.QuestionAdapter;
@@ -61,8 +63,12 @@ public class QuestionFragment extends Fragment {
         conferenceId = getArguments().getInt("conferenceId");
 
         ButterKnife.bind(this, view);
-
         getArrayOfIds(conferenceId, view);
+
+        new ServerConnector().refreshLikes(getActivity().getApplication(), getContext(), new GetLikesResultInterface() {
+            @Override
+            public void onDownloadFinished(Like[] res) {}
+        });
 
         return view;
     }
@@ -119,8 +125,6 @@ public class QuestionFragment extends Fragment {
 
     @OnClick(R.id.question_fab)
     public void onFabClicked(final View view) {
-
-
         if (DataGetter.checkUserLogged(getContext())) {
             if (editText.getVisibility() == View.GONE) {
                 Toast.makeText(getContext(), getString(R.string.question_available), Toast.LENGTH_SHORT).show();

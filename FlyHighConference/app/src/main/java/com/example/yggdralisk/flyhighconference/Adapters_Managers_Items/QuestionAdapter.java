@@ -2,11 +2,8 @@ package com.example.yggdralisk.flyhighconference.Adapters_Managers_Items;
 
 // sets recycler view to show questions to one speaker
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +12,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.yggdralisk.flyhighconference.BackEnd.AnalyticsApplication;
 import com.example.yggdralisk.flyhighconference.BackEnd.DataGetter;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Like;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Question;
-import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.ConnectorResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetLikesResultInterface;
-import com.example.yggdralisk.flyhighconference.BackEnd.RetrofitInterfaces.GetQuestionsResultInterface;
 import com.example.yggdralisk.flyhighconference.BackEnd.ServerConnector;
-import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.R;
-import com.google.android.gms.analytics.HitBuilders;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -84,12 +75,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         @Bind(R.id.question_to_speaker_nick)
         TextView nick;
         @Bind(R.id.question_to_speaker_rating)
-        TextView rating;
+        TextView ratingTv;
         @Bind(R.id.question_to_speaker_question)
         TextView questionField;
         @Bind(R.id.question_plus_one)
         ImageButton plusOne;
-
+        int rating = 0;
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -97,8 +88,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         public void setData(final Question question) {
-
             if (question != null) {
+                DataGetter dataGetter = new DataGetter(application);
                 plusOne.setVisibility(View.VISIBLE);
                 try {
                     String mail = new DataGetter(application).getUserById(question.getUser()).getMail();
@@ -106,41 +97,35 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 } catch (Exception ex) {
                     nick.setText("");
                 }
-                rating.setText("Likes: " + question.getRating());
+                rating = dataGetter.getLikesByQuestionId(question.getId()).length;
+                ratingTv.setText("Likes: " + rating);
                 questionField.setText(question.getContent());
             } else {
                 questionField.setText(R.string.no_questions_to_prelection);
                 plusOne.setVisibility(View.GONE);
-                rating.setVisibility(View.GONE);
+                ratingTv.setVisibility(View.GONE);
                 nick.setVisibility(View.GONE);
             }
 
 
             plusOne.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (plusOne.getVisibility() == View.VISIBLE) {
+                    if (plusOne.getVisibility() == View.VISIBLE && question != null) {
                         ServerConnector serverConnector = new ServerConnector();
                         serverConnector.postLikeToQuestion(application, context, question.getId(), DataGetter.getLoggedUserId(context), new ConnectorResultInterface() {
                             @Override
                             public void onDownloadFinished(boolean succeeded) {
                                 if (succeeded) {
                                     Toast.makeText(context, R.string.like_added, Toast.LENGTH_SHORT).show();
-
                                     ServerConnector serverConnector1 = new ServerConnector();
                                     serverConnector1.refreshLikes(application, context, new GetLikesResultInterface() {
                                         @Override
                                         public void onDownloadFinished(Like[] res) {
-                                            for (Like like : res) {
-                                                if (like.getQuestion() == question.getId()) {
-                                                    rating.setText("Likes: " + "DUPA");
-                                                    rating.invalidate();
-                                                    notifyDataSetChanged();
-                                                    break;
-                                                }
-                                            }
                                         }
                                     });
-
+                                    rating++;
+                                    ratingTv.setText("Likes: " + rating);
+                                    ratingTv.invalidate();
                                 } else
                                     Toast.makeText(context, R.string.like_not_added, Toast.LENGTH_SHORT).show();
 

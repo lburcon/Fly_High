@@ -24,7 +24,7 @@ import java.sql.SQLException;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "fly_high.db";
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 17;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

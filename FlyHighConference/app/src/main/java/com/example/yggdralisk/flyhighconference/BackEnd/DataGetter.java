@@ -163,7 +163,7 @@ public class DataGetter {
     public Like[] getLikesByQuestionId(int questionId){
         QueryBuilder<Like, Integer> builder = ormLikes.queryBuilder();
         try {
-            builder.where().eq("id", questionId);
+            builder.where().eq("questionId", questionId);
             return ormLikes.query(builder.prepare()).toArray(new Like[]{});
         } catch (SQLException | IndexOutOfBoundsException e) {
             return null;
@@ -334,5 +334,4 @@ public class DataGetter {
             return false;
         }
     }
-
 }

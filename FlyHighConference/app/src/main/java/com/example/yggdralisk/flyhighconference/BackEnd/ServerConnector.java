@@ -252,6 +252,7 @@ public class ServerConnector {
             final Dao<Place, Integer> ormPlaces = daoFactory.getOrmPlaces();
             final Dao<Question, Integer> ormQuestions = daoFactory.getOrmQuestions();
             final Dao<Speaker, Integer> ormSpeakers = daoFactory.getOrmSpeakers();
+
             if (data instanceof Import) {
                 ormOrganisers.callBatchTasks(new Callable<Void>() {
                     public Void call() throws Exception {

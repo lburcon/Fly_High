@@ -1,6 +1,7 @@
 package com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.types.IntegerObjectType;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -8,9 +9,9 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "likes")
 public class Like {
-    @DatabaseField(columnName = "likeId", generatedId = true)
+    @DatabaseField(generatedId = true)
     int id;
-    @DatabaseField
+    @DatabaseField(columnName = "questionId")
     int question;//question's id
     @DatabaseField
     int user;//user's id
@@ -23,5 +24,12 @@ public class Like {
         return user;
     }
 
-    public Like(){}
+    public Like() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Integer) return id == (int) o;
+        else return super.equals(o);
+    }
 }
