@@ -97,7 +97,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 } catch (Exception ex) {
                     nick.setText("");
                 }
-                rating = dataGetter.getLikesByQuestionId(question.getId()).length;
+                Like[] temp = dataGetter.getLikesByQuestionId(question.getId());
+                rating = temp.length;
+                temp = dataGetter.getLikes();
                 ratingTv.setText("Likes: " + rating);
                 questionField.setText(question.getContent());
             } else {

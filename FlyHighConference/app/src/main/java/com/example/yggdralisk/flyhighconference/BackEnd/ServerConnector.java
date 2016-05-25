@@ -32,6 +32,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -335,8 +338,11 @@ public class ServerConnector {
             } else if (data instanceof Like[]) {
                 ormLikes.callBatchTasks(new Callable<Void>() {
                     public Void call() throws Exception {
-                        for (Like o : (Like[]) data)
-                            ormLikes.createOrUpdate(o);
+                        for (Like o : (Like[]) data){
+                            List<Like> existing = ormLikes.queryForAll();
+                            if (!existing.contains(o))
+                                 ormLikes.create(o);
+                        }
                         return null;
                     }
                 });

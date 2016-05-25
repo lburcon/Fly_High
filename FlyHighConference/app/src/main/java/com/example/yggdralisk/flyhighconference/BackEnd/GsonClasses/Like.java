@@ -13,7 +13,7 @@ public class Like {
     int id;
     @DatabaseField(columnName = "questionId")
     int question;//question's id
-    @DatabaseField
+    @DatabaseField(columnName = "userId")
     int user;//user's id
 
     public int getQuestion() {
@@ -30,6 +30,6 @@ public class Like {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Integer) return id == (int) o;
-        else return super.equals(o);
+        else return question == ((Like)o).getQuestion() && user == ((Like)o).getUser();
     }
 }
