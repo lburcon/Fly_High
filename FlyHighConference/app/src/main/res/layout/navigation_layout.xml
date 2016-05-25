@@ -99,12 +99,15 @@
                 android:textColor="@color/text_white" />
 
             <ImageButton
+                android:layout_gravity="center"
                 android:id="@+id/navigation_campus"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:scaleType="center"
-                android:src="@drawable/fly_high_map2"
-                android:layout_gravity="center" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/main_yellow"
+                android:scaleType="fitXY"
+                android:src="@drawable/fed_navigation" />
 
         </LinearLayout>
 
