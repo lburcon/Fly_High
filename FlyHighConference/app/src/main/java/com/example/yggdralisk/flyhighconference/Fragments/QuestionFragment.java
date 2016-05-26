@@ -114,12 +114,12 @@ public class QuestionFragment extends Fragment {
         mTracker.setScreenName("Question Fragment: " + presentation.getTitle());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-
-
         Glide.with(getContext())
                 .load(presentation.getImage())
                 .placeholder(R.drawable.fly_high_temp)
                 .into(imageTop);
+
+
 
     }
 

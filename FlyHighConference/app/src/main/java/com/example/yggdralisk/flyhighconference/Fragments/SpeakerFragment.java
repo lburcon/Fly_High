@@ -79,7 +79,6 @@ public class SpeakerFragment extends Fragment {
         } else
             args = speaker.getUrl();
             activity.dataPassSpeaker(args);
-
     }
 
     public interface OnDataPassSpeaker {

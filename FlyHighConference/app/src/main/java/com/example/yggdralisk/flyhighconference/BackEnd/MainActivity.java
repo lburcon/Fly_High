@@ -20,13 +20,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerAdapter;
 import com.example.yggdralisk.flyhighconference.Adapters_Managers_Items.DrawerItem;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFavouriteList;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceListFragment;
-import com.example.yggdralisk.flyhighconference.Fragments.InfoFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.LoginOutFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.MapFragment;
@@ -35,8 +33,6 @@ import com.example.yggdralisk.flyhighconference.Fragments.QuestionFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakerFragment;
 import com.example.yggdralisk.flyhighconference.Fragments.SpeakersConferenceListFragment;
 import com.example.yggdralisk.flyhighconference.R;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -279,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
         if (getSupportActionBar() != null) {
             if (fragment instanceof ConferenceFragment ||
                     fragment instanceof SpeakerFragment || fragment instanceof QuestionFragment ||
-                    fragment instanceof InfoFragment || fragment instanceof SpeakersConferenceListFragment ||
+                     fragment instanceof SpeakersConferenceListFragment ||
                     fragment instanceof OrganisersListFragment || fragment instanceof ConferenceFavouriteList
                     || fragment instanceof MapFragment) {
                 ifLast = false;
@@ -325,10 +321,6 @@ public class MainActivity extends AppCompatActivity implements SpeakerFragment.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            /*case R.id.info:
-                if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof InfoFragment))
-                    setFragment(null, new InfoFragment(), null);
-                return true;*/
             case R.id.organisers:
                 if (!(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main) instanceof OrganisersListFragment))
                     setFragment(null, new OrganisersListFragment(), null);
