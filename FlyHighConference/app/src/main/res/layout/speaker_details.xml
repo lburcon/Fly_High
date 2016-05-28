@@ -7,30 +7,30 @@
     android:weightSum="10">
 
 
-        <TextView
-            android:id="@+id/speaker_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/rounded_corner_yellow"
-            android:gravity="center"
-            android:textColor="@color/text_white"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/speaker_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/rounded_corner_yellow"
+        android:gravity="center"
+        android:textColor="@color/text_white"
+        android:textSize="15sp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/speaker_image"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="3"
-            android:src="@drawable/fly_high"
-            app:civ_border_color="@color/main_yellow"
-            app:civ_border_width="0dp" />
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/speaker_image"
+        android:layout_width="170dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="3"
+        android:src="@drawable/fly_high"
+        app:civ_border_color="@color/main_yellow"
+        app:civ_border_width="0dp" />
 
     <TextView
         android:id="@+id/speaker_name"
@@ -40,7 +40,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="3dp"
-        android:layout_weight="1"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/rounded_corner_yellow"
         android:gravity="center"
         android:textColor="@color/text_white"
@@ -48,6 +48,7 @@
 
     <View
         android:id="@+id/view1"
+
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_marginBottom="3dp"
@@ -55,37 +56,20 @@
         android:background="@drawable/dotted_line"
         android:layerType="software" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/speaker_description"
+
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginBottom="3dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="6"
+        android:layout_marginTop="5dp"
+        android:layout_weight="7"
         android:background="@drawable/rounded_corner_yellow"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/speaker_description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:scrollbars="vertical"
-            android:textColor="@color/text_white"
-            android:textSize="15sp" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/dotted_line"
-            android:layerType="software" />
-
-    </LinearLayout>
+        android:scrollbars="vertical"
+        android:textColor="@color/text_white"
+        android:textSize="15sp" />
 
 
 </LinearLayout>
