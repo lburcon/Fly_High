@@ -40,7 +40,7 @@
 
     <TextView
         android:id="@+id/conference_list_item_titlext"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
@@ -49,7 +49,7 @@
 
     <TextView
         android:id="@+id/conference_list_item_descrxt"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
