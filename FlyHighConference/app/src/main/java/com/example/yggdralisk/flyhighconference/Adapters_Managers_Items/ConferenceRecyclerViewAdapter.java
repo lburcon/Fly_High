@@ -20,7 +20,9 @@ import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.Fragments.ConferenceFragment;
 import com.example.yggdralisk.flyhighconference.R;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
  */
 public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<ConferenceRecyclerViewAdapter.ViewHolder> {
 
-    Presentation[] mConferences;
+    public Presentation[] mConferences;
     public Context mContext;
     public MainActivity mUpLayout;
 
@@ -57,7 +59,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
 
     @Override
     public int getItemCount() {
-        return mConferences==null?0:mConferences.length;
+        return mConferences == null ? 0 : mConferences.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -93,14 +95,26 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             time.setText(getPresentationTime(presentation));
             auth.setText(getPresentationAuth());
 
-            if (isNotClickablePresentation(presentation))
-                linear.setBackgroundColor(ContextCompat.getColor(mContext, R.color.backgroung_dark));
+            //  if (isNotClickablePresentation(presentation))
+            //    linear.setBackgroundColor(ContextCompat.getColor(mContext, R.color.backgroung_dark));
 
+            checkIfCurr(presentation);
+        }
+
+        private void checkIfCurr(Presentation presentation) {
+            try {
+                Date currTime = new Date(System.currentTimeMillis());
+                if (presentation.getStartTime().compareTo(currTime) < 0 && presentation.getEndTime().compareTo(currTime) > 0)
+                    linear.setBackgroundColor(ContextCompat.getColor(mContext, R.color.background_main));
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         private boolean isNotClickablePresentation(Presentation presentation)//Możesz śmiało zmienić nazwę jeżeli znajdziesz lepszą :D
         {
-          return  (presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
+            return (presentation.getTitle().equals("Breakfast") || presentation.getTitle().equals("Supper") ||
                     presentation.getTitle().equals("Dinner") || presentation.getTitle().equals("Coffee break") ||
                     presentation.getTitle().equals("Lunch"));
         }
@@ -160,7 +174,7 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
                                     p.getTitle().equals("Dinner") || p.getTitle().equals("Coffee break") ||
                                     p.getTitle().equals("Lunch"))) {
                                 Bundle args = new Bundle();
-                                args.putSerializable("presentation",p);
+                                args.putSerializable("presentation", p);
                                 args.putInt("conferenceId", id);
                                 mUpLayout.setFragment(null, new ConferenceFragment(), args);
                             }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.yggdralisk.flyhighconference.BackEnd.GsonClasses.Partner;
 import com.example.yggdralisk.flyhighconference.BackEnd.MainActivity;
 import com.example.yggdralisk.flyhighconference.R;
@@ -88,7 +89,7 @@ public class PartnersRecyclerViewAdapter extends RecyclerView.Adapter<PartnersRe
             Glide.with(itemView.getContext())
                     .load(partner.getLogo())
                     .placeholder(R.drawable.fly_high_logotype2)
-                    .override(1400, 1400)
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .fitCenter()
                     .crossFade()
                     .into(image);

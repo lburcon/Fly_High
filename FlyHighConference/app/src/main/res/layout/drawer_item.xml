@@ -4,15 +4,14 @@
     android:background="@color/main_yellow"
     android:orientation="vertical">
 
-    <View
+   <!-- <View
         android:layout_width="wrap_content"
         android:layout_height="2dp"
-        android:background="@color/grey_light" />
+        android:background="@color/grey_light" />!-->
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginTop="2dp"
         android:background="@color/grey_light" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +24,7 @@
             android:id="@+id/drawer_item_image"
             android:layout_width="25dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginStart="2dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="4dp"
@@ -42,6 +41,7 @@
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@color/background_black"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="15dp"/>
     </LinearLayout>
 </LinearLayout>

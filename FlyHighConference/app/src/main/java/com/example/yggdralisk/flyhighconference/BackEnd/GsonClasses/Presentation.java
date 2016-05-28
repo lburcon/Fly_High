@@ -5,6 +5,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +30,7 @@ public class Presentation implements Serializable {
     @DatabaseField(columnName = "presentationGroup") String group;
 
     public static Calendar c = Calendar.getInstance();
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public int getId() {
         return id;
@@ -67,9 +70,17 @@ public class Presentation implements Serializable {
     }
 
     public int getStartDay() throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         c.setTime(formatter.parse(start));
         return c.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public Date getStartTime() throws ParseException {
+        return new SimpleDateFormat(DATE_FORMAT).parse(start);
+    }
+
+    public Date getEndTime() throws ParseException {
+        return new SimpleDateFormat(DATE_FORMAT).parse(end);
     }
 
     public Presentation() {

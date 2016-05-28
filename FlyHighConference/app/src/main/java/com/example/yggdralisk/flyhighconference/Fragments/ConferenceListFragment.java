@@ -1,6 +1,8 @@
 package com.example.yggdralisk.flyhighconference.Fragments;
 
+import android.app.Application;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import com.google.android.gms.analytics.Tracker;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -36,7 +39,9 @@ public class ConferenceListFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private Tracker mTracker;
     private Presentation[] mDataSet = {};
-
+    int dayOfMonth = 0;
+    int gotoButtonNr = 0; //Number of button to go to and display it's prelections
+    int gotoViewNr = 0;
     int activeLLChild = 0;
     LinearLayout ll;
 
@@ -53,65 +58,63 @@ public class ConferenceListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        final DataGetter dataGetter = new DataGetter(getActivity().getApplication());
+        ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
 
-       if(DataGetter.checkUserLogged(getContext())){
-           new ServerConnector().getHarmonogramToUser(getContext(), DataGetter.getLoggedUserId(getContext()), new GetHarmonogramResultInterface() {
-               @Override
-               public void onDownloadFinished(Presentation[] res) {
-                   if(res != null) mDataSet =res;
 
-                   if(mDataSet == null || mDataSet.length == 0)  mDataSet = dataGetter.getPresentations();
+        getDataSet();
+        setAnalytics();
+        try {
+            ll.getChildAt(gotoButtonNr).callOnClick();//Open prelections for "today"
+            mRecyclerView.scrollToPosition(gotoViewNr);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+        return view;
+    }
 
-                   try {
-                       separatedDaysPresentations = separateByDay(mDataSet);
-                       ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
-                       setButtons(ll);
-                   } catch (ParseException e) {
-                       mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-                       mRecyclerView.setAdapter(mAdapter);
-                   }
-
-                   mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-                   mRecyclerView.setAdapter(mAdapter);
-
-       /* view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (ll != null) {
-                        if (activeLLChild == ll.getChildCount()-1) ll.getChildAt(0).callOnClick();
-                        else ll.getChildAt(activeLLChild + 1).callOnClick();
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        });*/
-
-               }
-           });} else {
-           mDataSet = dataGetter.getPresentations();
-
-           try {
-               separatedDaysPresentations = separateByDay(mDataSet);
-               ll = (LinearLayout) view.findViewById(R.id.conference_list_buttons_layout);
-               setButtons(ll);
-           } catch (ParseException e) {
-               mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-               mRecyclerView.setAdapter(mAdapter);
-           }
-
-           mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-           mRecyclerView.setAdapter(mAdapter);
-       }
-
+    private void setAnalytics() {
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
         mTracker.setScreenName("Conference List Fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        return view;
+    }
+
+    private void getDataSet() {
+        final DataGetter dataGetter = new DataGetter(getActivity().getApplication());
+        if (DataGetter.checkUserLogged(getContext())) {
+            new ServerConnector().getHarmonogramToUser(getContext(), DataGetter.getLoggedUserId(getContext()), new GetHarmonogramResultInterface() {
+                @Override
+                public void onDownloadFinished(Presentation[] res) {
+                    if (res != null) mDataSet = res;
+
+                    if (mDataSet == null || mDataSet.length == 0)
+                        mDataSet = dataGetter.getPresentations();
+                    try {
+                        separatedDaysPresentations = separateByDay(mDataSet);
+                        setButtons(ll);
+                    } catch (ParseException e) {
+                        mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
+
+                    mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            });
+        } else {
+            mDataSet = dataGetter.getPresentations();
+
+            try {
+                separatedDaysPresentations = separateByDay(mDataSet);
+                setButtons(ll);
+            } catch (ParseException e) {
+                mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     private void setButtons(LinearLayout ll) {
@@ -126,7 +129,7 @@ public class ConferenceListFragment extends Fragment {
             tempButt.setTextColor(getResources().getColor(R.color.text_white));
             tempButt.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 90 / separatedDaysPresentations.size()));
 
-            tempButt.setOnClickListener(new MyOnClick(new DataGetter(getActivity().getApplication()).getPresentations(),ll));
+            tempButt.setOnClickListener(new MyOnClick(new DataGetter(getActivity().getApplication()).getPresentations(), ll));
             ll.addView(tempButt);
             for (int i = 0; i < separatedDaysPresentations.size(); i++) {
                 tempButt = new Button(getContext());
@@ -139,7 +142,7 @@ public class ConferenceListFragment extends Fragment {
                 Presentation[] presArray = new Presentation[separatedDaysPresentations.get(i).size()];
                 presArray = separatedDaysPresentations.get(i).toArray(presArray);
 
-                tempButt.setOnClickListener(new MyOnClick(presArray,ll));
+                tempButt.setOnClickListener(new MyOnClick(presArray, ll));
 
                 ll.addView(tempButt);
             }
@@ -149,60 +152,41 @@ public class ConferenceListFragment extends Fragment {
     private ArrayList<ArrayList<Presentation>> separateByDay(Presentation[] mDataSet) throws ParseException {
         ArrayList<ArrayList<Presentation>> tempSeparatedPres = new ArrayList<>();
         ArrayList<Presentation> tempPresetatnions = new ArrayList<>();
+        dayOfMonth = Calendar.getInstance().get(Calendar.DATE);
 
         for (Presentation presentation : mDataSet) {
             if (tempPresetatnions.size() == 0 || tempPresetatnions.get(0).getStartDay() == presentation.getStartDay()) {
                 tempPresetatnions.add(presentation);
             } else {
                 tempSeparatedPres.add(tempPresetatnions);
+                if (tempPresetatnions.get(0).getStartDay() == dayOfMonth) {
+                    getCurrentPosition(tempPresetatnions);
+                    gotoButtonNr = tempSeparatedPres.size();
+                }
                 tempPresetatnions = new ArrayList<>();
+                tempPresetatnions.add(presentation);
             }
         }
-
-        tempSeparatedPres.add(tempPresetatnions);
+        if (tempPresetatnions.size() != 0)
+            tempSeparatedPres.add(tempPresetatnions);
 
         return tempSeparatedPres;
     }
 
-    protected void scrollToCurrentPresentation(int index) {
-        if (mLayoutManager != null)
-            mLayoutManager.scrollToPosition(index);
-    }
-
-    private class TimeFinder extends AsyncTask<Presentation[], Void, Void> {
-        int index;
-
-        private int compareDates(String dt1, String dt2) throws ParseException {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            Date date1 = formatter.parse(dt1);
-            Date date2 = formatter.parse(dt2);
-
-            return date1.compareTo(date2);
-
-        }
-
-        @Override
-        protected Void doInBackground(Presentation[]... params) {
-            Presentation[] mDataSet = params[0];
-
-            String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    public void getCurrentPosition(ArrayList<Presentation> tempPresetatnions) {
+        Date currTime = new Date(System.currentTimeMillis());
+        int i = 0;
+        for (Presentation p :
+                tempPresetatnions) {
             try {
-                for (int i = 0; i < mDataSet.length; i++) {
-                    if (compareDates(mDataSet[i].getStart(), currentDate) >= 0 && compareDates(mDataSet[i].getEnd(), currentDate) <= 0) {
-                        index = i;
-                        break;
-                    }
+                if(p.getStartTime().compareTo(currTime) < 0 && p.getEndTime().compareTo(currTime) > 0) {
+                    gotoViewNr = i;
+                    break;
                 }
+                i++;
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            scrollToCurrentPresentation(index);
         }
     }
 
@@ -228,7 +212,7 @@ public class ConferenceListFragment extends Fragment {
                     ll.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.background_main));
 
                 v.setBackgroundColor(getResources().getColor(R.color.main_yellow_dark));
-               activeLLChild = ll.indexOfChild(v);
+                activeLLChild = ll.indexOfChild(v);
             }
         }
     }
