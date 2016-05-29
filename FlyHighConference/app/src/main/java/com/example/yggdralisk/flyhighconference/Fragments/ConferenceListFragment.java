@@ -93,12 +93,11 @@ public class ConferenceListFragment extends Fragment {
                         separatedDaysPresentations = separateByDay(mDataSet);
                         setButtons(ll);
                     } catch (ParseException e) {
+                        e.printStackTrace();
+                    }finally {
                         mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
                         mRecyclerView.setAdapter(mAdapter);
                     }
-
-                    mAdapter = new ConferenceRecyclerViewAdapter(mDataSet, getContext());
-                    mRecyclerView.setAdapter(mAdapter);
                 }
             });
         } else {
@@ -154,17 +153,26 @@ public class ConferenceListFragment extends Fragment {
         ArrayList<Presentation> tempPresetatnions = new ArrayList<>();
         dayOfMonth = Calendar.getInstance().get(Calendar.DATE);
 
+        int tempDz = -1;
         for (Presentation presentation : mDataSet) {
             if (tempPresetatnions.size() == 0 || tempPresetatnions.get(0).getStartDay() == presentation.getStartDay()) {
-                tempPresetatnions.add(presentation);
+                if (presentation.getStartDay() >= tempDz){
+                    tempPresetatnions.add(presentation);
+                    tempDz = presentation.getStartDay();
+                }
             } else {
                 tempSeparatedPres.add(tempPresetatnions);
+
                 if (tempPresetatnions.get(0).getStartDay() == dayOfMonth) {
                     getCurrentPosition(tempPresetatnions);
                     gotoButtonNr = tempSeparatedPres.size();
                 }
+
                 tempPresetatnions = new ArrayList<>();
-                tempPresetatnions.add(presentation);
+                if (presentation.getStartDay() >= tempDz){
+                    tempPresetatnions.add(presentation);
+                    tempDz = presentation.getStartDay();
+                }
             }
         }
         if (tempPresetatnions.size() != 0)
@@ -179,7 +187,7 @@ public class ConferenceListFragment extends Fragment {
         for (Presentation p :
                 tempPresetatnions) {
             try {
-                if(p.getStartTime().compareTo(currTime) < 0 && p.getEndTime().compareTo(currTime) > 0) {
+                if (p.getStartTime().compareTo(currTime) < 0 && p.getEndTime().compareTo(currTime) > 0) {
                     gotoViewNr = i;
                     break;
                 }
