@@ -71,5 +71,8 @@
     <string name="see_campus">See the campus map</string>
     <string name="see_bus">See bus timetable</string>
 
+    <string name="no_speakers">There are no speakers attached</string>
+    <string name="description_text">There is no description for this lecture.</string>
+
 
 </resources>

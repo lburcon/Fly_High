@@ -95,8 +95,8 @@ public class ConferenceRecyclerViewAdapter extends RecyclerView.Adapter<Conferen
             time.setText(getPresentationTime(presentation));
             auth.setText(getPresentationAuth());
 
-            //  if (isNotClickablePresentation(presentation))
-            //    linear.setBackgroundColor(ContextCompat.getColor(mContext, R.color.backgroung_dark));
+            if (isNotClickablePresentation(presentation))
+                linear.setBackgroundColor(ContextCompat.getColor(mContext, R.color.backgroung_dark));
 
             checkIfCurr(presentation);
         }

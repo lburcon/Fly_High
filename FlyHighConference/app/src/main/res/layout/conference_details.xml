@@ -78,6 +78,7 @@
             android:layout_below="@id/conference_name"
             android:background="@color/backgroung_dark"
             android:gravity="center_horizontal"
+            android:text="@string/description_text"
             android:layout_marginBottom="5dp"
             android:scrollbars="vertical"
             android:textColor="@color/text_white"

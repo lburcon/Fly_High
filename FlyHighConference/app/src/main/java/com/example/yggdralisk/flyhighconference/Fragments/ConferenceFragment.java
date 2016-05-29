@@ -99,7 +99,10 @@ public class ConferenceFragment extends Fragment {
         TextView groutTextView = ButterKnife.findById(view, R.id.conference_group);
         name.setText(presentation.getTitle());
 
-        description.setText(presentation.getDescription());
+        if (presentation.getDescription() != null)
+            description.setText(presentation.getDescription());
+        else
+            description.setText(R.string.description_text);
 
         description.setMovementMethod(new ScrollingMovementMethod());
 
@@ -199,7 +202,7 @@ public class ConferenceFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getContext();
 
         if (presentation.getSpeakers() == null) {
-
+            Toast.makeText(getContext(), R.string.no_speakers, Toast.LENGTH_SHORT).show();
         } else if (presentation.getSpeakers().length > 1) {
             args.putIntArray("speakersIds", presentation.getSpeakers());
             mainActivity.setFragment(null, new SpeakersConferenceListFragment(), args);
